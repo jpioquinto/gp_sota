@@ -40,4 +40,40 @@ class Validation
 	//--------------------------------------------------------------------
 	// Rules
 	//--------------------------------------------------------------------
+	public $signup = [
+        'usuario' => [
+			'label'=>'Usuario',
+            'rules'  => 'required|min_length[8]|is_unique[gp_usuarios.nickname]',
+            'errors' => [
+                'required' => 'Ingrese el usuario.',
+				'min_length'=>'El usuario debe contener mínimo 8 caracteres.'
+            ]
+        ],
+        'password'    => [
+			'label'=>'Contraseña',
+            'rules'  => 'required|min_length[8]',
+            'errors' => [
+                'required' => 'Ingrese la contraseña.',
+				'min_length'=>'La contraseña debe contener mínimo 8 caracteres.'
+            ]
+        ],
+    ];
+	public $signin = [
+        'usuario' => [
+			'label'=>'Usuario',
+            'rules'  => 'required|min_length[8]',
+            'errors' => [
+                'required' => 'Ingrese el usuario.',
+				'min_length'=>'El usuario debe contener mínimo 8 caracteres.'
+            ]
+        ],
+        'password'    => [
+			'label'=>'Contraseña',
+            'rules'  => 'required|min_length[8]',
+            'errors' => [
+                'required' => 'Ingrese la contraseña.',
+				'min_length'=>'La contraseña debe contener mínimo 8 caracteres.'
+            ]
+        ],
+    ];
 }

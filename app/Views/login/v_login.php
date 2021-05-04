@@ -8,9 +8,11 @@
 	<meta name="keywords" content="Proyectos del ramo, subsecretaría de ordenamiento territorial y agrario.">
 	<meta name="description" content="Seguimiento de proyectos">
 	<meta name="robots" content="none|index|follow">
+	<link href='images/favicon/favicon.png' rel='shortcut icon'>
 	<link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Open+Sans:600'>
     <link rel="stylesheet" href="css/login/login.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+	<link rel="stylesheet" href="css/plugins/animate.min.css"/>
+	<!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"-->
 <style>
 .hide{
 	opacity:0;
@@ -129,7 +131,9 @@
 		<?= csrf_field() ?>
 	</div>
 	<script src="js/library/jquery-3.6.0.min.js"></script>
-	<script src="js/util.js"></script>
+	<script src="js/plugins/jquery.noty.packaged.min.js"></script>
+	<script src="js/helpers.js"></script>
+	<script src="js/util.js"></script>	
 	<script src="js/modulos/login/login.js"></script>
 </body>
 </html>

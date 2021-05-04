@@ -31,14 +31,14 @@ class Database extends Config
 	 * @var array
 	 */
 	public $default = [
-		'DSN'      => '',
+		'DSN'      => 'pgsql:host=localhost;port=5432;dbname=gp_sota;user=app_gp_sota;password=g2%3U7a&i?1',
 		'hostname' => 'localhost',
-		'username' => '',
-		'password' => '',
-		'database' => '',
-		'DBDriver' => 'MySQLi',
+		'username' => 'app_gp_sota',
+		'password' => 'g2%3U7a&i?1',
+		'database' => 'gp_sota',
+		'DBDriver' => 'Postgre',
 		'DBPrefix' => '',
-		'pConnect' => false,
+		'pConnect' => true,
 		'DBDebug'  => (ENVIRONMENT !== 'production'),
 		'charset'  => 'utf8',
 		'DBCollat' => 'utf8_general_ci',
@@ -47,7 +47,7 @@ class Database extends Config
 		'compress' => false,
 		'strictOn' => false,
 		'failover' => [],
-		'port'     => 3306,
+		'port'     => 5432,
 	];
 
 	/**

@@ -2,16 +2,32 @@ var $login = (modulo => {
 	modulo.ingresar = e => {
 		e.preventDefault();
 		if ( $.trim($('#usuario').val())=='' || $.trim($('#password').val())=='' ) {
-			/*objUtil.notificacion('Llene los campos por favor', "warning", 200, "bottomRight", "fadeInUp", "fadeOutDown");
-			setTimeout(function() {
-				$.noty.closeAll();
-			}, 4300);*/
+			notificacion('Llene los campos por favor', "error", 200, "bottomRight", "fadeInUp", "fadeOutDown");
 			return;
 		}
+		$util.post({
+			controlador: "Login",
+			metodo: "loguear",
+			datos: "usuario=" + $("#usuario").val() + "&password=" + $("#password").val(),
+			funcion: function(data) {
+				if (data.Solicitud) {					
+					setTimeout(function() {
+						location.reload();
+					}, 200)
+					$(this).removeClass('clicked');
+				} else {					
+					$.noty.closeAll();
+					$(this).removeClass('clicked');					
+				}
+			}
+		});
 
 	}
     return modulo;
 })($login || {});
+
+var tkn = undefined;
+var v = undefined;
 
 $(function() {
 	/*$.ajaxSetup({
@@ -20,6 +36,8 @@ $(function() {
 			   data:{"<?=$this->security->get_csrf_token_name();?>":  "<?=$this->security->get_csrf_hash();?>"}
 		}
 	});*/
+	tkn = "csrf_gp_name";
+	v   = $("input[name='" + tkn + "']").val();
     setTimeout(function(){
 		$('.login-html').addClass('animated shake');
 		$('.historial-html').addClass('animated shake');
