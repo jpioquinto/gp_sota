@@ -1,13 +1,17 @@
 <?php
 
 namespace App\Controllers;
+use  App\Libraries\Usuario;
 
 
 class Home extends BaseController
 {
+	public $usuario;
+
 	public function __construct()
 	{
 		@session_start();
+		$this->usuario = new Usuario();
 	}
 
 	public function index()
@@ -17,6 +21,10 @@ class Home extends BaseController
 			return redirect()->to('/'); 
 		}
 		
-		return view('welcome_message');		
+		
+		return view(
+			'layout/v_plantilla', 
+			['v_header'=>view('layout/v_header'), 'v_sidebar'=>view('layout/v_sidebar'), 'v_perfil'=>view('usuario/v_perfil')]
+		);		
 	}
 }
