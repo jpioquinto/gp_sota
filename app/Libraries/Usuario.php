@@ -6,7 +6,7 @@ class Usuario extends Modelo
 {	
 	public function __construct()
 	{
-		parent::__construct($_SESSION['GP_SOTA']);
+		parent::__construct(isset($_SESSION['GP_SOTA']) ? $_SESSION['GP_SOTA'] : []);
         
 	}
 
