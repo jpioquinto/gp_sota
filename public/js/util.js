@@ -2,13 +2,24 @@ var $util = (modulo => {
     var ajaxRequests = [];
     modulo.modulo_actual = '';
 
+    modulo.soloEntero  = function(event) {
+        var keynum = window.event ? window.event.keyCode : e.which;
+        var dato   = new String($(this).val()).replace(/[#$,.\s ]*/g,"");
+        if ((keynum == 8) && esEnteroPositivo(dato))return true;
+        return esEnteroPositivo(String.fromCharCode(keynum));
+    };
+
+
     modulo.post = obj=> {
+        var tkn = "csrf_gp_name";
+	    var v   = $("input[name='" + tkn + "']").val();
+        
         if (typeof(obj.load) != "undefined") {
             modulo.load.show(obj.load);
         };
         var uri = (((typeof(obj.url) != "undefined") ? obj.url : "") + (((typeof(obj.controlador) != "undefined") ? obj.controlador : modulo.modulo_actual)) + "/" + (((typeof(obj.metodo) != "undefined") ? (obj.metodo + "/") : "")));
         
-        ($('[data-rel=tooltip]').length) ? $('[data-rel=tooltip]').tooltip('hide'): '';
+        ($('[data-rel=tooltip]').length) ? $('[data-rel=tooltip]').tooltip('hide'): '';                
 
         if (typeof(obj.formdata)!='undefined' && obj.formdata) {
             obj.datos.append(tkn,v);
@@ -152,11 +163,23 @@ var $util = (modulo => {
                 notificacion(jqXHR.status + " : " + errorThrown, "error", 3000, "bottomRight", "bounceIn", "bounceOut");
                 $('body').find('.clicked').removeClass('clicked');
                 modulo.load.hide();
-            }
-            //Materialize.toast('<i class="material-icons">info</i> El servidor no responde o no hay conexi&oacute;n a internet.',4000, 'red');
+            }            
         });
         ajaxRequests.push(ajx);
     }
+
+    modulo.hash = (longitud) => {
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#$!¡_";
+	    
+        if (!longitud) { longitud = 60; } 
+	    if (!esEnteroPositivo(longitud) || parseInt(longitud)==0) { longitud = 60; }
+	    
+        var has = "";
+	    for (var i = 0; i < longitud; i++) {
+            has += possible.charAt(Math.floor(Math.random() * possible.length));
+        }      
+	    return has;
+	}
 
     return modulo;
 })($util || {});

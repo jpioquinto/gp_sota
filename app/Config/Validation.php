@@ -76,4 +76,54 @@ class Validation
             ]
         ],
     ];
+	public $contact = [
+		'nombre' => [
+			'label'=>'Nombre',
+            'rules'  => 'required|min_length[3]',
+            'errors' => [
+                'required' => 'Ingrese el Nombre.',
+				'min_length'=>'El Nombre debe contener mínimo 3 caracteres.'
+            ]
+        ],
+        'ap_paterno'    => [
+			'label'=>'Apellido Paterno',
+            'rules'  => 'required|min_length[3]',
+            'errors' => [
+                'required' => 'Ingrese el Apellido Paterno.',
+				'min_length'=>'El Apellido Paterno debe contener mínimo 3 caracteres.'
+            ]
+        ],
+		'cargo'    => [
+			'label'=>'Cargo',
+            'rules'  => 'required|min_length[6]',
+            'errors' => [
+                'required' => 'Ingrese el Cargo.',
+				'min_length'=>'El Cargo debe contener mínimo 6 caracteres.'
+            ]
+        ],
+		'estado'    => [
+			'label'=>'Estado',
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required' => 'Seleccione el estado.',
+				'numeric'=>'No se recibió el identificador del estado.'
+            ]
+        ],
+		'municipio'    => [
+			'label'=>'Municipio',
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required' => 'Seleccione el municipio.',
+				'numeric'=>'No se recibió el identificador del municipio.'
+            ]
+        ],
+		'puesto'    => [
+			'label'=>'Puesto',
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required' => 'Seleccione el puesto.',
+				'numeric'=>'No se recibió el identificador del puesto.'
+            ]
+        ],
+	];
 }

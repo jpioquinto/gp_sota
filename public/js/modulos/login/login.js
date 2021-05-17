@@ -26,9 +26,6 @@ var $login = (modulo => {
     return modulo;
 })($login || {});
 
-var tkn = undefined;
-var v = undefined;
-
 $(function() {
 	/*$.ajaxSetup({
 		headers: {
@@ -36,8 +33,6 @@ $(function() {
 			   data:{"<?=$this->security->get_csrf_token_name();?>":  "<?=$this->security->get_csrf_hash();?>"}
 		}
 	});*/
-	tkn = "csrf_gp_name";
-	v   = $("input[name='" + tkn + "']").val();
     setTimeout(function(){
 		$('.login-html').addClass('animated shake');
 		$('.historial-html').addClass('animated shake');

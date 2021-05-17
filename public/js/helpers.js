@@ -35,3 +35,14 @@ var notificacion = function(texto, tipo, tiempo, colocacion, animacionEntrada, a
         $.noty.closeAll();
     }, 6300);
 }
+
+var esEntero = function(numero) {
+    var typeInt = /^[-]?[0-9]+$/;
+    if(!typeInt.test(numero))return false;
+    return true;
+};
+var esEnteroPositivo = function(numero) {
+    var typeInt = /^[0-9]+$/;
+    if(!typeInt.test(numero))return false;
+    return true;
+};

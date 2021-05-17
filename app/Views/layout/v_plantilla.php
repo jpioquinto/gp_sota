@@ -12,6 +12,7 @@
     <!-- CSS Files -->
 	<link rel="stylesheet" href="css/plugin/bootstrap.min.css">
 	<link rel="stylesheet" href="css/plugin/atlantis.min.css">
+	<link rel="stylesheet" href="css/plugins/animate.min.css"/>
 
 	<!-- Fonts and icons -->
 	<script src="js/plugin/webfont/webfont.min.js"></script>
@@ -23,7 +24,11 @@
 				sessionStorage.fonts = true;
 			}
 		});
-	</script>	
+	</script>
+	<script src="js/library/jquery-3.6.0.min.js"></script>
+	<script src="js/plugins/jquery.noty.packaged.min.js"></script>	
+	<script src="js/helpers.js"></script>
+	<script src="js/util.js"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -36,12 +41,11 @@
             
             </div>
         </div>
-    
-    </div>
-
+		<?= csrf_field() ?>
+    </div>	
     <!--   Core JS Files   -->
-	<!--script src="../assets/js/core/jquery.3.2.1.min.js"></script-->
-    <script src="js/library/jquery-3.6.0.min.js"></script>
+	<!--script src="js/core/jquery.3.2.1.min.js"></script-->
+    <!--script src="js/library/jquery-3.6.0.min.js"></script-->
 	<script src="js/core/popper.min.js"></script>
 	<script src="js/core/bootstrap.min.js"></script>
 
