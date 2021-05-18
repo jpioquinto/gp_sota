@@ -10,7 +10,7 @@ class Usuario extends Modelo
         
 	}
 	
-	public function getUsuarioId()
+	public function getId()
 	{
 		if ($this->getAttribute('id') && is_numeric($this->getAttribute('id'))) {
 			return $this->getAttribute('id');

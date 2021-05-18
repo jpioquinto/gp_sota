@@ -9,13 +9,14 @@
         </tr>
     </thead>
     <tbody>
+        <?=isset($listadoCorreos) ? $listadoCorreos : ''?>
     </tbody>
     <tfoot>
         <tr>
             <td colspan="2">
                 <div class="form-group form-floating-label">
                     <select class="form-control input-solid" id="id-tipo-correo" required>
-                        <?=isset($listadoCorreos) ? $listadoCorreos : ''?>
+                        <?=isset($listadoTipoCorreos) ? $listadoTipoCorreos : ''?>
                     </select>
                     <label for="id-tipo-correo" class="placeholder">Tipo de correo</label>
                 </div>

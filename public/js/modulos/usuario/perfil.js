@@ -2,6 +2,85 @@ var $uPerfil = (modulo => {
     var listaCorreos = [];
     var listaTelefonos = [];
     var cacheMunicipios = [];
+    modulo.test = () => {
+        return listaTelefonos;
+    }
+    modulo.ini = () => {
+        //$util.load.show(true);
+        $util.post({
+            url: "Perfil",
+            metodo:"obtenerCorreoYTelefono",
+            datos:{},
+            funcion: function(data){
+            if (data.Solicitud) {
+                listaCorreos = data.listaCorreos;
+                listaTelefonos = data.listaTelefonos;
+            }
+            //$util.load.hide();
+            }
+        });
+    };
+
+    modulo.clickCambiarPassword = function(e) {
+        e.preventDefault();
+        //$util.load.show(true);
+        $util.post({
+            url: "Usuario",
+            metodo:"obtenerVistaCambio",
+            datos:{},
+            funcion: function(data){
+                //$util.load.hide();
+                if (data.Solicitud) {
+                    $('.content-modal').html(data.vista);
+                    $('#jq_nuevo_pass').modal('show');
+                    $('#jq_aceptar_cambio').off('click').on('click', modulo.cambiarPassword);
+                }            
+            }
+        });
+    };
+
+    modulo.cambiarPassword = function(e) {
+        e.preventDefault();
+        if ($.trim($("input[name='anterior']").val())=='') {
+            notificacion('La contraseña anterior es requerida.', "error", 200, "bottomRight", "fadeInUp", "fadeOutDown");
+            $("input[name='anterior']").focus();
+			return;
+        }
+        if ($.trim($("input[name='nueva']").val())=='') {
+            notificacion('Ingrese la nueva contraseña.', "error", 200, "bottomRight", "fadeInUp", "fadeOutDown");
+            $("input[name='nueva']").focus();
+			return;
+        }
+        if ($.trim($("input[name='nueva']").val()).length<8) {
+            notificacion('La nueva contraseña debe contener minímo 8 caracteres.', "error", 200, "bottomRight", "fadeInUp", "fadeOutDown");
+            $("input[name='nueva']").focus();
+			return;
+        }
+        if ($.trim($("input[name='nueva']").val())!= $.trim($("input[name='copianueva']").val())) {
+            notificacion('La confirmación no coincide con la nueva contraseña.', "error", 200, "bottomRight", "fadeInUp", "fadeOutDown");
+            $("input[name='copianueva']").focus();
+			return;
+        }
+
+        var params = {
+            anterior:$.trim($("input[name='anterior']").val()),
+            nueva:$.trim($("input[name='nueva']").val()),
+            copianueva:$.trim($("input[name='copianueva']").val())
+        };
+
+        //$util.load.show(true);
+        $util.post({
+            url: "Usuario",
+            metodo:"cambiarPassword",
+            datos:params,
+            funcion: function(data){
+                //$util.load.hide();
+                if (data.Solicitud) {
+                    $('#jq_nuevo_pass').modal('hide');
+                }            
+            }
+        });
+    };
 
     modulo.clickGuardarPerfil = function(e) {
         e.preventDefault();
@@ -270,6 +349,7 @@ var $uPerfil = (modulo => {
 $(function() {    
     $('#id-municipio').select2();
 
+    $('.jq_cambiar_passw').off('click').on('click', $uPerfil.clickCambiarPassword);
     $("input[name='telefono']").mask('99 99 99 99');
     $('.jq_agregar_email').off('click').on('click', $uPerfil.clickAgregarCorreo);
     $('#id-correo').off('keyup').on('keyup', $uPerfil.capturandoCorreo);
@@ -281,5 +361,14 @@ $(function() {
     $('#id-estado').off('change').on('change', $uPerfil.seleccionarEstado);
 
     $('.jq_guardar_info').off('click').on('click', $uPerfil.clickGuardarPerfil);
-    $('#id-estado').trigger('change');
+
+    if ($('#id-municipio option').length==0) {
+        $('#id-estado').trigger('change');
+    }
+
+    $('.jq_tabla_correos tbody tr .jq_eliminar_email').off('click').on('click', $uPerfil.clickEliminarFilaCorreo);
+    $('.jq_tabla_telefonos tbody tr .jq_eliminar_tel').off('click').on('click', $uPerfil.clickEliminarFilaTelefono);
+
+    $uPerfil.ini();
+
 });

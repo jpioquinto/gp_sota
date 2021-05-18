@@ -13,6 +13,6 @@ class TelefonoModel extends Model
 
     protected $returnType     = 'array';
 
-    protected $allowedFields = ['tipo', 'lada', 'telefono', 'extension', 'contacto_id'];
+    protected $allowedFields = ['tipo', 'lada', 'telefono', 'extension', 'contacto_id', 'estatus'];
     
 }

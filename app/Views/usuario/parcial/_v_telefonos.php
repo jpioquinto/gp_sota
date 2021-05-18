@@ -9,13 +9,14 @@
         </tr>
     </thead>
     <tbody>
+        <?=isset($listadoTels) ? $listadoTels : ''?>
     </tbody>
     <tfoot>
         <tr>
             <td colspan="2">
                 <div class="form-group form-floating-label">
                     <select class="form-control input-solid" id="id-tipo-telefono" required>                                                        
-                        <?=isset($listadoTels) ? $listadoTels : ''?>
+                        <?=isset($listadoTipoTels) ? $listadoTipoTels : ''?>
                     </select>
                     <label for="id-tipo-telefono" class="placeholder">Tipo de tel&eacute;fono</label>
                 </div>

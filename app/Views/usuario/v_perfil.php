@@ -32,7 +32,7 @@
                                         </span>
                                         Cargar foto de perfil
                                     </button>
-                                    <button class="btn btn-default btn-sm mt-1">
+                                    <button class="btn btn-default btn-sm mt-1 jq_cambiar_passw">
                                         <span class="btn-label">
                                             <i class="fa fa-unlock"></i>
                                         </span>
@@ -47,19 +47,19 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="id-nombre">Nombre</label>
-                                        <input id="id-nombre" name="nombre" type="text" class="form-control input-solid" required>
+                                        <input id="id-nombre" name="nombre" type="text" class="form-control input-solid" value="<?=isset($nombre) ? $nombre : ''?>" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="id-appaterno">Apellido Paterno</label>
-                                        <input id="id-appaterno" name="ap_paterno" type="text" class="form-control input-solid" required>
+                                        <input id="id-appaterno" name="ap_paterno" type="text" class="form-control input-solid" value="<?=isset($ap_paterno) ? $ap_paterno : ''?>" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="id-apmaterno">Apellido Materno</label>
-                                        <input id="id-apmaterno" name="ap_materno" type="text" class="form-control input-solid" required>
+                                        <input id="id-apmaterno" name="ap_materno" type="text" class="form-control input-solid" value="<?=isset($ap_materno) ? $ap_materno : ''?>" required>
                                     </div>
                                 </div>
 
@@ -95,7 +95,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="form-group">                                
-                                        <input id="id-cargo" name="cargo" type="text" class="form-control input-solid" required>
+                                        <input id="id-cargo" name="cargo" type="text" class="form-control input-solid" value="<?=isset($cargo) ? $cargo : ''?>" required>
                                     </div>
                                 </div>
 
@@ -120,6 +120,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class='content-modal'>
     </div>
 </div>
 <script src="js/library/select2.min.js"></script>

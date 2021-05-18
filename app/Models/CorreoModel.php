@@ -13,6 +13,6 @@ class CorreoModel extends Model
 
     protected $returnType     = 'array';
 
-    protected $allowedFields = ['tipo', 'email', 'contacto_id'];
+    protected $allowedFields = ['tipo', 'email', 'contacto_id', 'estatus'];
     
 }
