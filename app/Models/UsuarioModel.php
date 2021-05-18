@@ -12,5 +12,7 @@ class UsuarioModel extends Model
     protected $useAutoIncrement = true;
 
     protected $returnType     = 'array';
+
+    protected $allowedFields = ['password'];
     
 }

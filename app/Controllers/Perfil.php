@@ -4,7 +4,7 @@ namespace App\Controllers;
 use App\Models\MunicipioModel;
 use App\Models\{ContactoModel, TelefonoModel, CorreoModel};
 use  App\Libraries\Usuario\Perfil as CPerfil;
-use  App\Libraries\Usuario;
+use  App\Libraries\{Usuario, Archivo};
 
 class Perfil extends BaseController
 {   
@@ -13,6 +13,49 @@ class Perfil extends BaseController
     {
         @session_start();   
         $this->usuario = new Usuario();              
+    }
+
+    public function cargarFoto()
+    {
+        $foto = $this->request->getFile('foto');
+        #var_dump($foto->getSize());return;        
+        if (!in_array($foto->getMimeType(), ['image/png', 'image/jpeg', 'image/jp2'])) {
+            echo json_encode([
+                'Solicitud' =>false,
+                'Error'=>'El el formato del archivo que intenta cargar no esta permitido.',
+            ]);	
+            return;
+        }
+
+        $archivo = new Archivo(0.48828125);
+
+        if ($archivo->sizePermitido()<$foto->getSize()) {
+			echo json_encode([
+							'Solicitud' =>false,
+							'Error'=>'El Tamaño del archivo supera lo permitido por el sistema.',
+				]);	
+			return;
+		}
+        
+        $foto->move(
+            WRITEPATH.'uploads/perfiles/', "usuario_". $this->usuario->getId() . '.' . $archivo->obtenExtension($foto->getName())
+        );
+        if (!$foto->hasMoved()) {
+            echo json_encode([
+                'Solicitud' =>false,'Error'=>'Error al cargar la imagen.',
+            ]);	
+            return;
+        }
+        $contactoModel = new ContactoModel();
+		$info = $contactoModel->find($this->usuario->getId());
+
+        if (isset($info['id'])) {
+            $contactoModel->update($info['id'], ['foto'=>'uploads/perfiles/'."usuario_". $this->usuario->getId() . '.' . $archivo->obtenExtension($foto->getName())]);
+        }
+        
+        echo json_encode([
+            'Solicitud' =>true,'Msg'=>'Foto de perfil cargada correctamente.','url'=>'uploads/perfiles/'."usuario_". $this->usuario->getId() . '.' . $archivo->obtenExtension($foto->getName())
+        ]);	
     }
 
     public function obtenerCorreoYTelefono()

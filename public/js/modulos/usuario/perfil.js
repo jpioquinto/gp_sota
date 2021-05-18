@@ -21,6 +21,11 @@ var $uPerfil = (modulo => {
         });
     };
 
+    modulo.clickCargarFoto = function(e) {
+        e.preventDefault();
+        $('.uploadFile').trigger('click');
+    };
+
     modulo.clickCambiarPassword = function(e) {
         e.preventDefault();
         //$util.load.show(true);
@@ -37,6 +42,50 @@ var $uPerfil = (modulo => {
                 }            
             }
         });
+    };
+
+    modulo.subirFoto = function(e) {
+        var me = $(this);
+        /* 500 KMB */
+        var mb = 0.48828125;
+        var limit   = 1048576 * mb;
+        var cargado = false;
+        var error   = "";
+        var datos = new FormData();
+        datos.append("foto",this.files[0]);        
+        //datos.append(tkn,v);
+        if (limit<this.files[0].size) {          
+            notificacion("El tamaño del archivo supera lo permitido ( 500 kB )", "error", 5000, "bottomRight");
+            return false;          
+        }
+        //objUtil.load.show(true); 
+        $.ajax({
+            url:'Perfil/cargarFoto',
+            type:"POST",
+            data:datos,
+            mimeType:"multipart/form-data",
+            contentType: false,
+            cache: false,
+            processData:false,
+            dataType: "json",
+            success:function(data){
+              if (data.Solicitud) {
+                cargado = true;  
+                $('.jq_foto_perfil').attr("src", data.url + "?id=" + $util.hash());
+                //$('.user-image img').attr("src", "./assets/v2/img/perfil/" + data.File + "?id=" + generatePassword());              
+                notificacion(data.Msg, "success", 4000, "bottomRight", "fadeInUp", "fadeOutDown"); 
+              }
+
+              if (!data.Solicitud) {
+                error = data.Error;
+              }                        
+            }
+        }).always(function(){
+            //objUtil.load.hide();
+            if (!cargado) {            
+                notificacion(error, "error", 4000, "bottomRight", "fadeInUp", "fadeOutDown"); 
+            }          
+        });  
     };
 
     modulo.cambiarPassword = function(e) {
@@ -350,6 +399,8 @@ $(function() {
     $('#id-municipio').select2();
 
     $('.jq_cambiar_passw').off('click').on('click', $uPerfil.clickCambiarPassword);
+    $('.jq_cargar_foto').off('click').on('click', $uPerfil.clickCargarFoto);
+    $('.uploadFile').off('change').on('change', $uPerfil.subirFoto);
     $("input[name='telefono']").mask('99 99 99 99');
     $('.jq_agregar_email').off('click').on('click', $uPerfil.clickAgregarCorreo);
     $('#id-correo').off('keyup').on('keyup', $uPerfil.capturandoCorreo);

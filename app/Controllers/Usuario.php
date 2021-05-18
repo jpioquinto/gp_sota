@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use  App\Libraries\Usuario as CUsuario;
+use App\Models\UsuarioModel;
 
 class Usuario extends BaseController
 {   
@@ -23,9 +24,17 @@ class Usuario extends BaseController
         if ($this->usuario->getId()<1) {
             echo json_encode(['Solicitud'=>false, 'Error'=>'Error al intentar obtener el usuario.']);return;
         }
-        $actual = md5($this->usuario->getAttribute('password'));
-        if (encriptarPassword($this->request->getPost('anterior')) != $actual) {
+        if (trim($this->request->getPost('nueva'))!=trim($this->request->getPost('copianueva'))) {
+            echo json_encode(['Solicitud'=>false, 'Error'=>'La nueva contraseña y su confirmación no coinciden.']);return;
+        }        
+        if (encriptarPassword($this->request->getPost('anterior')) != $this->usuario->getAttribute('password')) {
             echo json_encode(['Solicitud'=>false, 'Error'=>'La contraseña es incorrecta.']);return;
         }
+
+        $userModel = new UsuarioModel();        
+        if($userModel->update($this->usuario->getId(), ['password'=>encriptarPassword( trim($this->request->getPost('nueva')) )])===FALSE) {
+            echo json_encode(['Solicitud'=>false, 'Error'=>'Error al cambiar la contraseña.']);return;
+        }
+        echo json_encode(['Solicitud'=>true, 'Msg'=>'La contraseña ha sido cambiada correctamente.']); 
     }
 }

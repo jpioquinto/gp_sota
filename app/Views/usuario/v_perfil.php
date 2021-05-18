@@ -24,9 +24,9 @@
                         </div>
                         <div class="col-md-2">                          
                             <div class="text-center">                  
-                                <img src="images/perfiles/default.png" alt="Foto de perfil" class="img-thumbnail">
+                                <img src="images/perfiles/default.png" alt="Foto de perfil" class="img-thumbnail jq_foto_perfil">
                                 <span>
-                                    <button class="btn btn-primary btn-sm">
+                                    <button class="btn btn-primary btn-sm jq_cargar_foto">
                                         <span class="btn-label">
                                             <i class="fa fa-image"></i>
                                         </span>
@@ -38,6 +38,7 @@
                                         </span>
                                         Cambiar contraseña
                                     </button>
+                                    <input type="file" accept=".jpg,.png" class="form-control invisible uploadFile" name="foto" value="" />
                                 </span>
                             </div>
                         </div>
