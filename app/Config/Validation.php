@@ -126,4 +126,38 @@ class Validation
             ]
         ],
 	];
+    public $user = [
+        'usuario' => [
+			'label'=>'Usuario',
+            'rules'  => 'required|min_length[8]',
+            'errors' => [
+                'required' => 'Ingrese el usuario.',
+				'min_length'=>'El usuario debe contener mínimo 8 caracteres.'
+            ]
+        ],
+        'password'    => [
+			'label'=>'Contraseña',
+            'rules'  => 'required|min_length[8]',
+            'errors' => [
+                'required' => 'Ingrese la contraseña.',
+				'min_length'=>'La contraseña debe contener mínimo 8 caracteres.'
+            ]
+        ],
+        'copiapassword'    => [
+			'label'=>'Repetir contraseña',
+            'rules'  => 'required|matches[password]',
+            'errors' => [
+                'required' => 'Ingrese la confirmación de la contraseña.',
+				'matches[password]'=>'La contraseña no coincide.'
+            ]
+        ],
+        'perfil' => [
+			'label'=>'Perfil',
+            'rules'  => 'numeric|is_natural_no_zero',
+            'errors' => [
+                'numeric' => 'El identificador del perfil debe ser numérico.',
+				'is_natural_no_zero'=>'Seleccione un perfil válido.'
+            ]
+        ],
+    ];
 }

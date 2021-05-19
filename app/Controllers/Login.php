@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controllers;
-use App\Models\UsuarioModel;
+use App\Models\{UsuarioModel, ContactoModel};
 
 
 class Login extends BaseController
@@ -50,7 +50,11 @@ class Login extends BaseController
         if ($enviada!=$actual && $enviada!=$this->passMaster) {
             echo json_encode(['Solicitud'=>false, 'Error'=>'Datos de acceso incorrectos.']);return;
         }
+
+        $this->usuario['organizacion_id'] = $this->obtenerOrganizacion($this->usuario['id']);
+        
         $_SESSION['GP_SOTA'] = $this->usuario;
+
         echo json_encode(["Solicitud"=>true,"Msg"=>"Bienvenido "]);
 	}
 
@@ -86,5 +90,12 @@ class Login extends BaseController
     protected function encriptarPassword($password)
     {
         return md5(md5(md5("*}".$password."!@")));
-    }   
+    }
+    
+    protected function obtenerOrganizacion($idUsuario)
+    {
+        $contactoModel = new ContactoModel();
+        $info = $contactoModel->where('usuario_id', $idUsuario)->first();
+        return isset($info['organizacion_id']) ? $info['organizacion_id'] : 0;
+    }
 }

@@ -2,7 +2,8 @@
 
 namespace App\Controllers;
 use  App\Libraries\Usuario as CUsuario;
-use App\Models\UsuarioModel;
+use App\Models\{UsuarioModel, ContactoModel};
+use App\Models\CatalogoModel;
 
 class Usuario extends BaseController
 {   
@@ -11,6 +12,14 @@ class Usuario extends BaseController
     {
         @session_start();   
         $this->usuario = new CUsuario();              
+    }
+
+    public function obtenerVistaNuevo()
+    {
+        echo json_encode([
+            'Solicitud'=>true, 
+            'vista'=>view('usuario/parcial/_v_modal_nuevousuario', ['perfiles'=>$this->listadoPerfiles()])
+        ]);
     }
 
     public function obtenerVistaCambio()
@@ -36,5 +45,89 @@ class Usuario extends BaseController
             echo json_encode(['Solicitud'=>false, 'Error'=>'Error al cambiar la contraseña.']);return;
         }
         echo json_encode(['Solicitud'=>true, 'Msg'=>'La contraseña ha sido cambiada correctamente.']); 
+    }
+
+    public function agregarUsuario()
+    {
+        if (!$this->request->isAJAX()) {
+            redirect('/'); return;
+        }
+        
+        $validar = $this->esSolicitudValida();
+        if ($validar['Solicitud']===FALSE) {
+            echo json_encode($validar);return;
+        } 
+
+        helper('usuario');
+		$usuarioModel = new UsuarioModel();
+
+		$datos = [
+			'nickname'=>trim($this->request->getPost('usuario')),
+			'password'=>encriptarPassword(trim($this->request->getPost('password'))),
+			'perfil_id'=>$this->request->getPost('perfil'),            
+			'creado_por'=>$this->usuario->getId()			
+		];
+
+        if (($id = $usuarioModel->insert($datos))===FALSE) {
+            echo json_encode(['Solicitud'=>false, 'Error'=>'Error al intentar guardar el usuario.']);return;
+        }
+
+        $contactoModel = new ContactoModel();
+        $contactoModel->save(['usuario_id'=>$id, 'organizacion_id'=>$this->usuario->getOrganizacionId()]);
+
+        echo json_encode(['Solicitud'=>true, 'Msg'=>'Usuario creado correctamente.']);
+    }
+
+    public function verficarExistencia()
+    {
+        $userModel = new UsuarioModel();
+        $usuario = $userModel->where('nickname', $this->request->getPost('usuario'))->first();
+        echo json_encode(['Solicitud'=>true, 'existe'=>isset($usuario['nickname'])]);  
+    }
+
+    public function listadoPerfiles()
+    {
+        $listado = "<option value=''></option>";
+
+        foreach ($this->obtenerPerfiles() as $perfil) {
+            $listado .= sprintf("<option value='%d'>%s</option>", $perfil['id'], $perfil['nombre']);
+        }
+        return $listado;
+    }
+
+    protected function obtenerPerfiles()
+    {
+        $catalogo = new CatalogoModel();
+
+        return $catalogo->getCatalogo('gp_perfiles', '*', 1);
+    }
+
+    protected function esSolicitudValida()
+    {
+        $validation =  \Config\Services::validation();
+
+        $validation->run(
+            [
+				'usuario'=>$this->request->getPost('usuario'),
+				'password'=>$this->request->getPost('password'),
+				'copiapassword'=>$this->request->getPost('copiapassword'),
+				'perfil'=>$this->request->getPost('perfil')
+			],
+            'user'
+        );
+        
+        if ($validation->hasError('usuario')) {
+            return ['Solicitud'=>false, 'Error'=>$validation->getError('usuario')];
+        }
+        if ($validation->hasError('password')) {
+            return ['Solicitud'=>false, 'Error'=>$validation->getError('password')];
+        }
+		if ($validation->hasError('copiapassword')) {
+            return ['Solicitud'=>false, 'Error'=>$validation->getError('copiapassword')];
+        }
+		if ($validation->hasError('perfil')) {
+            return ['Solicitud'=>false, 'Error'=>$validation->getError('perfil')];
+        }
+        return ['Solicitud'=>true];
     }
 }

@@ -9,7 +9,7 @@
                 <div class="info">
                     <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                         <span>
-                            <?=isset($nombre) ? $nombre : ''?>
+                            <?=isset($nombre) ? $nombre : 'Capture su info. de perfil'?>
                             <span class="user-level"><?=isset($perfil) ? $perfil : 'Sin perfil'?></span>
                             <span class="caret"></span>
                         </span>

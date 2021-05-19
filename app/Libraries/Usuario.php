@@ -25,5 +25,13 @@ class Usuario extends Modelo
 		}
 		return 0;
 	}
+
+	public function getOrganizacionId()
+	{
+		if ($this->getAttribute('organizacion_id') && is_numeric($this->getAttribute('organizacion_id'))) {
+			return $this->getAttribute('organizacion_id');
+		}
+		return 0;
+	}
 	
 }

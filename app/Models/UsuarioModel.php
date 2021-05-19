@@ -13,6 +13,9 @@ class UsuarioModel extends Model
 
     protected $returnType     = 'array';
 
-    protected $allowedFields = ['password'];
+    protected $allowedFields = [
+        'nickname', 'password', 'perfil_id', 'ultimo_acceso', 'creado_por',
+        'estatus', 'archivo_cer', 'archivo_cer', 'pass_key'
+    ];
     
 }
