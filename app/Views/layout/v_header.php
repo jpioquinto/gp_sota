@@ -225,29 +225,30 @@
                 <li class="nav-item dropdown hidden-caret">
                     <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                         <div class="avatar-sm">
-                            <img src="images/perfiles/profile.jpg" alt="..." class="avatar-img rounded-circle">
+                            <img src="<?=(isset($foto) && $foto!='') ? $foto : 'images/perfiles/default.png'?>" alt="..." class="avatar-img rounded-circle">
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-user animated fadeIn">
                         <div class="dropdown-user-scroll scrollbar-outer">
                             <li>
                                 <div class="user-box">
-                                    <div class="avatar-lg"><img src="images/perfiles/profile.jpg" alt="image profile" class="avatar-img rounded"></div>
+                                    <div class="avatar-lg"><img src="<?=(isset($foto) && $foto!='') ? $foto : 'images/perfiles/default.png'?>" alt="foto de perfil" class="avatar-img rounded"></div>
                                     <div class="u-text">
-                                        <h4>Hizrian</h4>
-                                        <p class="text-muted">hello@example.com</p><a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                                        <h4><?=isset($nombre) ? $nombre : ''?></h4>
+                                        <p class="text-muted"><?=isset($email) ? $email : 'Sin dirección de correo'?></p>
+                                        <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">Ver perfil</a>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <div class="dropdown-divider"></div>
+                                <!--div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">My Profile</a>
                                 <a class="dropdown-item" href="#">My Balance</a>
                                 <a class="dropdown-item" href="#">Inbox</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Account Setting</a>
+                                <a class="dropdown-item" href="#">Account Setting</a-->
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Logout</a>
+                                <a class="dropdown-item" href="javascript:;">Cerrar sesión</a>
                             </li>
                         </div>
                     </ul>

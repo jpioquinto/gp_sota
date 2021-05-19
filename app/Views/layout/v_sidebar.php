@@ -4,13 +4,13 @@
         <div class="sidebar-content">
             <div class="user">
                 <div class="avatar-sm float-left mr-2">
-                    <img src="images/perfiles/profile.jpg" alt="..." class="avatar-img rounded-circle">
+                    <img src="<?=(isset($foto) && $foto!='') ? $foto : 'images/perfiles/default.png'?>" alt="..." class="avatar-img rounded-circle">
                 </div>
                 <div class="info">
                     <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                         <span>
-                            Hizrian
-                            <span class="user-level">Administrator</span>
+                            <?=isset($nombre) ? $nombre : ''?>
+                            <span class="user-level"><?=isset($perfil) ? $perfil : 'Sin perfil'?></span>
                             <span class="caret"></span>
                         </span>
                     </a>
@@ -20,17 +20,7 @@
                         <ul class="nav">
                             <li>
                                 <a href="#profile">
-                                    <span class="link-collapse">My Profile</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#edit">
-                                    <span class="link-collapse">Edit Profile</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#settings">
-                                    <span class="link-collapse">Settings</span>
+                                    <span class="link-collapse">Ver Perfil</span>
                                 </a>
                             </li>
                         </ul>

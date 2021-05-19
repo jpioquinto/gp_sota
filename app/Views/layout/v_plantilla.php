@@ -37,7 +37,7 @@
 
         <div class="main-panel">
 			<div class="content">
-			<?=isset($v_perfil) ? $v_perfil : ''?>
+			<?=isset($v_usuarios) ? $v_usuarios : ''?>
             
             </div>
         </div>

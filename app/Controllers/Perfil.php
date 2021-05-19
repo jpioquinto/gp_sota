@@ -38,7 +38,7 @@ class Perfil extends BaseController
 		}
         
         $foto->move(
-            WRITEPATH.'uploads/perfiles/', "usuario_". $this->usuario->getId() . '.' . $archivo->obtenExtension($foto->getName())
+            '../public/images/perfiles/', "usuario_". $this->usuario->getId() . '.' . $archivo->obtenExtension($foto->getName())
         );
         if (!$foto->hasMoved()) {
             echo json_encode([
@@ -50,11 +50,11 @@ class Perfil extends BaseController
 		$info = $contactoModel->find($this->usuario->getId());
 
         if (isset($info['id'])) {
-            $contactoModel->update($info['id'], ['foto'=>'uploads/perfiles/'."usuario_". $this->usuario->getId() . '.' . $archivo->obtenExtension($foto->getName())]);
+            $contactoModel->update($info['id'], ['foto'=>'images/perfiles/'."usuario_". $this->usuario->getId() . '.' . $archivo->obtenExtension($foto->getName())]);
         }
         
         echo json_encode([
-            'Solicitud' =>true,'Msg'=>'Foto de perfil cargada correctamente.','url'=>'uploads/perfiles/'."usuario_". $this->usuario->getId() . '.' . $archivo->obtenExtension($foto->getName())
+            'Solicitud' =>true,'Msg'=>'Foto de perfil cargada correctamente.','url'=>'images/perfiles/'."usuario_". $this->usuario->getId() . '.' . $archivo->obtenExtension($foto->getName())
         ]);	
     }
 

@@ -17,5 +17,13 @@ class Usuario extends Modelo
 		}
 		return 0;
 	}
+
+	public function getPerfilId()
+	{
+		if ($this->getAttribute('perfil_id') && is_numeric($this->getAttribute('perfil_id'))) {
+			return $this->getAttribute('perfil_id');
+		}
+		return 0;
+	}
 	
 }
