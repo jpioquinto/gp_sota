@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controllers;
-use App\Models\{UsuarioModel, ContactoModel};
+use App\Models\{UsuarioModel, UsuarioQuery, ContactoModel, AccionModel};
 
 
 class Login extends BaseController
@@ -97,5 +97,30 @@ class Login extends BaseController
         $contactoModel = new ContactoModel();
         $info = $contactoModel->where('usuario_id', $idUsuario)->first();
         return isset($info['organizacion_id']) ? $info['organizacion_id'] : 0;
+    }
+
+    protected function obtenerPermisos($perfilId)
+    {
+        $usuarioQuery = new UsuarioQuery();
+        $permisos = $usuarioQuery->obtenerPermisosModulos($perfilId);
+    }
+
+    protected function procesarPermisos($permisos)
+    {
+        $catalogoModel = new AccionModel();        
+        foreach ($permisos as $index=>$value) {
+            if (is_null($value['acciones']) || empty($value['acciones'])) {
+                continue;
+            }
+
+            $acciones = $catalogoModel->find(explode(',', $value['acciones']));
+            
+            if (count($acciones)==0) {
+                continue;
+            }
+
+            $permisos[$index]['acciones'] = $acciones;
+        }
+        return $permisos;
     }
 }
