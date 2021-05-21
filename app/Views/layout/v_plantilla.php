@@ -37,7 +37,7 @@
 
         <div class="main-panel">
 			<div class="content">
-			<?=isset($v_usuarios) ? $v_usuarios : ''?>
+			<?=isset($v_perfil) ? $v_perfil : ''?>
             
             </div>
         </div>
@@ -81,5 +81,7 @@
 
 	<!-- Atlantis JS -->
 	<script src="js/atlantis.min.js"></script>
+
+	<script src="js/main.js"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controllers;
-use App\Models\{UsuarioModel, UsuarioQuery, ContactoModel, AccionModel};
+use App\Models\{UsuarioModel, UsuarioQuery, ContactoModel, AccionModel, ModuloModel};
 
 
 class Login extends BaseController
@@ -54,6 +54,7 @@ class Login extends BaseController
         $this->usuario['organizacion_id'] = $this->obtenerOrganizacion($this->usuario['id']);
         
         $_SESSION['GP_SOTA'] = $this->usuario;
+        $_SESSION['GP_SOTA']['permisos'] = $this->obtenerPermisos($this->usuario['perfil_id']);
 
         echo json_encode(["Solicitud"=>true,"Msg"=>"Bienvenido "]);
 	}
@@ -102,7 +103,7 @@ class Login extends BaseController
     protected function obtenerPermisos($perfilId)
     {
         $usuarioQuery = new UsuarioQuery();
-        $permisos = $usuarioQuery->obtenerPermisosModulos($perfilId);
+        return $this->procesarPermisos( $this->obtenerModulosPadre($usuarioQuery->obtenerPermisosModulos($perfilId)) );
     }
 
     protected function procesarPermisos($permisos)
@@ -110,17 +111,33 @@ class Login extends BaseController
         $catalogoModel = new AccionModel();        
         foreach ($permisos as $index=>$value) {
             if (is_null($value['acciones']) || empty($value['acciones'])) {
+                $permisos[$index]['acciones'] = [];
                 continue;
             }
 
             $acciones = $catalogoModel->find(explode(',', $value['acciones']));
-            
-            if (count($acciones)==0) {
-                continue;
-            }
 
-            $permisos[$index]['acciones'] = $acciones;
+            $permisos[$index]['acciones'] = is_array($acciones) ? $acciones : [];
         }
         return $permisos;
     }
+
+    protected function obtenerModulosPadre($modulos)
+    {
+        $moduloModel = new ModuloModel();		
+        $listado = [];        
+        foreach ($modulos as $value) {
+            if ($value['nodo_padre']>0 && $this->existeRegistro($modulos, $value['nodo_padre'])===FALSE) {
+                $modPadre = $moduloModel->find($value['nodo_padre']);
+                isset($modPadre['id']) ? $listado[] = $modPadre : '';                
+            }
+            $listado[] = $value;
+        }
+        return $listado;
+    }
+
+    protected function existeRegistro($datos, $id, $columna='id')
+	{
+		return array_search($id, array_column($datos, $columna));
+	}
 }

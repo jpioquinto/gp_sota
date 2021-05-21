@@ -36,7 +36,7 @@ class UsuarioQuery
         
         $tablas = "gp_permisos p LEFT JOIN gp_modulos m ON(m.id=p.modulo_id AND p.estatus=1) ";
 
-        $query   = $this->db->query("SELECT {$campos} FROM {$tablas} WHERE m.estatus=1 AND m.perfil_id={$perfilId} ORDER BY m.nodo_padre ASC, m.orden ASC");
+        $query   = $this->db->query("SELECT {$campos} FROM {$tablas} WHERE m.estatus=1 AND p.perfil_id={$perfilId} ORDER BY m.nodo_padre ASC, m.orden ASC");
         
         $this->db->close();
 
