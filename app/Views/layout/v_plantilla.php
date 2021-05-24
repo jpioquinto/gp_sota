@@ -36,9 +36,8 @@
         <?=isset($v_sidebar) ? $v_sidebar : ''?>
 
         <div class="main-panel">
-			<div class="content">
-			<?=isset($v_perfil) ? $v_perfil : ''?>
-            
+			<div class="content gp-content">
+				<?=isset($v_perfil) ? $v_perfil : ''?>            
             </div>
         </div>
 		<?= csrf_field() ?>

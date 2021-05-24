@@ -35,7 +35,7 @@
                 </div>
                 <div class="card-body">                   
                     <div class="table-responsive">
-                        <table id="add-row" class="display table table-striped table-hover" >
+                        <table id="jq_listado_users" class="display table table-striped table-hover" >
                             <thead>
                                 <tr>
                                     <th rowspan="2">Entidad</th>
@@ -44,7 +44,7 @@
                                     <th rowspan="2">Estatus</th>
                                     <th colspan="2" class="text-center">Fechas</th>
                                     <th rowspan="2">Creador</th>
-                                    <th rowspan="2" style="width: 10%"></th>
+                                    <th rowspan="2" style="width: 10%">Acciones</th>
                                 </tr>
                                 <tr>
                                     <th class="text-center">Registro</th>
@@ -52,7 +52,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <!--tr>
                                     <td>Ciudad de México</td>
                                     <td>jesus.pioquinto</td>
                                     <td>Super Adminstrador</td>
@@ -61,7 +61,8 @@
                                     <td>2021-05-19 12:36:23</td>
                                     <td>Principal</td>
                                     <td></td>
-                                </tr>
+                                </tr-->
+                                <?=isset($listado) ? $listado : ''?>
                             </tbody>
                         </table>
                     </div>

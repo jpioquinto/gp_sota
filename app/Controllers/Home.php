@@ -26,13 +26,14 @@ class Home extends BaseController
 		}
 		
 		$perfil = new Perfil();	
+		#$path = explode('\\', __CLASS__);    
+		#echo '<pre>'.array_pop($path);
 		#echo '<pre>';print_r($this->usuario->permisos);exit;
 		return view(
 			'layout/v_plantilla', 
 			[
 				'v_header'=>view('layout/v_header', $usuario=$this->obtenerInfoUsuario()??[]), 
-				'v_sidebar'=>view('layout/v_sidebar', array_merge($usuario, ['menu'=>$this->generarMenu()])),
-				#'v_usuarios'=>view('usuario/v_listado') 
+				'v_sidebar'=>view('layout/v_sidebar', array_merge($usuario, ['menu'=>$this->generarMenu()])),				
 				'v_perfil'=>$perfil->obtenerVistaPerfil()
 			]
 		);		

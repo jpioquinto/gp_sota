@@ -1,9 +1,12 @@
 <?php 
 namespace App\Libraries;
 use  App\Libraries\Modelo;
+use  App\Traits\PermisoTrait;
 
 class Usuario extends Modelo
 {	
+	use PermisoTrait;
+
 	public function __construct()
 	{
 		parent::__construct(isset($_SESSION['GP_SOTA']) ? $_SESSION['GP_SOTA'] : []);

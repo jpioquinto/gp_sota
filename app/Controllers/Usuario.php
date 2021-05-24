@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use  App\Libraries\Usuario as CUsuario;
+use  App\Libraries\Usuario\GestionUsuario;
 use App\Models\{UsuarioModel, ContactoModel};
 use App\Models\CatalogoModel;
 
@@ -12,6 +13,18 @@ class Usuario extends BaseController
     {
         @session_start();   
         $this->usuario = new CUsuario();              
+    }
+
+    public function index()
+    {
+        if (!isset($_SESSION['GP_SOTA']) || empty($_SESSION['GP_SOTA'])) {			
+			return redirect()->to('/'); 
+		}
+		$gestoUser = new GestionUsuario(get_class($this));
+		echo json_encode([
+            'Solicitud'=>true, 
+            'vista'=>view('usuario/v_listado', ['listado'=>$gestoUser->obtenerListado()])
+            ]);
     }
 
     public function obtenerVistaNuevo()

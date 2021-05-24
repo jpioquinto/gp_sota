@@ -20,7 +20,9 @@ var $usuario = (modulo=>{
 })($usuario || {}); 
 
 $(function() {
-
+    $('#jq_listado_users').DataTable({
+        "pageLength": 50,
+    });
 
     $('.jq_nuevo_usuario').off('click').on('click', $usuario.clickAgregar);
 });
