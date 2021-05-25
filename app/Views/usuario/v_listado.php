@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="css/plugins/select2.min.css" />
+<link rel="stylesheet" href="css/modulos/usuario/listado.css"/>
 <div class="page-inner">
     <div class="page-header">
         <h4 class="page-title">Gestión de Usuarios</h4>
@@ -35,7 +37,7 @@
                 </div>
                 <div class="card-body">                   
                     <div class="table-responsive">
-                        <table id="jq_listado_users" class="display table table-striped table-hover" >
+                        <table id="jq_listado_users" class="display table table-striped table-hover tabla-listado-usuarios" >
                             <thead>
                                 <tr>
                                     <th rowspan="2">Entidad</th>
@@ -74,4 +76,5 @@
         </div>
     </div>
 </div>
+<script src="js/library/select2.min.js"></script>
 <script src="js/modulos/usuario/usuario.js"></script>

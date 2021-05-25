@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Controllers;
-use  App\Libraries\Usuario as CUsuario;
-use  App\Libraries\Usuario\GestionUsuario;
 use App\Models\{UsuarioModel, ContactoModel};
+use  App\Libraries\Usuario\GestionUsuario;
+use  App\Libraries\Usuario as CUsuario;
+use  App\Libraries\Entidad\Dependencia;
 use App\Models\CatalogoModel;
 
 class Usuario extends BaseController
@@ -55,6 +56,25 @@ class Usuario extends BaseController
         ]);
     }
 
+    public function obtenerVistaCambiarOrganizacion()
+    {
+        $usuario = $this->obtenerUsuario( $id=$this->encrypter->decrypt(base64_decode($this->request->getPost('id'))) );
+        $dependencias = new Dependencia();
+        $contactoModel = new ContactoModel();
+        $contacto = $contactoModel->find($id);
+        
+        echo json_encode([
+            'Solicitud'=>true, 
+            'vista'=>view('usuario/parcial/_v_modal_cambiar_organizacion',
+                    [                    
+                        'usuario'=>$usuario['nickname']??''
+                    ]
+                ),
+            'organizacion'=>$contacto['organizacion_id']??null,
+            'opciones'=>$dependencias->obtenerListado() 
+        ]);
+    }
+
     public function cambiarPerfil()
     {
         $userModel = new UsuarioModel();
@@ -102,6 +122,21 @@ class Usuario extends BaseController
             echo json_encode(['Solicitud'=>false, 'Error'=>'Error al cambiar la contraseña.']);return;
         }
         echo json_encode(['Solicitud'=>true, 'Msg'=>'La contraseña ha sido cambiada correctamente.']); 
+    }
+
+    public function cambiarDependencia()
+    {                
+        $contactoModel = new ContactoModel();
+        $update = $contactoModel->update(
+            $this->encrypter->decrypt(base64_decode($this->request->getPost('id'))),
+            ['organizacion_id'=>$this->request->getPost('dependencia')]
+        );
+
+        if ($update===FALSE) {
+            echo json_encode(['Solicitud'=>false, 'Error'=>'Error al intentar cambiar la dependencia.']);return;
+        }
+        echo json_encode(['Solicitud'=>true, 'Msg'=>'Dependencia cambiada correctamente.']); 
+
     }
 
     public function agregarUsuario()
