@@ -35,9 +35,9 @@ class GestionUsuario
             base64_encode($this->encrypter->encrypt($usuario['id'])), $usuario['estado'], $usuario['nickname'], $usuario['perfil']
             );
         return $fila .= sprintf(
-            "<td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",
-            $this->descripcionEstatus($usuario['estatus']), $usuario['creado_el'], $usuario['ultimo_acceso'], $usuario['creador'],
-            $this->obtenerAcciones($usuario['estatus'])
+            "<td data-estatus='%d'>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>",
+            $usuario['estatus'], $this->descripcionEstatus($usuario['estatus']), $usuario['creado_el'], $usuario['ultimo_acceso'],
+            $usuario['creador'], $this->obtenerAcciones($usuario['estatus'])
             );
     }
     

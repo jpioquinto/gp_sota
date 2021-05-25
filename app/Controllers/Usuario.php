@@ -8,11 +8,14 @@ use App\Models\CatalogoModel;
 
 class Usuario extends BaseController
 {   
-    protected $usuario;     
+    protected $usuario; 
+    protected $encrypter;
+
     public function __construct()
     {
         @session_start();   
-        $this->usuario = new CUsuario();              
+        $this->usuario = new CUsuario();  
+        $this->encrypter = \Config\Services::encrypter();              
     }
 
     public function index()
@@ -38,6 +41,47 @@ class Usuario extends BaseController
     public function obtenerVistaCambio()
     {
         echo json_encode(['Solicitud'=>true, 'vista'=>view('usuario/v_cambiar_password')]);
+    }
+
+    public function obtenerVistaCambiarPerfil()
+    {              
+        $usuario = $this->obtenerUsuario( $this->encrypter->decrypt(base64_decode($this->request->getPost('id'))) );
+
+        echo json_encode([
+            'Solicitud'=>true, 
+            'vista'=>view('usuario/parcial/_v_modal_cambiar_perfil',
+                ['perfiles'=>$this->listadoPerfiles($usuario['perfil_id']??null), 'usuario'=>$usuario['nickname']??'']
+             )
+        ]);
+    }
+
+    public function cambiarPerfil()
+    {
+        $userModel = new UsuarioModel();
+        $update = $userModel->update( 
+            $this->encrypter->decrypt(base64_decode($this->request->getPost('id'))), ['perfil_id'=>$this->request->getPost('perfil')] 
+        ); 
+
+        if ($update===FALSE) {
+            echo json_encode(['Solicitud'=>false, 'Error'=>'Error al intentar cambiar el perfil.']);return;
+        }
+        echo json_encode(['Solicitud'=>true, 'Msg'=>'Perfil cambiado correctamente.']); 
+    }
+
+    public function cambiarEstatus()
+    {
+        $userModel = new UsuarioModel();
+        $estatus = $this->request->getPost('estatus')==1 ? 2 : 1;
+
+        $update = $userModel->update( 
+            $this->encrypter->decrypt(base64_decode($this->request->getPost('id'))), 
+            ['estatus'=>$estatus] 
+        ); 
+
+        if ($update===FALSE) {
+            echo json_encode(['Solicitud'=>false, 'Error'=>'Error al intentar '.($estatus==1?'activar':'desactivar').' el usuario.']);return;
+        }
+        echo json_encode(['Solicitud'=>true, 'Msg'=>'Usuario '.($estatus==1?'activado':'desactivado').' correctamente.', 'estatus'=>$estatus]); 
     }
 
     public function cambiarPassword()
@@ -98,14 +142,21 @@ class Usuario extends BaseController
         echo json_encode(['Solicitud'=>true, 'existe'=>isset($usuario['nickname'])]);  
     }
 
-    public function listadoPerfiles()
+    public function listadoPerfiles($perfilId=null)
     {
         $listado = "<option value=''></option>";
 
         foreach ($this->obtenerPerfiles() as $perfil) {
-            $listado .= sprintf("<option value='%d'>%s</option>", $perfil['id'], $perfil['nombre']);
+            $selected = $perfilId==$perfil['id'] ? 'selected' : '';
+            $listado .= sprintf("<option value='%d' %s>%s</option>", $perfil['id'], $selected, $perfil['nombre']);
         }
         return $listado;
+    }
+
+    public function obtenerUsuario($id)
+    {
+        $userModel = new UsuarioModel();
+        return $userModel->find($id);
     }
 
     protected function obtenerPerfiles()
