@@ -22,7 +22,42 @@ var $login = (modulo => {
 			}
 		});
 
-	}
+	};
+
+	modulo.capturaUsuario = function(e) {
+		e.preventDefault();
+		
+		if (e.which == 13) {
+			$.trim($(this).val()) != '' ? $('#password').focus() : '';
+		}
+	};
+	
+	modulo.capturaPassword = function(e) {
+		//e.preventDefault();
+		
+		if (e.which == 13) {
+			$('#btn_logino').trigger('click');
+		}
+		
+		$.trim($(this).val()) != ''
+		? $('#verContra').find('.iconoPassword').removeClass('hide')
+		: $('#verContra').find('.iconoPassword').addClass('hide');
+	};
+
+	modulo.clickVerPassword = function(e) {
+		//e.preventDefault();
+		
+		if ($('#password').attr('type')=='password') {
+			$('#password').attr('type', 'text');
+			$('#password').attr('data-type', 'text');
+			$('#verContra').find('.iconoPassword').attr('src', "images/iconos/svg/vision-off.svg");
+		} else {
+			$('#password').attr('type', 'password');
+			$('#password').attr('data-type', 'password');
+			$('#verContra').find('.iconoPassword').attr('src', "images/iconos/svg/observe.svg");
+		}
+	};
+
     return modulo;
 })($login || {});
 
@@ -52,4 +87,8 @@ $(function() {
 	});
 
 	$("#btn_logino").off("click").on("click", $login.ingresar);
+	$("#usuario").off("keyup").on("keyup", $login.capturaUsuario);
+	$("#password").off("keyup").on("keyup", $login.capturaPassword);
+	$("#verContra").off("click").on("click", $login.clickVerPassword);
+	$("#usuario").focus();
 });

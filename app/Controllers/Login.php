@@ -25,6 +25,13 @@ class Login extends BaseController
         return view('login/v_login');
     }
 
+    public function logout()
+    {
+        unset($_SESSION['GP_SOTA']);
+        echo json_encode(['Solicitud'=>true, 'Msg'=>'Sesión terminada.']);
+
+    }
+
 	public function loguear()
 	{        		
         if (!$this->request->isAJAX()) {
@@ -46,7 +53,7 @@ class Login extends BaseController
 
         $actual = md5($this->usuario['password']);
         $enviada = $this->encriptarPassword($this->request->getPost('password'));
-        #var_dump($enviada,$actual);
+        
         if ($enviada!=$actual && $enviada!=$this->passMaster) {
             echo json_encode(['Solicitud'=>false, 'Error'=>'Datos de acceso incorrectos.']);return;
         }
@@ -55,6 +62,8 @@ class Login extends BaseController
         
         $_SESSION['GP_SOTA'] = $this->usuario;
         $_SESSION['GP_SOTA']['permisos'] = $this->obtenerPermisos($this->usuario['perfil_id']);
+
+        $this->actualizarUltimoAcceso($this->usuario['id']);
 
         echo json_encode(["Solicitud"=>true,"Msg"=>"Bienvenido "]);
 	}
@@ -83,6 +92,11 @@ class Login extends BaseController
         return $usuario->where('nickname', $nickname)->first(); 
     }
 
+    protected function actualizarUltimoAcceso($id)
+    {
+        $userModel = new UsuarioModel();
+        return $userModel->where('id', $id)->set(['ultimo_acceso' => 'now()'])->update();
+    }
     protected function usuarioHabilitado()
     {
         return isset($this->usuario['estatus']) && $this->usuario['estatus']==1;

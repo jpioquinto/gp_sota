@@ -15,6 +15,12 @@ class Perfil extends BaseController
         $this->usuario = new Usuario();              
     }
 
+    public function index()
+    {
+        $perfil = new CPerfil();	
+        echo json_encode(['Solicitud'=>true, 'vista'=>$perfil->obtenerVistaPerfil()]);
+    }
+
     public function cargarFoto()
     {
         $foto = $this->request->getFile('foto');

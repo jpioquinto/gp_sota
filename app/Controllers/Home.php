@@ -24,6 +24,10 @@ class Home extends BaseController
 		if (!isset($_SESSION['GP_SOTA']) || empty($_SESSION['GP_SOTA'])) {			
 			return redirect()->to('/'); 
 		}
+
+		if ($this->request->isAJAX()) {
+            echo json_encode(['Solicitud'=>true, 'vista'=>view('inicio/v_inicio')]); return;
+        }
 		
 		$perfil = new Perfil();	
 		#$path = explode('\\', __CLASS__);    
@@ -33,8 +37,9 @@ class Home extends BaseController
 			'layout/v_plantilla', 
 			[
 				'v_header'=>view('layout/v_header', $usuario=$this->obtenerInfoUsuario()??[]), 
-				'v_sidebar'=>view('layout/v_sidebar', array_merge($usuario, ['menu'=>$this->generarMenu()])),				
-				'v_perfil'=>$perfil->obtenerVistaPerfil()
+				'v_sidebar'=>view('layout/v_sidebar', array_merge($usuario, ['menu'=>$this->generarMenu()])),
+				'v_inicio'=>view('inicio/v_inicio')				
+				#'v_perfil'=>$perfil->obtenerVistaPerfil()
 			]
 		);		
 	}

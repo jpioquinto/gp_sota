@@ -37,7 +37,7 @@
 
         <div class="main-panel">
 			<div class="content gp-content">
-				<?=isset($v_perfil) ? $v_perfil : ''?>            
+				<?=isset($v_inicio) ? $v_inicio : ''?>            
             </div>
         </div>
 		<?= csrf_field() ?>

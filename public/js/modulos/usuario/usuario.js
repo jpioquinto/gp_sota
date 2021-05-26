@@ -92,14 +92,14 @@ var $usuario = (modulo=>{
         //$util.load.show(true);
         $util.post({
             url: "Usuario",
-            metodo:"obtenerVistaCambiarPassword",
+            metodo:"obtenerVistaCambio",
             datos:$params,
             funcion: function(data){
                 //$util.load.hide();
                 if (data.Solicitud) {
-                    $('.content-modal').html(data.vista);                                       
-                    $dependencia.ini(data.opciones, data.organizacion, $params.id);
-                    $('#jq_modal_nuevaorg').modal('show');                 
+                    $('.content-modal').html(data.vista);                                                           
+                    $('#jq_nuevo_pass').modal('show'); 
+                    $uPass.ini($params.id);                
                 }            
             }
         });

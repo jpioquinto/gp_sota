@@ -41,7 +41,11 @@ class Usuario extends BaseController
 
     public function obtenerVistaCambio()
     {
-        echo json_encode(['Solicitud'=>true, 'vista'=>view('usuario/v_cambiar_password')]);
+        $usuario = null;
+        if ($this->request->getPost('id')) {
+            $usuario = $this->obtenerUsuario( $this->encrypter->decrypt(base64_decode($this->request->getPost('id'))) );
+        }
+        echo json_encode(['Solicitud'=>true, 'vista'=>view('usuario/v_cambiar_password', ['usuario'=>$usuario])]);
     }
 
     public function obtenerVistaCambiarPerfil()
@@ -119,6 +123,25 @@ class Usuario extends BaseController
 
         $userModel = new UsuarioModel();        
         if($userModel->update($this->usuario->getId(), ['password'=>encriptarPassword( trim($this->request->getPost('nueva')) )])===FALSE) {
+            echo json_encode(['Solicitud'=>false, 'Error'=>'Error al cambiar la contraseña.']);return;
+        }
+        echo json_encode(['Solicitud'=>true, 'Msg'=>'La contraseña ha sido cambiada correctamente.']); 
+    }
+
+    public function cambiarPasswordDirecto()
+    {
+        helper('usuario');
+
+        if (trim($this->request->getPost('nueva'))!=trim($this->request->getPost('copianueva'))) {
+            echo json_encode(['Solicitud'=>false, 'Error'=>'La nueva contraseña y su confirmación no coinciden.']);return;
+        }
+        
+        if (strlen(trim($this->request->getPost('nueva')))<8) {
+            echo json_encode(['Solicitud'=>false, 'Error'=>'La nueva contraseña debe contener mínimo 8 caracteres.']);return;
+        }
+
+        $userModel = new UsuarioModel();        
+        if($userModel->update($this->encrypter->decrypt(base64_decode($this->request->getPost('id'))), ['password'=>encriptarPassword( trim($this->request->getPost('nueva')) )])===FALSE) {
             echo json_encode(['Solicitud'=>false, 'Error'=>'Error al cambiar la contraseña.']);return;
         }
         echo json_encode(['Solicitud'=>true, 'Msg'=>'La contraseña ha sido cambiada correctamente.']); 

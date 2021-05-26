@@ -236,7 +236,7 @@
                                     <div class="u-text">
                                         <h4><?=isset($nombre) ? $nombre : ''?></h4>
                                         <p class="text-muted"><?=isset($email) ? $email : 'Sin dirección de correo'?></p>
-                                        <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">Ver perfil</a>
+                                        <a href="" onClick="return false;" class="btn btn-xs btn-secondary btn-sm jq_ver_perfil">Ver perfil</a>
                                     </div>
                                 </div>
                             </li>
@@ -248,7 +248,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Account Setting</a-->
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="javascript:;">Cerrar sesión</a>
+                                <a class="dropdown-item jq_cerrar_sesion" href="javascript:;">Cerrar sesión</a>
                             </li>
                         </div>
                     </ul>
