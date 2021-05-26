@@ -33,6 +33,31 @@ var $gPerfil = (modulo=> {
 
     modulo.clickEditarPerfil = function(e) {
         e.preventDefault();
+        if ($(this).parents('tr').attr('data-id').length==0) {
+            return;
+        }
+        $el = $(this);
+        var $params = {
+            id:$el.parents('tr').attr('data-id')
+        };
+        //$util.load.show(true);
+        $util.post({
+            url: "PerfilUsuario",
+            metodo:"obtenerVistaFormPerfil",
+            datos:$params,
+            funcion: function(data){
+                //$util.load.hide();
+                if (data.Solicitud) {
+                    $('.content-listado-perfiles').hide('animate__backOutLeft');
+
+                    $('.content-modal').html('');
+                    $('.content-modal').html(data.vista);
+                    $('.content-modal').removeClass('d-none animate__backOutRight').addClass('animate__backInRight');
+
+                    $('.jq_regresar_perfiles').off('click').on('click', modulo.clickRegresar);
+                }            
+            }
+        });
     };
 
     modulo.cambiarEstatus = estatus => {
@@ -73,6 +98,14 @@ var $gPerfil = (modulo=> {
         $('.jq_switch_estatus').off('click').on('click', modulo.clickCambiarEstatus);
     };
 
+    modulo.clickRegresar = function(e) {
+        e.preventDefault();
+
+        $('.content-listado-perfiles').show('animate__backInLeft');                                        
+        $('.content-modal').removeClass('animate__backInRight').addClass('animate__backOutRight');
+        $('.content-modal').html('');
+    }
+
     return modulo;
 })($gPerfil || {});
 
@@ -82,7 +115,7 @@ $(function() {
     });
 
     $('[data-toggle="tooltip"]').tooltip();
-    //$('.jq_nuevo_usuario').off('click').on('click', $usuario.clickAgregar);
+    //$('.jq_nuevo_usuario').off('click').on('click', $usuario.clickAgregar);    
 
     $gPerfil.eventoAcciones();
 });

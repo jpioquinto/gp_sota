@@ -23,7 +23,7 @@
             </li>
         </ul>
     </div>                
-    <div class="row">
+    <div class="row content-listado-perfiles">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
@@ -54,11 +54,11 @@
                         </table>
                     </div>
                 </div>
-
-                <div class="content-modal"></div>
-
             </div>
         </div>
+    </div>
+    <div class="content-modal d-none animated">
+        <!-- Aquí el contenido de la vista para editar o crear un perfil de usuario -->
     </div>
 </div>
 <script src="js/library/select2.min.js"></script>

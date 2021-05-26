@@ -3,6 +3,7 @@
 namespace App\Controllers;
 use  App\Libraries\Perfil\GestionPerfil;
 use  App\Libraries\{Usuario};
+use App\Models\CatalogoModel;
 use App\Models\PerfilModel;
 
 class PerfilUsuario extends BaseController
@@ -26,6 +27,20 @@ class PerfilUsuario extends BaseController
         ]);
     }
 
+    public function obtenerVistaFormPerfil()
+    {
+        $perfil = $this->obtenerPerfil($this->encrypter->decrypt(base64_decode($this->request->getPost('id'))));
+        echo json_encode([
+            'Solicitud'=>true, 
+            'vista'=>view('perfil/v_form_perfil', 
+                [
+                    'perfiles'=>$this->listadoPerfiles($perfil['id']??null),
+                    'v_acciones'=> view('perfil/parcial/_v_acciones'),
+                    'perfil'=>$perfil??null
+                ])
+        ]);
+    }
+
     public function cambiarEstatus()
     {
         $perfilModel = new PerfilModel();
@@ -41,5 +56,29 @@ class PerfilUsuario extends BaseController
         }
         echo json_encode(['Solicitud'=>true, 'Msg'=>'Perfil '.($estatus==1?'activado':'desactivado').' correctamente.', 'estatus'=>$estatus]); 
 
+    }
+
+    public function listadoPerfiles($perfilId=null)
+    {
+        $listado = "<option value=''></option>";
+
+        foreach ($this->obtenerPerfiles() as $perfil) {
+            $selected = $perfilId==$perfil['id'] ? 'disabled' : '';
+            $listado .= sprintf("<option value='%d' %s>%s</option>", $perfil['id'], $selected, $perfil['nombre']);
+        }
+        return $listado;
+    }
+
+    protected function obtenerPerfiles()
+    {
+        $catalogo = new CatalogoModel();
+
+        return $catalogo->getCatalogo('gp_perfiles', '*', 1);
+    }
+
+    protected function obtenerPerfil($id)
+    {
+        $perfilModel = new PerfilModel();
+        return $perfilModel->find($id);
     }
 }
