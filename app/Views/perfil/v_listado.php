@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="css/plugins/select2.min.css" />
-<!--link rel="stylesheet" href="css/modulos/usuario/listado.css"/-->
+<link rel="stylesheet" href="css/modulos/perfil/listado.css"/>
 <div class="page-inner">
     <div class="page-header">
         <h4 class="page-title">Gestión de Perfiles</h4>
@@ -42,10 +42,9 @@
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Descripción</th>
-                                    <th>Estatus</th>
-                                    <th>Estatus</th>
-                                    <th colspan="2" class="text-center">Fecha creación</th>
-                                    <th>Creador</th>
+                                    <th>Estatus</th>                                    
+                                    <th class="text-center">Fecha de creación</th>
+                                    <th>Creado por</th>
                                     <th style="width: 10%">Acciones</th>
                                 </tr>
                             </thead>

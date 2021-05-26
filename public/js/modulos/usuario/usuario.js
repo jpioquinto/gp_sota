@@ -184,7 +184,7 @@ var $usuario = (modulo=>{
         });
     };
 
-    modulo.eventoAcciones = function() {
+    modulo.eventoAcciones = () => {
         $('.jq_cambiar_perfil').off('click').on('click', modulo.clickCambiarPerfil);
         $('.jq_switch_estatus').off('click').on('click', modulo.clickCambiarEstatus);
         $('.jq_cambiar_org').off('click').on('click', modulo.clickCambiarOrganizacion);

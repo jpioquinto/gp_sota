@@ -1,10 +1,13 @@
 <?php 
 namespace App\Libraries\Usuario;
 use App\Models\{UsuarioQuery};
+use App\Traits\AccionesTrait;
 use  App\Libraries\Usuario;
 
 class GestionUsuario
 {	
+    use AccionesTrait;
+
 	protected $usuario;	
     protected $encrypter;
     protected $controlador;
@@ -56,30 +59,32 @@ class GestionUsuario
         return '<span class="badge badge-warning">Inactivo</span>';
     }
 
-    protected function obtenerAcciones($estatus)
+    protected function obtenerAccionesModulo($estatus)
     {
-        $acciones = '<div class="form-button-action">';
-        $acciones.= $this->obtenerAccion(2, $estatus);
+        $acciones = $this->obtenerAccion(2, $estatus);
         $acciones.= $this->obtenerAccion(5, $estatus);
         $acciones.= $this->obtenerAccion(6, $estatus);
-        $acciones.= $this->obtenerAccion(7, $estatus);
-        return $acciones.= '</div>';
+        return $acciones.= $this->obtenerAccion(7, $estatus);
     }
 
-    protected function obtenerAccion($accion, $estatus)
+    protected function obtenerVistaAcciones()
     {
-        $botones = [2=>'_v_btn_editar', 5=>'_v_btn_habilita', 6=>'_v_btn_cambiar_organizacion', 7=>'_v_btn_cambiar_pass'];
-        if (!isset( $botones[$accion] )) {
-            return '';
-        }
-        $datos = [];
+        return [2=>'_v_btn_editar', 5=>'_v_btn_habilita', 6=>'_v_btn_cambiar_organizacion', 7=>'_v_btn_cambiar_pass'];
+    }
+
+    protected function infoAccion($accion, $estatus)
+    {
         if ($accion==5) {
-            $datos = [
+            return [
                 'mensaje'=>$estatus==1 ? 'Inhabilitar usuario' : 'Habilitar usuario',
                 'clase'=>$estatus==1 ? 'minus-circle' : 'check-circle'
             ];
-
         }
-        return $this->usuario->tienePermiso($this->controlador, $accion)!==FALSE ? view('usuario/parcial/'.$botones[$accion], $datos) : '';
+        return [];
+    }
+
+    protected function vistaRelativaAcciones()
+    {
+        return 'usuario/parcial/';
     }
 }
