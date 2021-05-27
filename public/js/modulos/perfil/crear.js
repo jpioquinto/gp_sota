@@ -14,7 +14,9 @@ var $formPerfil = (modulo=>{
                     
                     $('#jq_arbol_modulos').jstree({ 'core' : {
                         'data' : data.arbol
-                    } });
+                        },
+                        "plugins" : [ "checkbox" ]
+                    });
                 }            
             }
         });

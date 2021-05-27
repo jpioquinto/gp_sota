@@ -63,7 +63,7 @@ class PerfilUsuario extends BaseController
         $perfil = new GestionPerfil(get_class($this));
         echo json_encode([
             'Solicitud'=>true, 
-            'arbol'=>$perfil->generarArbol()
+            'arbol'=>$perfil->obtenerArbolPermiso($this->encrypter->decrypt(base64_decode($this->request->getPost('id'))))
         ]); 
     }
 
