@@ -55,6 +55,8 @@ var $gPerfil = (modulo=> {
                     $('.content-modal').removeClass('d-none animate__backOutRight').addClass('animate__backInRight');
 
                     $('.jq_regresar_perfiles').off('click').on('click', modulo.clickRegresar);
+
+                    $formPerfil.ini($params.id);
                 }            
             }
         });

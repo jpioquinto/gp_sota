@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="js/plugin/jstree/themes/default/style.min.css" />
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -43,9 +44,18 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <span class="h5">
+                                <i class="fa flaticon-lock-1"></i> Permisos a Módulos
+                            </span><hr />
+                            <div id="jq_arbol_modulos"></div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<script src="js/plugin/jstree/jstree.min.js"></script>
 <script src="js/modulos/perfil/crear.js"></script>

@@ -58,6 +58,15 @@ class PerfilUsuario extends BaseController
 
     }
 
+    public function obtenerModulos()
+    {
+        $perfil = new GestionPerfil(get_class($this));
+        echo json_encode([
+            'Solicitud'=>true, 
+            'arbol'=>$perfil->generarArbol()
+        ]); 
+    }
+
     public function listadoPerfiles($perfilId=null)
     {
         $listado = "<option value=''></option>";
