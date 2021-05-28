@@ -22,7 +22,7 @@ class GestionPerfil
 
     public function obtenerArbolPermiso($perfilId)
     {   
-        $arbol = new ArbolPermiso();
+        $arbol = new ArbolPermiso($perfilId);
 
         return $arbol->generarArbol();
     }

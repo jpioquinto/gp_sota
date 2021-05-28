@@ -160,4 +160,30 @@ class Validation
             ]
         ],
     ];
+    public $profile_user = [
+        'nombre' => [
+			'label'=>'Nombre',
+            'rules'  => 'required|min_length[5]',
+            'errors' => [
+                'required' => 'El campo Nombre es requerido.',
+				'min_length'=>'Ingrese un Nombre válido.'
+            ]
+        ],
+        'descripcion'    => [
+			'label'=>'Descripción',
+            'rules'  => 'required|min_length[8]',
+            'errors' => [
+                'required' => 'El campo Descripción es requerida.',
+				'min_length'=>'Ingrese una Descripción válida.'
+            ]
+        ],
+        'padre'    => [
+			'label'=>'Perfil padre',
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required' => 'El campo Perfil padre es requerido.',
+                'numeric' => 'El identificador del Perfil padre debe ser numérico.',
+            ]
+        ],
+    ];
 }

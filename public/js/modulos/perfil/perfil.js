@@ -52,10 +52,7 @@ var $gPerfil = (modulo=> {
 
                     $('.content-modal').html('');
                     $('.content-modal').html(data.vista);
-                    $('.content-modal').removeClass('d-none animate__backOutRight').addClass('animate__backInRight');
-
-                    $('.jq_regresar_perfiles').off('click').on('click', modulo.clickRegresar);
-
+                    $('.content-modal').removeClass('d-none animate__backOutRight').addClass('animate__backInRight');                    
                     $formPerfil.ini($params.id);
                 }            
             }
@@ -99,14 +96,6 @@ var $gPerfil = (modulo=> {
         $('.jq_editar_perfil').off('click').on('click', modulo.clickEditarPerfil);
         $('.jq_switch_estatus').off('click').on('click', modulo.clickCambiarEstatus);
     };
-
-    modulo.clickRegresar = function(e) {
-        e.preventDefault();
-
-        $('.content-listado-perfiles').show('animate__backInLeft');                                        
-        $('.content-modal').removeClass('animate__backInRight').addClass('animate__backOutRight');
-        $('.content-modal').html('');
-    }
 
     return modulo;
 })($gPerfil || {});

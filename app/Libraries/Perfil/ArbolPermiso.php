@@ -5,16 +5,16 @@ use App\Models\ModuloModel;
 
 class ArbolPermiso
 {	
+    protected $permisoPerfil;
     protected $accionModulo;
     protected $pilaModulos;
-    protected $permisos;
     protected $modulos;   
 
     public function __construct($perfilId=0)
     {
-        $this->accionModulo = new AccionModulo();
+        $this->permisoPerfil = new PermisoPerfil($perfilId);
+        $this->accionModulo = new AccionModulo();        
         $this->pilaModulos = []; 
-        $this->permisos = [];
         $this->modulos = [];
     }
 
@@ -41,7 +41,16 @@ class ArbolPermiso
     {
         $this->agregarApila($modulo['id']);
 
-        $itemModulo = $this->generarElemento($modulo);
+        $acciones = $this->agregarAcciones($modulo);
+
+        $itemModulo = $this->generarElemento(
+            $modulo, $modulo['nodo_padre'], 
+            ($this->esModuloPadre($modulo['id'])===FALSE && count($acciones)==0 && $this->permisoPerfil->tienePermisoModulo($modulo['id']))
+        );
+
+        if (count($acciones)>0) {
+            $itemModulo = array_merge($itemModulo, ['children' => $acciones]);
+        }
 
         if ($this->esModuloPadre($modulo['id'])===FALSE) {
             return [$itemModulo];
@@ -59,28 +68,40 @@ class ArbolPermiso
 			}
 
             $this->agregarApila($modulo['id']);
-            $modulosHijos[] = array_merge($this->generarElemento($modulo, $idPadre), ['children' => $this->agregarAcciones($modulo)]);
+
+            $acciones = $this->agregarAcciones($modulo);
+            $modulosHijos[] = array_merge(
+                $this->generarElemento($modulo, $idPadre, (count($acciones)==0 && $this->permisoPerfil->tienePermisoModulo($modulo['id']))), 
+                ['children' => $acciones]
+            );
         }
 
         return $modulosHijos;
     }
 
-    protected function generarElemento($elemento, $idPadre='#', $iconDefault='fa icon-screen-desktop')
+    protected function generarElemento($elemento, $idPadre='#', $selected=false, $iconDefault='fa icon-screen-desktop')
     {
-        return [
-            'id'=>$idPadre.'-'.$elemento['id'], 
-            #'parent'=>$idPadre, 
+        $elemento= [
+            'id'=>$idPadre.'-'.$elemento['id'],             
             'text'=>$elemento['nombre'], 
             'icon'=>!empty($elemento['icono']) ? $elemento['icono'] : $iconDefault,
-            'selected'=>true
+            'data'=>['elemento_id'=>$elemento['id'],'padre_id'=>$idPadre]
+            
         ];
+
+        if ($selected) {
+            $elemento['state'] = ['selected' => true];
+        }
+        return $elemento;
     }
 
     protected function agregarAcciones($modulo)
     {   
         $acciones = [];
         foreach ($this->listadoAcciones($modulo['acciones']) as $accion) {            
-            $acciones[] = $this->generarElemento($accion, $modulo['id']);            
+            $acciones[] = $this->generarElemento(
+                $accion, $modulo['id'], $this->permisoPerfil->tienePermiso($modulo['id'], $accion['id'])
+            );            
         }
         
         return $acciones;

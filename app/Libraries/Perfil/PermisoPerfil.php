@@ -10,27 +10,43 @@ class PermisoPerfil
     function __construct($perfilId=-1)
     {
         $this->perfilId = $perfilId;
-        $this->permisos = $this->obtenerPermisos($perfilId);
+        $this->permisos = $this->obtenerPermisos();
     }
 
-    public function obtenerPermisos($perfilId = 0)
+    public function getPerfilId()
+    {
+        return $this->perfilId;
+    }
+
+    public function obtenerPermisos()
     {
         $permisos = [];
         foreach ($this->listarPermisos() as $permiso) {
+            if (!isset($permiso['id'])) {
+                continue;
+            }
             $permisos[$permiso['modulo_id']]['permisos'] = explode(',', $permiso['acciones']);
-
         }
         return $permisos;
     }
 
-    public function listarPermisos($perfilId)
+    public function listarPermisos()
     {
         $permisoModel = new PermisoModel();
-        return $permisoModel->find($perfilId);
+        return $permisoModel->where(['perfil_id' => $this->getPerfilId(), 'estatus' => 1])->findAll() ?? [];
     }
 
-    public function tienePermiso($accion)
+    public function tienePermiso($moduloId, $accionId)
     {
-        return array_search($accion, array_column($this->permisos, 'id'));
+        if ( !isset($this->permisos[$moduloId]['permisos']) ) {
+            return false;
+        }
+        #return array_search($moduloId, array_column($this->permisos, 'id'))!==FALSE;
+        return in_array($accionId, $this->permisos[$moduloId]['permisos']);
+    }
+
+    public function tienePermisoModulo($moduloId)
+    {
+        return isset($this->permisos[$moduloId]['permisos']);
     }
 }

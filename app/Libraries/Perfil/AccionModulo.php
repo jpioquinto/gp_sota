@@ -9,20 +9,12 @@ class AccionModulo
     protected $permisos;
     protected $usuario;
 
-    public function __construct()
+    public function __construct($perfilId=0)
     {
+        $this->permisos = new PermisoPerfil($perfilId);
         $this->usuario = new Usuario(); 
         $this->acciones = [];
-        $this->permisos = [];
         
-    }
-
-    public function obtenerPermisos()
-    {
-        $permisos = [];
-        foreach ($this->usuario->permisos as $permiso) {
-
-        }
     }
 
     public function obtenerAcciones($id)

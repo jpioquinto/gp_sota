@@ -12,5 +12,9 @@ class PermisoModel extends Model
     protected $useAutoIncrement = true;
 
     protected $returnType     = 'array';
+
+    protected $allowedFields = [
+        'perfil_id', 'modulo_id', 'estatus', 'usuario_id', 'acciones'
+    ];
     
 }
