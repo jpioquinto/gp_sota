@@ -1,13 +1,17 @@
 <?php
 
 namespace App\Controllers;
+
+use App\Models\{PerfilModel, PermisoModel};
 use  App\Libraries\Perfil\GestionPerfil;
 use  App\Libraries\{Usuario};
 use App\Models\CatalogoModel;
-use App\Models\{PerfilModel, PermisoModel};
+use App\Traits\InfoVistaTrait;
 
 class PerfilUsuario extends BaseController
 {   
+    use InfoVistaTrait;
+
     protected $encrypter;
     protected $usuario;   
 
@@ -23,20 +27,29 @@ class PerfilUsuario extends BaseController
         $perfil = new GestionPerfil(get_class($this));	
         echo json_encode([
             'Solicitud'=>true, 
-            'vista'=>view('perfil/v_listado', ['listado'=>$perfil->obtenerListado()])
+            'vista'=>view(
+                'perfil/v_listado', 
+                [
+                    'listado'=>$perfil->obtenerListado(), 
+                    'permisos'=>$this->usuario->obtenerPermisosModulo(get_class($this)),
+                    'breadcrumbs'=>$this->generarBreadCrumbs(get_class($this)),
+                    'modulo'=>$this->nombreModulo(get_class($this))
+                ]
+            )
         ]);
     }
 
     public function obtenerVistaFormPerfil()
     {
-        $perfil = $this->obtenerPerfil($this->encrypter->decrypt(base64_decode($this->request->getPost('id'))));
+        $perfil = $this->request->getPost('id')
+                ? $this->obtenerPerfil($this->encrypter->decrypt(base64_decode($this->request->getPost('id')))) : null;
         echo json_encode([
             'Solicitud'=>true, 
             'vista'=>view('perfil/v_form_perfil', 
                 [
                     'perfiles'=>$this->listadoPerfiles($perfil['id']??null),
                     'v_acciones'=> view('perfil/parcial/_v_acciones'),
-                    'perfil'=>$perfil??null
+                    'perfil'=>$perfil
                 ])
         ]);
     }
@@ -60,10 +73,14 @@ class PerfilUsuario extends BaseController
 
     public function obtenerModulos()
     {
+        $perfilId = $this->request->getPost('id') 
+        ? $this->encrypter->decrypt(base64_decode($this->request->getPost('id'))) : 0;
+
         $perfil = new GestionPerfil(get_class($this));
+
         echo json_encode([
             'Solicitud'=>true, 
-            'arbol'=>$perfil->obtenerArbolPermiso($this->encrypter->decrypt(base64_decode($this->request->getPost('id'))))
+            'arbol'=>$perfil->obtenerArbolPermiso($perfilId)
         ]); 
     }
 
@@ -77,9 +94,7 @@ class PerfilUsuario extends BaseController
         if ($validar['Solicitud']===FALSE) {
             echo json_encode($validar);return;
         } 
-
-        $perfilModel = new PerfilModel();
-
+        
         $datos = [
 			'nombre'=>trim($this->request->getPost('nombre')),
 			'descripcion'=>trim($this->request->getPost('descripcion'))	
@@ -88,7 +103,7 @@ class PerfilUsuario extends BaseController
         if (!$this->request->getPost('id')) {
             $datos['creado_por'] = $this->usuario->getId();
         }
-        #echo '<pre>';print_r($this->request->getPost('permisos'));exit;
+        #echo '<pre>';print_r($datos);exit;
         $id = $this->insertaAcualizaPerfil($datos, $this->request->getPost('id'));
 
         if (!$this->agregarPermisos($id, $this->request->getPost('permisos'))) {
@@ -127,7 +142,7 @@ class PerfilUsuario extends BaseController
     protected function insertaAcualizaPerfil($datos, $id=null)
     {
         $perfilModel = new PerfilModel();
-        if (!$id) {
+        if (!$id) {#var_dump($perfilModel->insert($datos));exit;
             return $perfilModel->insert($datos); 
         }
  

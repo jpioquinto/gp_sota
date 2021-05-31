@@ -1,9 +1,11 @@
 var $formPerfil = (modulo=>{
     var perfiId;
     var permisos = {};
+    var btnAccion;
 
-    modulo.ini = id => {
+    modulo.ini = (id, accion) => {
         perfiId = id;
+        btnAccion = accion;
         //$util.load.show(true);
         $util.post({
             url: "PerfilUsuario",
@@ -53,7 +55,7 @@ var $formPerfil = (modulo=>{
             notificacion('Debe agregar permisos para el perfil.', "error", 200, "bottomRight", "fadeInUp", "fadeOutDown");            
 			return;
 		}
-        permisos = procesarPermisos($('#jq_arbol_modulos').jstree().get_json());console.log(permisos);
+        permisos = procesarPermisos($('#jq_arbol_modulos').jstree().get_json());
 
         if (Object.keys(permisos).length==0) {
             notificacion('Ocurrió un error al obtener los permisos.', "error", 200, "bottomRight", "fadeInUp", "fadeOutDown");            
@@ -77,7 +79,15 @@ var $formPerfil = (modulo=>{
             funcion: function(data){
                 //$util.load.hide();
                 if (data.Solicitud) { 
-                    setTimeout(function() { $('.jq_regresar_perfiles').trigger('click'); },2750);                                       
+                    setTimeout(function() { 
+                        $('.jq_regresar_perfiles').trigger('click');
+                        if (!perfiId) {
+                            $('.jq_sidebar li .active:last').find('a').trigger('click');
+                        } else {
+                            btnAccion.parents('tr').find("td[data-descripcion]").html($params.descripcion);
+                            btnAccion.parents('tr').find("td[data-nombre]").html($params.nombre);
+                        }
+                     },2500);                                       
                 }            
             }
         });

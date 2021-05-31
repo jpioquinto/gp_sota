@@ -33,7 +33,7 @@ class UsuarioQuery
 
     public function obtenerPermisosModulos($perfilId)
     {        
-        $campos = "m.id, m.nombre, m.controlador, m.icono, m.clase, m.orden, m.nodo_padre, p.acciones";
+        $campos = "m.id, m.nombre, m.controlador, m.icono, m.clase, m.orden, m.nodo_padre, m.descripcion, p.acciones";
         
         $tablas = "gp_permisos p LEFT JOIN gp_modulos m ON(m.id=p.modulo_id AND p.estatus=1) ";
 

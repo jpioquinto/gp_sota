@@ -16,8 +16,32 @@ trait PermisoTrait
             }
             $tienePermiso = array_search($accion, array_column($permiso['acciones'], 'id'));
         }
-        return $tienePermiso;
-        
+        return $tienePermiso;        
+    }
+
+    public function obtenerPermisosModulo($controlador)
+    {
+        helper('util');
+        $permisos = [];
+        foreach ($this->permisos as $permiso) {
+            if (getNameClass($controlador)!==$permiso['controlador']) {
+                continue;
+            }
+            if (!is_array($permiso['acciones'])) {
+                continue;
+            }    
+            $permisos = $this->procesarAcciones($permiso['acciones']);        
+        }
+        return $permisos;
+    }
+
+    public function procesarAcciones($acciones)
+    {
+        $listado = [];
+        foreach ($acciones as $accion) {
+            $listado[$accion['id']] = $accion;
+        }
+        return $listado;
     }
 
 }

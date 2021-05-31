@@ -2,14 +2,14 @@
 <link rel="stylesheet" href="css/modulos/perfil/listado.css"/>
 <div class="page-inner">
     <div class="page-header">
-        <h4 class="page-title">Gestión de Perfiles</h4>
+        <h4 class="page-title"><?=isset($modulo) ? $modulo : ''?></h4>
         <ul class="breadcrumbs">
             <li class="nav-home">
-                <a href="#">
+                <a href="" onClick="return false;">
                     <i class="flaticon-home"></i>
                 </a>
             </li>
-            <li class="separator">
+            <!--li class="separator">
                 <i class="flaticon-right-arrow"></i>
             </li>
             <li class="nav-item">
@@ -20,7 +20,8 @@
             </li>
             <li class="nav-item">
                 <a href="javascript:;">Perfil</a>
-            </li>
+            </li-->
+            <?=isset($breadcrumbs) ? $breadcrumbs : ''?>
         </ul>
     </div>                
     <div class="row content-listado-perfiles">
@@ -29,10 +30,12 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="card-title">Listado de Perfiles</h4>
-                        <button class="btn btn-primary btn-round ml-auto jq_nuevo_usuario">
+                        <?php if (isset($permisos[1])): ?>
+                        <button class="btn btn-primary btn-round ml-auto jq_nuevo_perfil">
                             <i class="fa fa-plus"></i>
                             Agregar
                         </button>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="card-body">                   

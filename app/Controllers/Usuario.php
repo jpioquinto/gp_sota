@@ -5,10 +5,13 @@ use App\Models\{UsuarioModel, ContactoModel};
 use  App\Libraries\Usuario\GestionUsuario;
 use  App\Libraries\Usuario as CUsuario;
 use  App\Libraries\Entidad\Dependencia;
+use App\Traits\InfoVistaTrait;
 use App\Models\CatalogoModel;
 
 class Usuario extends BaseController
-{   
+{
+    use InfoVistaTrait;
+
     protected $usuario; 
     protected $encrypter;
 
@@ -23,11 +26,18 @@ class Usuario extends BaseController
     {
         if (!isset($_SESSION['GP_SOTA']) || empty($_SESSION['GP_SOTA'])) {			
 			return redirect()->to('/'); 
-		}
+		}#echo '<pre>';print_r($this->usuario);exit;
 		$gestoUser = new GestionUsuario(get_class($this));
 		echo json_encode([
             'Solicitud'=>true, 
-            'vista'=>view('usuario/v_listado', ['listado'=>$gestoUser->obtenerListado()])
+            'vista'=>view(
+                'usuario/v_listado', 
+                [
+                    'listado'=>$gestoUser->obtenerListado(), 
+                    'permisos'=>$this->usuario->obtenerPermisosModulo(get_class($this)),
+                    'breadcrumbs'=>$this->generarBreadCrumbs(get_class($this)),
+                    'modulo'=>$this->nombreModulo(get_class($this))
+                ])
             ]);
     }
 

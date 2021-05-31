@@ -40,23 +40,13 @@ var $gPerfil = (modulo=> {
         var $params = {
             id:$el.parents('tr').attr('data-id')
         };
-        //$util.load.show(true);
-        $util.post({
-            url: "PerfilUsuario",
-            metodo:"obtenerVistaFormPerfil",
-            datos:$params,
-            funcion: function(data){
-                //$util.load.hide();
-                if (data.Solicitud) {
-                    $('.content-listado-perfiles').hide('animate__backOutLeft');
+        mostrarFormulario($params);
+    };
 
-                    $('.content-modal').html('');
-                    $('.content-modal').html(data.vista);
-                    $('.content-modal').removeClass('d-none animate__backOutRight').addClass('animate__backInRight');                    
-                    $formPerfil.ini($params.id);
-                }            
-            }
-        });
+    modulo.clickAgregar = function(e) {
+        e.preventDefault();
+        $el = $(this);
+        mostrarFormulario({});
     };
 
     modulo.cambiarEstatus = estatus => {
@@ -78,6 +68,10 @@ var $gPerfil = (modulo=> {
                     $el.parents('tr').find("td[data-estatus]").attr('data-estatus', data.estatus);
 
                     data.estatus==1 
+                    ? $el.parents('tr').find('td .badge').html('Activo')
+                    : $el.parents('tr').find('td .badge').html('Inactivo');
+
+                    data.estatus==1 
                     ? $el.parents('tr').find('td .badge').removeClass('badge-warning').addClass('badge-dark')
                     : $el.parents('tr').find('td .badge').removeClass('badge-dark').addClass('badge-warning');
 
@@ -97,6 +91,26 @@ var $gPerfil = (modulo=> {
         $('.jq_switch_estatus').off('click').on('click', modulo.clickCambiarEstatus);
     };
 
+    var mostrarFormulario = $params => {
+        //$util.load.show(true);
+        $util.post({
+            url: "PerfilUsuario",
+            metodo:"obtenerVistaFormPerfil",
+            datos:$params,
+            funcion: function(data){
+                //$util.load.hide();
+                if (data.Solicitud) {
+                    $('.content-listado-perfiles').hide('animate__backOutLeft');
+
+                    $('.content-modal').html('');
+                    $('.content-modal').html(data.vista);
+                    $('.content-modal').removeClass('d-none animate__backOutRight').addClass('animate__backInRight');                    
+                    $params.hasOwnProperty('id') ? $formPerfil.ini($params.id, $el) : $formPerfil.ini(undefined);
+                }            
+            }
+        });
+    }
+
     return modulo;
 })($gPerfil || {});
 
@@ -106,7 +120,7 @@ $(function() {
     });
 
     $('[data-toggle="tooltip"]').tooltip();
-    //$('.jq_nuevo_usuario').off('click').on('click', $usuario.clickAgregar);    
+    $('.jq_nuevo_perfil').off('click').on('click', $gPerfil.clickAgregar);    
 
     $gPerfil.eventoAcciones();
 });

@@ -14,7 +14,7 @@ class PerfilModel extends Model
     protected $returnType     = 'array';
 
     protected $allowedFields = [
-        'nombre', 'descripcion', 'estatus', 'creado_el', 'creado_por'
+        'nombre', 'descripcion', 'estatus', 'creado_por'
     ];
     
 }

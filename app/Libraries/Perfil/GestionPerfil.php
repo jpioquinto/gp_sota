@@ -46,7 +46,7 @@ class GestionPerfil
     protected function generarFila($perfil)
     {
         $fila = sprintf(
-                "<tr data-id='%s'><td>%s</td><td>%s</td><td data-estatus='%d'>%s</td>",
+                "<tr data-id='%s'><td data-nombre='true'>%s</td><td data-descripcion='true'>%s</td><td data-estatus='%d'>%s</td>",
                 base64_encode($this->encrypter->encrypt($perfil['id'])), $perfil['nombre'], $perfil['descripcion'], 
                 $perfil['estatus'], $this->descripcionEstatus($perfil['estatus'])
             );

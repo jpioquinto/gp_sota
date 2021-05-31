@@ -2,14 +2,14 @@
 <link rel="stylesheet" href="css/modulos/usuario/listado.css"/>
 <div class="page-inner">
     <div class="page-header">
-        <h4 class="page-title">Gestión de Usuarios</h4>
+        <h4 class="page-title"><?=isset($modulo) ? $modulo : ''?></h4>
         <ul class="breadcrumbs">
             <li class="nav-home">
                 <a href="#">
                     <i class="flaticon-home"></i>
                 </a>
             </li>
-            <li class="separator">
+            <!--li class="separator">
                 <i class="flaticon-right-arrow"></i>
             </li>
             <li class="nav-item">
@@ -20,7 +20,8 @@
             </li>
             <li class="nav-item">
                 <a href="javascript:;">Usuarios</a>
-            </li>
+            </li-->
+            <?=isset($breadcrumbs) ? $breadcrumbs : ''?>
         </ul>
     </div>                
     <div class="row">
@@ -29,10 +30,12 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="card-title">Listado de Usuarios</h4>
+                        <?php if (isset($permisos[1])): ?>
                         <button class="btn btn-primary btn-round ml-auto jq_nuevo_usuario">
                             <i class="fa fa-plus"></i>
                             Agregar
                         </button>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="card-body">                   
