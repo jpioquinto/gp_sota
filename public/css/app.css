@@ -1,0 +1,14 @@
+.logo-header[data-background-color=sota] {
+    background: #134238!important;
+}
+.navbar-header[data-background-color=sota] {
+    background: #12352e!important;
+}
+.bg-primary-gradient {
+    /*background: #1572e8!important;
+    background: -webkit-linear-gradient(legacy-direction(-45deg),#06418e,#1572e8)!important;*/
+    background: linear-gradient(-45deg,#385851,#073a2e)!important;
+}
+.sidebar[data-background-color=sota] {
+    background: #0C231E!important;
+}

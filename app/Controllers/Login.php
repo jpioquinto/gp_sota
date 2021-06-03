@@ -68,6 +68,14 @@ class Login extends BaseController
         echo json_encode(["Solicitud"=>true,"Msg"=>"Bienvenido "]);
 	}
 
+    public function ordernarPermisos($permisoA, $permisoB)
+    {
+       if ($permisoA['nodo_padre'] != $permisoB['nodo_padre']) {
+            return $permisoA['nodo_padre']>$permisoB['nodo_padre'];
+        }
+        return $permisoA['orden']>$permisoB['orden'];
+    }   
+
     protected function esSolicitudValida()
     {
         $validation =  \Config\Services::validation();
@@ -141,12 +149,13 @@ class Login extends BaseController
         $moduloModel = new ModuloModel();		
         $listado = [];        
         foreach ($modulos as $value) {
-            if ($value['nodo_padre']>0 && $this->existeRegistro($modulos, $value['nodo_padre'])===FALSE) {
+            if ($value['nodo_padre']>0 && $this->existeRegistro($modulos, $value['nodo_padre'])===FALSE && $this->existeRegistro($listado, $value['nodo_padre'])===FALSE) {
                 $modPadre = $moduloModel->find($value['nodo_padre']);
                 isset($modPadre['id']) ? $listado[] = $modPadre : '';                
             }
             $listado[] = $value;
         }
+        usort($listado, [get_class($this), 'ordernarPermisos']);        
         return $listado;
     }
 

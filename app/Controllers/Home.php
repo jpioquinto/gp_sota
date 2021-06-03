@@ -29,7 +29,7 @@ class Home extends BaseController
             echo json_encode(['Solicitud'=>true, 'vista'=>view('inicio/v_inicio')]); return;
         }
 		
-		$perfil = new Perfil();	
+		#$perfil = new Perfil();	
 		#$path = explode('\\', __CLASS__);    
 		#echo '<pre>'.array_pop($path);
 		#echo '<pre>';print_r($this->usuario->permisos);exit;
@@ -39,7 +39,6 @@ class Home extends BaseController
 				'v_header'=>view('layout/v_header', $usuario=$this->obtenerInfoUsuario()??[]), 
 				'v_sidebar'=>view('layout/v_sidebar', array_merge($usuario, ['menu'=>$this->generarMenu()])),
 				'v_inicio'=>view('inicio/v_inicio')				
-				#'v_perfil'=>$perfil->obtenerVistaPerfil()
 			]
 		);		
 	}
