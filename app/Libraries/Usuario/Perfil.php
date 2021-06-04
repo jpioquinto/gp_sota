@@ -1,8 +1,8 @@
 <?php 
 namespace App\Libraries\Usuario;
-use App\Models\CatalogoModel;
+use App\Models\{ContactoModel};
 use App\Models\MunicipioModel;
-use App\Models\{ContactoModel, TelefonoModel, CorreoModel};
+use App\Models\CatalogoModel;
 use  App\Libraries\Usuario;
 
 class Perfil

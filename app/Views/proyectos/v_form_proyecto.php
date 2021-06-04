@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="css/plugins/select2.min.css" />
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -12,103 +13,119 @@
                 </div>
             </div>
             <div class="card-body">                   
-                <form class="jq_form_perfil">
+                <form class="jq_form_proyecto">
                     <div class="row">
                         <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="data-nombre">Nombre</label>
-                                <input 
-                                    type="text" id="data-nombre" name="nombre" 
-                                    class="form-control" value="<?=isset($perfil['nombre']) ? $perfil['nombre']:''?>" minlength="8"
-                                >
-                                <small id="mensaje-nombre" class="form-text text-danger"></small>
+                            <div class="text-center">
+                                <img src="images/fondos/image-not-found.png" class="rounded img-fluid img-thumbnail" alt="...">
+                                <span>
+                                <button class="btn btn-primary btn-sm jq_cargar_foto">
+                                    <span class="btn-label">
+                                        <i class="fa fa-image"></i>
+                                    </span>
+                                    Cargar imagen
+                                    </button>
+                                </span>
                             </div>
                         </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="data-alias">Alias</label>
-                                <input 
-                                    type="text" id="data-alias" name="alias" 
-                                    class="form-control" value="<?=isset($perfil['alias']) ? $perfil['alias']:''?>" minlength="8"
-                                >
-                                <small id="mensaje-alias" class="form-text text-danger"></small>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="data-descripcion">Descripción</label>
-                                <input 
-                                    type="text" id="data-descripcion" name="descripcion" 
-                                    class="form-control" value="<?=isset($perfil['descripcion']) ? $perfil['descripcion']:''?>" minlength="8"
-                                >
-                                <small id="mensaje-descripcion" class="form-text text-danger"></small>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="data-padre">Tipo proyecto</label>
-                                <select name="padre" id="data-padre" class="form-control">
-                                    <?=isset($perfiles) ? $perfiles : ''?>
-                                </select>
-                            </div>
-                        </div>
+                        <div class="col-sm-9">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="data-nombre">Nombre</label>
+                                        <input 
+                                            type="text" id="data-nombre" name="nombre" 
+                                            class="form-control" value="<?=isset($perfil['nombre']) ? $perfil['nombre']:''?>" minlength="3"
+                                        >
+                                        <small id="mensaje-nombre" class="form-text text-danger"></small>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="data-alias">Alias</label>
+                                        <input 
+                                            type="text" id="data-alias" name="alias" 
+                                            class="form-control" value="<?=isset($perfil['alias']) ? $perfil['alias']:''?>" minlength="8"
+                                        >
+                                        <small id="mensaje-alias" class="form-text text-danger"></small>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="data-descripcion">Descripción</label>
+                                        <input 
+                                            type="text" id="data-descripcion" name="descripcion" 
+                                            class="form-control" value="<?=isset($perfil['descripcion']) ? $perfil['descripcion']:''?>" minlength="8"
+                                        >
+                                        <small id="mensaje-descripcion" class="form-text text-danger"></small>
+                                    </div>
+                                </div>
 
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="data-claves">Palabras clave</label>
-                                <input 
-                                    type="text" id="data-claves" name="claves" 
-                                    class="form-control" value="<?=isset($perfil['claves']) ? $perfil['claves']:''?>" minlength="8"
-                                >
-                                <small id="mensaje-claves" class="form-text text-danger"></small>
-                            </div>
-                        </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="data-tipo">Tipo proyecto</label>
+                                        <select name="tipo" id="data-tipo" class="form-control">
+                                            <?=isset($v_listado_tipos) ? $v_listado_tipos : ''?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="data-claves">Palabras clave</label>
+                                        <input 
+                                            type="text" id="data-claves" name="claves" 
+                                            class="form-control" value="<?=isset($perfil['claves']) ? $perfil['claves']:''?>" minlength="8"
+                                        >
+                                        <small id="mensaje-claves" class="form-text text-danger"></small>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="data-objetivo">Objetivo del Ramo 15</label>
+                                        <input 
+                                            type="text" id="data-objetivo" name="objetivo" 
+                                            class="form-control" value="<?=isset($perfil['objetivo']) ? $perfil['objetivo']:''?>" minlength="8"
+                                        >
+                                        <small id="mensaje-objetivo" class="form-text text-danger"></small>
+                                    </div>
+                                </div> 
 
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="data-objetivo">Objetivo del Ramo 15</label>
-                                <input 
-                                    type="text" id="data-objetivo" name="objetivo" 
-                                    class="form-control" value="<?=isset($perfil['objetivo']) ? $perfil['objetivo']:''?>" minlength="8"
-                                >
-                                <small id="mensaje-objetivo" class="form-text text-danger"></small>
-                            </div>
-                        </div> 
-                        
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="data-cobertura">Cobertura geográfica (escala)</label>
-                                <select name="cobertura" id="data-cobertura" class="form-control">
-                                    <?=isset($perfiles) ? $perfiles : ''?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="data-incorporacion">Fecha de incorporación PSPP</label>
-                                <input 
-                                    type="text" id="data-incorporacion" name="incorporacion" 
-                                    class="form-control" value="<?=isset($perfil['incorporacion']) ? $perfil['incorporacion']:''?>" minlength="8"
-                                >
-                                <small id="mensaje-incorporacion" class="form-text text-danger"></small>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="data-nota">Nota</label>
-                                <input 
-                                    type="text" id="data-nota" name="nota" 
-                                    class="form-control" value="<?=isset($perfil['nota']) ? $perfil['nota']:''?>" minlength="8"
-                                >
-                                <small id="mensaje-nota" class="form-text text-danger"></small>
-                            </div>
-                        </div>
-                        
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="data-cobertura">Cobertura geográfica (escala)</label>
+                                        <select name="cobertura" id="data-cobertura" class="form-control">
+                                        <?=isset($v_listado_cobertura) ? $v_listado_cobertura : ''?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="data-incorporacion">Fecha de incorporación PSPP</label>
+                                        <input 
+                                            type="date" id="data-incorporacion" name="incorporacion" 
+                                            class="form-control" value="<?=isset($perfil['incorporacion']) ? $perfil['incorporacion']:''?>" minlength="8"
+                                        >
+                                        <small id="mensaje-incorporacion" class="form-text text-danger"></small>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="data-nota">Nota</label>
+                                        <input 
+                                            type="text" id="data-nota" name="nota" 
+                                            class="form-control" value="<?=isset($perfil['nota']) ? $perfil['nota']:''?>" minlength="8"
+                                        >
+                                        <small id="mensaje-nota" class="form-text text-danger"></small>
+                                    </div>
+                                </div>
+                            </div>                        
+                        </div>                        
+                       
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label for="data-coordinador">Coordinador Ramo 15</label>
                                 <select name="coordinador" id="data-coordinador" class="form-control">
-                                    <?=isset($perfiles) ? $perfiles : ''?>
+                                    <?=isset($v_listado_usuarios) ? $v_listado_usuarios : ''?>
                                 </select>
                             </div>
                         </div>
@@ -116,15 +133,15 @@
                             <div class="form-group">
                                 <label for="data-responsable">Responsable</label>
                                 <select name="responsable" id="data-responsable" class="form-control">
-                                    <?=isset($perfiles) ? $perfiles : ''?>
+                                    <?=isset($v_listado_usuarios) ? $v_listado_usuarios : ''?>
                                 </select>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="data-colaboradores">Colaboradores</label>
-                                <select name="colaboradores" id="data-colaboradores" class="form-control">
-                                    <?=isset($perfiles) ? $perfiles : ''?>
+                                <select name="colaboradores" id="data-colaboradores" class="form-control" multiple>
+                                    <?=isset($v_listado_usuarios) ? $v_listado_usuarios : ''?>
                                 </select>
                             </div>
                         </div>
@@ -136,4 +153,5 @@
     </div>
 </div>
 
-<script src="js/modulos/perfil/crear.js"></script>
+<script src="js/library/select2.min.js"></script>
+<script src="js/modulos/proyecto/form_crear.js"></script>

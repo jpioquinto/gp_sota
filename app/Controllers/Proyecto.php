@@ -3,27 +3,28 @@
 namespace App\Controllers;
 
 use App\Libraries\Proyecto\UIProyecto;
+use App\Libraries\Usuario;
 
 class Proyecto extends BaseController
 {   
-    protected $usuario;   
+    protected $uiProyecto;   
+    protected $usuario;
 
     public function __construct()
     {
         @session_start();   
-        $this->usuario = new Usuario();                      
+        $this->usuario = new Usuario();  
+        $this->uiProyecto = new UIProyecto();                    
     }
 
     public function indexxxxxxxxxx()
-    {
-        
-        $uiProyecto = new UIProyecto();
+    {            
 		echo json_encode([
             'Solicitud'=>true, 
             'vista'=>view(
                 'proyectos/v_listado', 
                 [
-                    'listado'=>$uiProyecto->obtenerListado(), 
+                    'listado'=>$this->uiProyecto->obtenerListado(), 
                 ])
             ]);
     }
@@ -31,13 +32,16 @@ class Proyecto extends BaseController
     public function index()
     {
         
-        #$uiProyecto = new UIProyecto();
+        
 		echo json_encode([
             'Solicitud'=>true, 
             'vista'=>view(
                 'proyectos/v_form_proyecto', 
                 [
-                    'listado'=>''#$uiProyecto->obtenerListado(), 
+                    'v_acciones'=> view('proyectos/parcial/_v_acciones'),
+                    'v_listado_tipos'=>$this->uiProyecto->listadoTipos(),
+                    'v_listado_cobertura'=>$this->uiProyecto->listadoCoberturas(),
+                    'v_listado_usuarios'=>$this->uiProyecto->listadoUsuarios($this->usuario->getOrganizacionId())                    
                 ])
             ]);
     }
