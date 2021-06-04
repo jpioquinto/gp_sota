@@ -14,7 +14,7 @@ class Proyecto extends BaseController
         $this->usuario = new Usuario();                      
     }
 
-    public function index()
+    public function indexxxxxxxxxx()
     {
         
         $uiProyecto = new UIProyecto();
@@ -24,6 +24,20 @@ class Proyecto extends BaseController
                 'proyectos/v_listado', 
                 [
                     'listado'=>$uiProyecto->obtenerListado(), 
+                ])
+            ]);
+    }
+
+    public function index()
+    {
+        
+        #$uiProyecto = new UIProyecto();
+		echo json_encode([
+            'Solicitud'=>true, 
+            'vista'=>view(
+                'proyectos/v_form_proyecto', 
+                [
+                    'listado'=>''#$uiProyecto->obtenerListado(), 
                 ])
             ]);
     }

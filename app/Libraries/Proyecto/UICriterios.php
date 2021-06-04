@@ -25,7 +25,7 @@ class UICriterios
         $htmlItem = '';
         $criterios = $this->obtenerCriterios();
         foreach ($criterios as $key => $criterio) {
-            $htmlItem .= $this->htmlItem($criterio);
+            $htmlItem .= $this->htmlItem( $criterio, $key<(count($criterios)-1) );
         }
         return $htmlItem;
     }
