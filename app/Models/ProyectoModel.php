@@ -13,6 +13,9 @@ class ProyectoModel extends Model
 
     protected $returnType     = 'array';
 
-    protected $allowedFields = ['nombre', 'descripcion', 'imagen', 'estatus'];
+    protected $allowedFields = [
+        'nombre', 'alias', 'descripcion', 'tipo_id', 'palabra_clave', 'objetivo', 'cobertura_id', 'fecha_incorporacion', 'nota', 'organizacion_id',
+        'coordinador_id', 'responsable_id', 'colaboradores','imagen', 'estatus', 'creado_por', 'actualizado_el', 'actualizado_por'
+     ];
     
 }

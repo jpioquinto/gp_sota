@@ -104,7 +104,7 @@ class Perfil extends BaseController
 			'puesto_id'=>$this->request->getPost('puesto'),
 			'usuario_id'=>$this->usuario->getId(),
 			'cargo'=>$this->request->getPost('cargo'), 
-			'organizacion_id'=>1,
+			'organizacion_id'=>$this->usuario->getOrganizacionId(),
 		];
         if ($this->request->getPost('ap_materno')) {
             $datos['ap_materno'] = trim($this->request->getPost('ap_materno'));

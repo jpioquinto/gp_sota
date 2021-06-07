@@ -13,17 +13,17 @@
                 </div>
             </div>
             <div class="card-body">                   
-                <form class="jq_form_proyecto">
+                <div class="jq_form_proyecto">
                     <div class="row">
                         <div class="col-sm-3">
                             <div class="text-center">
                                 <img src="images/fondos/image-not-found.png" class="rounded img-fluid img-thumbnail" alt="...">
                                 <span>
-                                <button class="btn btn-primary btn-sm jq_cargar_foto">
-                                    <span class="btn-label">
-                                        <i class="fa fa-image"></i>
-                                    </span>
-                                    Cargar imagen
+                                    <button class="btn btn-primary btn-sm jq_cargar_foto">
+                                        <span class="btn-label">
+                                            <i class="fa fa-image"></i>
+                                        </span>
+                                        Cargar imagen
                                     </button>
                                 </span>
                             </div>
@@ -147,7 +147,7 @@
                         </div>
 
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

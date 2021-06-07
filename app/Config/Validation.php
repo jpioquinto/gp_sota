@@ -186,4 +186,77 @@ class Validation
             ]
         ],
     ];
+    public $project = [
+		'nombre' => [
+			'label'=>'Nombre',
+            'rules'  => 'required|min_length[3]',
+            'errors' => [
+                'required' => 'Ingrese el Nombre.',
+				'min_length'=>'El Nombre debe contener mínimo 3 caracteres.'
+            ]
+        ],
+        'alias'    => [
+			'label'=>'Alias',
+            'rules'  => 'required|min_length[3]',
+            'errors' => [
+                'required' => 'Ingrese el Alias.',
+				'min_length'=>'El Alias debe contener mínimo 3 caracteres.'
+            ]
+        ],
+		'descripcion'    => [
+			'label'=>'Descripcion',
+            'rules'  => 'required|min_length[20]',
+            'errors' => [
+                'required' => 'Ingrese la Descripción.',
+				'min_length'=>'La Descripción debe contener mínimo 20 caracteres.'
+            ]
+        ],
+		'tipo'    => [
+			'label'=>'Tipo',
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required' => 'Seleccione el Tipo de Proyecto.',
+				'numeric'=>'No se recibió el identificador del Tipo del Proyecto.'
+            ]
+        ],
+		'cobertura'    => [
+			'label'=>'Cobertura',
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required' => 'Seleccione la Cobertura.',
+				'numeric'=>'No se recibió el identificador de la Cobertura.'
+            ]
+        ],
+        'incorporacion'    => [
+			'label'=>'Fecha de incorporación al PSPP',
+            'rules'  => 'required|min_length[10]',
+            'errors' => [
+                'required' => 'Ingrese la Fecha de incorporación al PSPP.',
+				'min_length'=>'El formato de la Fecha de incorporación al PSPP debe contener mínimo 10 caracteres.'
+            ]
+        ],
+		'coordinador'    => [
+			'label'=>'Coordinador',
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required' => 'Seleccione el/la Coordinador(a).',
+				'numeric'=>'No se recibió el identificador del/la Coordinador(a).'
+            ]
+        ],
+        'responsable'    => [
+			'label'=>'Responsable',
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required' => 'Seleccione el/la Responsable.',
+				'numeric'=>'No se recibió el identificador del/la Responsable.'
+            ]
+        ],
+        /*'colaboradores'    => [
+			'label'=>'Coordinador',
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'Seleccione los Colaboradores.'				
+            ]
+        ],*/
+	];
 }

@@ -42,11 +42,40 @@ var $formFicha  = (modulo => {
             $("select[name='responsable']").focus();
 			return;
 		}
-        if ( $("select[name='colaboradores'] option:selected").val().length==0 ) {
+        if ( $("select[name='colaboradores']").select2('data').length==0 ) {
             notificacion('Seleccione los colaboradores.', "error", 200, "bottomRight", "fadeInUp", "fadeOutDown");
             $("select[name='colaboradores']").focus();
 			return;
 		}
+        var $params = {};
+        $('.jq_form_proyecto').find('input').each(function() {
+            if (!$(this).attr('name')) {
+                return true;
+            }
+            $params[$(this).attr('name')] = $(this).val();
+        });
+        
+        if (Object.keys($params).length==0) {
+            return;
+        }
+        $params['tipo'] = $("select[name='tipo'] option:selected").val();
+        $params['cobertura'] = $("select[name='cobertura'] option:selected").val();
+        $params['coordinador'] = $("select[name='coordinador'] option:selected").val();
+        $params['responsable'] = $("select[name='responsable'] option:selected").val();
+        $params['colaboradores'] = $("select[name='colaboradores']").val();
+        console.log($params);
+        //$util.load.show(true);
+        $util.post({
+            url: "Proyecto",
+            metodo:"guardar",
+            datos:$params,
+            funcion: function(data){
+              if (data.Solicitud) {
+                
+              }
+              //$util.load.hide();
+            }
+          });
         
     };
 
