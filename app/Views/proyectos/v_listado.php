@@ -21,7 +21,7 @@
             <div class="card card-post card-round">
                 <img class="card-img-top" src="documentos/SOTA/aifa.png" alt="Card image cap">
                 <div class="card-body text-center">
-                <p>AIFA</p>
+                <p>AIFA TEST</p>
                 <div class="separator-solid"></div>
                     <div class="dropdown">
                         <!--a href="#" class="btn btn-primary btn-rounded btn-sm">Ver Información</a-->

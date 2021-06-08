@@ -63,7 +63,7 @@ var $formFicha  = (modulo => {
         $params['coordinador'] = $("select[name='coordinador'] option:selected").val();
         $params['responsable'] = $("select[name='responsable'] option:selected").val();
         $params['colaboradores'] = $("select[name='colaboradores']").val();
-        console.log($params);
+        
         //$util.load.show(true);
         $util.post({
             url: "Proyecto",
@@ -75,8 +75,7 @@ var $formFicha  = (modulo => {
               }
               //$util.load.hide();
             }
-          });
-        
+        });        
     };
 
     modulo.clickCargarImagen = function(e) {

@@ -32,6 +32,11 @@ class Proyecto extends BaseController
             ]);
     }
 
+    public function verModulo()
+    {
+        
+    }
+
     public function indexddsdadasda()
     {
         

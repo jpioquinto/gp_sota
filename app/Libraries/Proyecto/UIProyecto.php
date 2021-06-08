@@ -35,7 +35,7 @@ class UIProyecto
 		$proyecto['id'] = base64_encode($this->encrypter->encrypt($proyecto['id']));
 		return view(
 			'proyectos/parcial/_v_card_proyecto',
-			array_merge($proyecto, ['v_item_criterios'=>$this->uiCriterios->listadoItems()])
+			array_merge($proyecto, ['v_item_criterios'=>''])
 		);
 	}
 
