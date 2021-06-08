@@ -12,6 +12,56 @@ class UICriterios
         
     }
 
+    public function contenedorTabs()
+    {
+        $htmlItem = '';
+        $criterios = $this->obtenerCriterios();
+        foreach ($criterios as $key => $criterio) {
+            $htmlItem .= $this->contenedorTab( $criterio, $key==0 );
+        }
+        return $htmlItem;
+    }
+
+    public function contenedorTab($criterio, $first = true)
+    {
+        return "<div class='tab-pane fade".($first ? ' show active' : '')."' id='pills-{$criterio['id']}' role='tabpanel' aria-labelledby='pills-{$criterio['id']}-tab'>
+                    {$criterio['descripcion']}
+                </div>";
+    }
+
+    public function listadoTabs()
+    {  
+         if ($this->items=='') {
+            $this->items = $this->generarTabs();
+        }     
+        return $this->items;
+    }
+
+    public function generarTabs()
+    {
+        $htmlItem = '';
+        $criterios = $this->obtenerCriterios();
+        foreach ($criterios as $key => $criterio) {
+            $htmlItem .= $this->htmlITab( $criterio, $key==0 );
+        }
+        return $htmlItem;
+    }
+
+    public function htmlITab($criterio, $first = true)
+    {
+        return "<li class='nav-item'>
+                    <a class='nav-link".($first ? ' active' :'')."' 
+                        id='pills-{$criterio['id']}-tab' 
+                        data-control='{$criterio['controlador']}'
+                        data-toggle='pill' 
+                        href='#pills-{$criterio['id']}' 
+                        role='tab' 
+                        aria-controls='pills-{$criterio['id']}' 
+                        aria-selected='".($first ? 'true' :'false')."'
+                    ><i class='{$criterio['icono']}'></i>  {$criterio['descripcion']}</a>
+                </li>";
+    }
+    
     public function listadoItems()
     {  
          if ($this->items=='') {

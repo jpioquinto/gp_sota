@@ -14,7 +14,7 @@
     </div>
 </div>
 <div class="page-inner mt--5">
-    <div class="row mt--2"> 
+    <div class="row mt--2 content-listado-proyectos"> 
         <?=isset($listado) ? $listado : ''?>  
         
         <div class="col-md-4">
@@ -59,5 +59,6 @@
             </div>
         </div>                
     </div>
-    <div class='content-modal'></div>
+    <div class='content-modulo jq_content_modulo'></div>
 </div>
+<script src="js/modulos/proyecto/proyecto.js"></script>

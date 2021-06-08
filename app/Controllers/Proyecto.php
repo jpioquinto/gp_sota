@@ -34,7 +34,15 @@ class Proyecto extends BaseController
 
     public function verModulo()
     {
-        
+        echo json_encode([
+            'Solicitud'=>true, 
+            'vista'=>view(
+                'proyectos/v_proyecto', 
+                [
+                    'modulos'=>$this->uiProyecto->obtenerSubModulos(),
+                    'proyecto'=>$this->obtenerProyecto($this->encrypter->decrypt(base64_decode( $this->request->getPost('id') ))) 
+                ])
+            ]);
     }
 
     public function indexddsdadasda()
@@ -120,7 +128,6 @@ class Proyecto extends BaseController
         $proyectoModel->update( $this->encrypter->decrypt(base64_decode($id)), $datos );
 
         return $this->encrypter->decrypt(base64_decode($id));
-
     }
 
     protected function esSolicitudValida()
@@ -172,4 +179,9 @@ class Proyecto extends BaseController
         return ['Solicitud'=>true];
     }
 
+    protected function obtenerProyecto($id)
+    {
+        $proyectoModel = new ProyectoModel();
+        return $proyectoModel->find($id);
+    }
 }

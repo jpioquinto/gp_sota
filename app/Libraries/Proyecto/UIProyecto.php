@@ -21,6 +21,15 @@ class UIProyecto
         
 	}
 
+	public function obtenerSubModulos()
+	{
+		return view('proyectos/parcial/_v_modulos', 
+				[
+					'items'=>$this->uiCriterios->listadoTabs(), 
+					'contenedores'=>$this->uiCriterios->contenedorTabs()
+				]);
+	}
+
 	public function obtenerListado()
 	{
 		$items = '';
