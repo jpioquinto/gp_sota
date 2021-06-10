@@ -1,5 +1,20 @@
 var $formFicha  = (modulo => {
 
+    modulo.ini = () => {
+        var tempo = 0, itera = 0;
+
+        tempo = setInterval(() => {
+            if (itera>99) {
+                clearInterval(tempo);
+            }
+            if ($('#data-coordinador').length==0) {
+                itera++; return;
+            }
+            $('#data-coordinador, #data-responsable, #data-colaboradores').select2();
+            clearInterval(tempo);
+        }, 500);        
+    };
+
     modulo.clickGuardar = function(e) {
         e.preventDefault();
         if ( $.trim($("input[name='nombre']").val())=='') {
@@ -85,7 +100,8 @@ var $formFicha  = (modulo => {
     return modulo;
 })($formFicha || {});
 $(function() {
+    $formFicha.ini();
+    //setTimeout(function() {$('#data-coordinador, #data-responsable, #data-colaboradores').select2();},500);    
     $('.jq_guardar_ficha').off('click').on('click', $formFicha.clickGuardar);
-    $('#data-coordinador, #data-responsable, #data-colaboradores').select2();
     $('.jq_cargar_foto').off('click').on('click', $formFicha.clickCargarImagen);
 });

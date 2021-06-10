@@ -14,7 +14,7 @@ var $proyecto = (modulo => {
             url: "Proyecto",
             metodo:"verModulo",
             datos:$params,
-            funcion: function(data){
+            funcion: function(data) {
                 if (data.Solicitud) {
                     $('.content-listado-proyectos').hide('animate__fadeOut');
 
