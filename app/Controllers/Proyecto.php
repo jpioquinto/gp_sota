@@ -39,7 +39,9 @@ class Proyecto extends BaseController
             'vista'=>view(
                 'proyectos/v_proyecto', 
                 [
-                    'modulos'=>$this->uiProyecto->obtenerSubModulos(),
+                    'permisos'=>($permisos = $this->usuario->obtenerPermisosModulo(get_class($this))),
+                    'v_acciones'=>view('proyectos/parcial/_v_acciones_proyecto', compact('permisos')),
+                    'v_modulos'=>$this->uiProyecto->obtenerSubModulos(),
                     'proyecto'=>$this->obtenerProyecto($this->encrypter->decrypt(base64_decode( $this->request->getPost('id') ))) 
                 ])
             ]);

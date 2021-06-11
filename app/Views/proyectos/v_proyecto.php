@@ -2,10 +2,19 @@
 	<div class="col-md-12">        
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title"><?=isset($proyecto['alias']) ? $proyecto['alias'] : ''?></h4>
+                <div class="d-flex align-items-center">
+                    <h4 class="card-title"><?=isset($proyecto['alias']) ? $proyecto['alias'] : ''?></h4>
+                    <div class="ml-md-auto py-2 py-md-0">
+                        <?=isset($v_acciones) ? $v_acciones : ''?>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
-                <?=isset($modulos) ? $modulos : ''?>
+                <div class="content-modulos">
+                    <?=isset($v_modulos) ? $v_modulos : ''?>
+                </div>
+                <div class="content-modulo d-none">
+                </div>
             </div>
         </div>
     </div>

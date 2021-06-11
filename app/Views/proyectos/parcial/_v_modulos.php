@@ -1,6 +1,8 @@
-<ul class="nav nav-pills nav-secondary" id="modulos-proyecto" role="tablist">
-    <?=isset($items) ? $items : ''?>    
-</ul>
-<div class="tab-content mt-2 mb-3" id="pills-tabContent">
-    <?=isset($contenedores) ? $contenedores : ''?>
+<div class="row">
+    <div class="col-md-8">
+        <?=isset($modulos) ? $modulos : ''?>
+    </div>
+    <div class="col-md-4" style="margin: auto 0;">
+        <?=isset($ultimoModulo) ? $ultimoModulo : ''?>
+    </div>
 </div>

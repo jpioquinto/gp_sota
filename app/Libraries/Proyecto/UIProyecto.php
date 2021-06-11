@@ -8,7 +8,7 @@ use  App\Libraries\Usuario;
 class UIProyecto
 {	
 	protected $proyectoModel;
-	protected $uiCriterios;
+	protected $uiSubmodulos;
 	protected $encrypter;
 	#protected $usuario;	
 
@@ -17,17 +17,13 @@ class UIProyecto
 		#$this->usuario = new Usuario();
 		$this->encrypter = \Config\Services::encrypter();  
 		$this->proyectoModel = new ProyectoModel();
-		$this->uiCriterios = new UICriterios;
+		$this->uiSubmodulos = new UIModulos;
         
 	}
 
 	public function obtenerSubModulos()
 	{
-		return view('proyectos/parcial/_v_modulos', 
-				[
-					'items'=>$this->uiCriterios->listadoTabs(), 
-					'contenedores'=>$this->uiCriterios->contenedorTabs()
-				]);
+		return view('proyectos/parcial/_v_modulos', $this->uiSubmodulos->listadoSubmodulos());
 	}
 
 	public function obtenerListado()
