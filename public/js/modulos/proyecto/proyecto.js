@@ -9,7 +9,7 @@ var $proyecto = (modulo => {
         }
         id = $(this).attr('id');
         var $params = {id:id};
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "Proyecto",
             metodo:"verModulo",
@@ -23,7 +23,7 @@ var $proyecto = (modulo => {
                     
                     $('.content-modulo').removeClass('d-none animate__fadeOut').addClass('animate__fadeInUp');  
                 }
-                //$util.load.hide();
+                $util.load.hide();
             }
         });        
     };

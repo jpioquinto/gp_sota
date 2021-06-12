@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Libraries\Proyecto\UIProyecto;
 use App\Models\ProyectoModel;
+use App\Traits\PermisoTrait;
 use App\Libraries\Usuario;
 
 class Proyecto extends BaseController
@@ -11,6 +12,8 @@ class Proyecto extends BaseController
     protected $uiProyecto;  
     protected $encrypter; 
     protected $usuario;
+
+    use PermisoTrait;
 
     public function __construct()
     {
@@ -33,14 +36,16 @@ class Proyecto extends BaseController
     }
 
     public function verModulo()
-    {
+    {#echo '<pre>';print_r($this->obtenerAccionesModulo(get_class($this)));exit;
         echo json_encode([
             'Solicitud'=>true, 
             'vista'=>view(
                 'proyectos/v_proyecto', 
                 [
                     'permisos'=>($permisos = $this->usuario->obtenerPermisosModulo(get_class($this))),
-                    'v_acciones'=>view('proyectos/parcial/_v_acciones_proyecto', compact('permisos')),
+                    'v_acciones'=>view(
+                        'proyectos/parcial/_v_acciones_proyecto', ['permisos'=>$permisos, 'acciones'=>$this->obtenerAccionesModulo(get_class($this))]
+                    ),
                     'v_modulos'=>$this->uiProyecto->obtenerSubModulos(),
                     'proyecto'=>$this->obtenerProyecto($this->encrypter->decrypt(base64_decode( $this->request->getPost('id') ))) 
                 ])

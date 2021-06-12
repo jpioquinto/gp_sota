@@ -42,7 +42,21 @@
             </div>
         </div>
 		<?= csrf_field() ?>
-    </div>	
+    </div>
+
+	<!-- INICIA PRELOADER -->
+    <div class="loader-overlay">
+      <div class="spinner">
+        <h5>Cargando, espere un momento...</h5>
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+        <br>
+        <a class="btn btn-danger" id="abortRequest" href="#">Cancelar</a>
+      </div>
+    </div>
+    <!-- TERMINA PRELOADER -->
+
     <!--   Core JS Files   -->
 	<!--script src="js/core/jquery.3.2.1.min.js"></script-->
     <!--script src="js/library/jquery-3.6.0.min.js"></script-->

@@ -2,6 +2,45 @@ var $util = (modulo => {
     var ajaxRequests = [];
     modulo.modulo_actual = '';
 
+    modulo.load = {
+        show: function(overlay, texto) {
+            
+            if (overlay) {
+                $('body .loader-overlay').removeClass('loaded')
+            } else {
+                $('.loader-overlay').addClass('loaded');
+            };
+            
+            $("#abortRequest").off("click").on("click", function() {
+                var size = ajaxRequests.length
+                console.log('solicitud cancelada');
+                $('body').find('.clicked').removeClass('clicked');
+                $('#abortRequest').prop('disabled', true).addClass('disabled');
+                if (size > 0) {
+                    for (var i = 0; i < size; i++) {
+                        var curRequest = ajaxRequests[i];
+                        curRequest.abort();
+                    }
+                    $('body .loader-overlay').addClass('loaded');
+                    $("body").css("cursor", "auto");
+
+
+                    setTimeout(function() {
+                        $('#abortRequest').prop('disabled', false).removeClass('disabled');
+                    }, 500)
+                } else {
+                    console.log('no hay nada que cancelar');
+                    return false;
+                }
+            });
+            $("footer").animate({ opacity: '0' }, 'slow');
+        },
+        hide: function() {
+            $('.loader-overlay').addClass('loaded');
+            $("body").css("cursor", "auto");
+        }
+    };
+
     modulo.soloEntero  = function(event) {
         var keynum = window.event ? window.event.keyCode : e.which;
         var dato   = new String($(this).val()).replace(/[#$,.\s ]*/g,"");
@@ -166,7 +205,7 @@ var $util = (modulo => {
             }            
         });
         ajaxRequests.push(ajx);
-    }
+    }    
 
     modulo.hash = (longitud) => {
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#$!¡_";

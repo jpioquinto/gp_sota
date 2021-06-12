@@ -97,6 +97,16 @@ var $formFicha  = (modulo => {
         e.preventDefault();
     };
 
+    modulo.clickRegresar = function(e) {
+        e.preventDefault();
+
+        if ($(this).parents('.content-submodulo').length>0) {
+            $('.content-submodulo').removeClass(modulo.claseEntrada).addClass('d-none ' + modulo.claseSalida);
+            $('.content-modulos').removeClass(modulo.claseSalida).addClass(modulo.claseEntrada).show('slow');
+            $('.content-submodulo').html(''); 
+        }
+    };
+
     return modulo;
 })($formFicha || {});
 $(function() {
@@ -104,4 +114,5 @@ $(function() {
     //setTimeout(function() {$('#data-coordinador, #data-responsable, #data-colaboradores').select2();},500);    
     $('.jq_guardar_ficha').off('click').on('click', $formFicha.clickGuardar);
     $('.jq_cargar_foto').off('click').on('click', $formFicha.clickCargarImagen);
+    $('.jq_regresar_fichas').off('click').on('click', $formFicha.clickRegresar);
 });

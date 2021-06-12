@@ -34,11 +34,11 @@ var $main = (modulo=> {
     };
 
     var cargarModulo = controlador => {
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             controlador: controlador,
             funcion: function(data){
-                //$util.load.hide();
+                $util.load.hide();
                 if (data.Solicitud) {
                     $('.gp-content').html('');
                     $('.gp-content').html(data.vista);
@@ -54,4 +54,5 @@ $(function() {
     $('.jq_sidebar .jq_modulo').off('click').on('click', $main.seleccionarModulo);
     $('.jq_cerrar_sesion').off('click').on('click', $main.clickCerrarSesion);
     $('.jq_ver_perfil').off('click').on('click', $main.clickVerPerfil);
+    $('body .loader-overlay').addClass('loaded');
 });

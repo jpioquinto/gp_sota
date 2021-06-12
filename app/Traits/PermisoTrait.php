@@ -1,8 +1,31 @@
 <?php
 namespace App\Traits;
+use App\Models\{ModuloModel, FuncionalidadAccionModel};
 
 trait PermisoTrait
 {
+    public function obtenerAccionesModulo($controlador)
+    {
+        helper('util');
+        $moduloModel = new ModuloModel();
+        $funcionalidadModel = new FuncionalidadAccionModel();
+        
+        $modulo = $moduloModel->where('controlador', getNameClass($controlador))->first();
+
+        if (!isset($modulo['acciones'])) {
+            return [];
+        }
+
+        $funciondalidad = $funcionalidadModel->whereIn('accion_id', explode(',', $modulo['acciones']))->findAll();
+
+        $listado = [];
+        foreach ($funciondalidad as $value) {
+            $listado[$value['accion_id']] = $value;
+        }
+
+        return $listado;
+    }
+
     public function tienePermiso($controlador, $accion)
     {
         helper('util');

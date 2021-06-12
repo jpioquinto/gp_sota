@@ -31,7 +31,7 @@ class FichaTecnica extends BaseController
                 [   
                     'id'=>$this->request->getPost('id'),
                     'proyecto'=>($registro=$proyecto->obtenerProyecto()),
-                    'v_acciones'=> view('proyectos/parcial/_v_acciones'),
+                    'v_acciones'=> view('proyectos/parcial/_v_acciones', ['permisos'=>$this->usuario->obtenerPermisosModulo('Proyecto'), 'submodulo'=>true]),
                     'v_listado_tipos'=>$this->uiProyecto->listadoTipos(isset($registro['tipo_id']) ? $registro['tipo_id'] : null),
                     'v_listado_cobertura'=>$this->uiProyecto->listadoCoberturas(isset($registro['cobertura_id']) ? $registro['cobertura_id'] : null),
                     'v_listado_coordinadores'=>$this->uiProyecto->listadoUsuarios($this->usuario->getOrganizacionId(),isset($registro['coordinador_id']) ? $registro['coordinador_id'] : null), 

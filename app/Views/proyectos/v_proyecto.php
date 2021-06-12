@@ -10,10 +10,10 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="content-modulos">
+                <div class="content-modulos">modulossssssssss
                     <?=isset($v_modulos) ? $v_modulos : ''?>
                 </div>
-                <div class="content-modulo d-none">
+                <div class="content-submodulo d-none">
                 </div>
             </div>
         </div>

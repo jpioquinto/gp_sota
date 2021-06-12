@@ -3,15 +3,15 @@ namespace App\Libraries\Proyecto;
 use App\Models\ProyectoModel;
 use App\Models\CatalogoModel;
 use App\Models\UsuarioQuery;
-use  App\Libraries\Usuario;
+#use  App\Libraries\Usuario;
 
 class UIProyecto
 {	
 	protected $proyectoModel;
 	protected $uiSubmodulos;
 	protected $encrypter;
-	#protected $usuario;	
-
+	#protected $usuario;
+	
 	public function __construct()
 	{
 		#$this->usuario = new Usuario();

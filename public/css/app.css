@@ -5,10 +5,94 @@
     background: #12352e!important;
 }
 .bg-primary-gradient {
-    /*background: #1572e8!important;
-    background: -webkit-linear-gradient(legacy-direction(-45deg),#06418e,#1572e8)!important;*/
     background: linear-gradient(-45deg,#385851,#073a2e)!important;
 }
 .sidebar[data-background-color=sota] {
     background: #0C231E!important;
+}
+/*=========================== overly /*===========================*/
+.loader-overlay.loaded {
+    -moz-opacity: 0;
+    -webkit-opacity: 0;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    visibility: hidden;
+    zoom: 1;
+}
+.loaded {
+    display: none;
+}
+.loader-overlay {
+    background: rgba(45, 46, 47, 0.8);
+}
+.loader-overlay {
+    -moz-opacity: 1;
+    -moz-perspective: 10000;
+    -moz-perspective: 10000px;
+    -moz-transition: all 800ms ease-in-out;
+    -o-transition: all 800ms ease-in-out;
+    -webkit-opacity: 1;
+    -webkit-perspective: 10000;
+    -webkit-perspective: 10000px;
+    -webkit-transition: all 800ms ease-in-out;
+    background: #2D2E2F;
+    bottom: 0;
+    filter: alpha(opacity=100);
+    left: 0;
+    opacity: 1;
+    overflow: hidden;
+    perspective: 10000px;
+    perspective: 10000px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    transition: all 800ms ease-in-out;
+    z-index: 10000;
+    zoom: 1;
+}
+.spinner {
+    width: 23em;
+}
+.spinner {
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    -webkit-user-select: none;
+    bottom: 0;
+    height: 2em;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    user-select: none;
+    width: 10em;
+}
+.spinner .bounce1 {
+    -webkit-animation-delay: -.32s;
+    animation-delay: -.32s;
+    margin-right: 1em;
+}
+.spinner>div {
+    -moz-border-radius: 100%;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
+    -webkit-border-radius: 100%;
+    animation-fill-mode: both;
+    animation: bouncedelay 1.4s infinite ease-in-out;
+    background-color: #fff;
+    border-radius: 100%;
+    display: inline-block;
+    height: 1em;
+    width: 1em;
+}
+.spinner .bounce2 {
+    -webkit-animation-delay: -.16s;
+    animation-delay: -.16s;
+    margin-right: 1em;
+}
+#abortRequest {
+    margin-top: 1em;
+    margin-left: 1.5em;
 }
