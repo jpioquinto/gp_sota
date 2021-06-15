@@ -103,7 +103,7 @@
                                         <label for="data-incorporacion">Fecha de incorporación PSPP</label>
                                         <input 
                                             type="date" id="data-incorporacion" name="incorporacion" 
-                                            class="form-control" value="<?=isset($proyecto['fecha_incorporacion']) ? $proyecto['fecha_incorporacion']:''?>" minlength="8"
+                                            class="form-control" value="<?=isset($proyecto['fecha_incorporacion']) ? $proyecto['fecha_incorporacion']:''?>" minlength="10"
                                         >
                                         <small id="mensaje-incorporacion" class="form-text text-danger"></small>
                                     </div>

@@ -9,7 +9,7 @@ var $gestion = (modulo => {
         if (!$(this).attr('data-control') || $.trim($(this).attr('data-control'))=='') {
             console.log('sin controlador');return;
         }
-        console.log($(this).attr('data-control'));
+        //console.log($(this).attr('data-control'));
         var $params = {id:$proyecto.getId()};
         var me = $(this);
         $util.load.show(true);

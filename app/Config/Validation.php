@@ -250,13 +250,6 @@ class Validation
                 'required' => 'Seleccione el/la Responsable.',
 				'numeric'=>'No se recibió el identificador del/la Responsable.'
             ]
-        ],
-        /*'colaboradores'    => [
-			'label'=>'Coordinador',
-            'rules'  => 'required',
-            'errors' => [
-                'required' => 'Seleccione los Colaboradores.'				
-            ]
-        ],*/
+        ]
 	];
 }

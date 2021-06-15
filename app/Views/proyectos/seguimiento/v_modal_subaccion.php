@@ -7,7 +7,7 @@
                     <span class="fw-mediumbold">
                     Nueva</span> 
                     <span class="fw-light">
-                        Acción General
+                        Acción Específica
                     </span>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -32,27 +32,62 @@
                                 <small id="mensaje-descripcion" class="form-text text-danger"></small>
                             </div>
                         </div>
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="data-programa">Programa Ramo</label>
+                                <input type="text" id="data-programa" name="programa" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="data-fecha_ini">Fecha inicio</label>
+                                <input type="date" id="data-fecha_ini" name="fecha_ini" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="data-fecha_fin">Fecha fin</label>
+                                <input type="date" id="data-fecha_fin" name="fecha_fin" class="form-control">
+                            </div>
+                        </div>
                         
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label for="data-coordinador">Coordinador</label>
-                                <select name="coordinador" id="data-coordinador" class="form-control">
+                                <label for="data-responsable">Responsable</label>
+                                <select name="responsable" id="data-responsable" class="form-control">
                                     <?=isset($usuarios) ? $usuarios : ''?>
                                 </select>
                             </div>
-                        </div>
+                        </div>                        
 
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <label for="data-ponderacion">Ponderación de Avance</label>
-                                <input type="numeric" id="data-ponderacion" name="ponderacion" class="form-control">
+                                <label for="data-avance">Avance</label>
+                                <input type="number" id="data-avance" name="avance" class="form-control">
                             </div>
                         </div>
 
                         <div class="col-sm-3">
+                            <div class="form-check">
+                                <label>¿Requiere evidencia?</label><br/>
+                                <label class="form-radio-label">
+                                    <input class="form-radio-input" type="radio" name="evidencia" value="1">
+                                    <span class="form-radio-sign">Si</span>
+                                </label>
+                                <label class="form-radio-label ml-3">
+                                    <input class="form-radio-input" type="radio" name="evidencia" value="0" checked>
+                                    <span class="form-radio-sign">No</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="data-orden">Orden</label>
-                                <input type="numeric" id="data-orden" name="orden" class="form-control">
+                                <label for="data-meta">Meta</label>
+                                <textarea id="data-meta" class="form-control" name="meta"></textarea>
                             </div>
                         </div>
 
@@ -62,11 +97,12 @@
                                 <textarea id="data-nota" class="form-control" name="nota"></textarea>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
+                    <input type="hidden" name="accion_id" value="<?=isset($accion_id) ? $accion_id : ''?>">                    
                 </form>
             </div>
             <div class="modal-footer no-bd">
-                <button type="button" id="jq_guardar_accion" class="btn btn-default">
+                <button type="button" id="jq_guardar_subaccion" class="btn btn-default">
                     <span class="btn-label"><i class="fa fa-save"></i></span> Crear																					
                 </button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">
