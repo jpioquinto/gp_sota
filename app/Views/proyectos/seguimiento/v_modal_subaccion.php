@@ -20,7 +20,7 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="data-definicion">Definición</label>
-                                <input type="text" id="data-definicion" name="definicion" class="form-control" minlength="5">
+                                <input type="text" id="data-definicion" name="definicion" class="form-control" minlength="5" value="<?=isset($definicion) ? $definicion : ''?>">
                                 <small id="mensaje-definicion" class="form-text text-danger"></small>
                             </div>
                         </div>
@@ -28,7 +28,7 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="data-descripcion">Descripción</label>
-                                <input type="text" id="data-descripcion" name="descripcion" class="form-control">
+                                <input type="text" id="data-descripcion" name="descripcion" class="form-control" value="<?=isset($descripcion) ? $descripcion : ''?>">
                                 <small id="mensaje-descripcion" class="form-text text-danger"></small>
                             </div>
                         </div>
@@ -36,21 +36,21 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="data-programa">Programa Ramo</label>
-                                <input type="text" id="data-programa" name="programa" class="form-control">
+                                <input type="text" id="data-programa" name="programa" class="form-control" value="<?=isset($programa) ? $programa : ''?>">
                             </div>
                         </div>
 
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="data-fecha_ini">Fecha inicio</label>
-                                <input type="date" id="data-fecha_ini" name="fecha_ini" class="form-control">
+                                <input type="date" id="data-fecha_ini" name="fecha_ini" class="form-control" value="<?=isset($fecha_ini) ? $fecha_ini : ''?>">
                             </div>
                         </div>
 
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="data-fecha_fin">Fecha fin</label>
-                                <input type="date" id="data-fecha_fin" name="fecha_fin" class="form-control">
+                                <input type="date" id="data-fecha_fin" name="fecha_fin" class="form-control" value="<?=isset($fecha_fin) ? $fecha_fin : ''?>">
                             </div>
                         </div>
                         
@@ -66,7 +66,7 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label for="data-avance">Avance</label>
-                                <input type="number" id="data-avance" name="avance" class="form-control">
+                                <input type="number" id="data-avance" name="avance" class="form-control" value="<?=isset($avance) ? $avance : ''?>">
                             </div>
                         </div>
 
@@ -87,18 +87,21 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="data-meta">Meta</label>
-                                <textarea id="data-meta" class="form-control" name="meta"></textarea>
+                                <textarea id="data-meta" class="form-control" name="meta"><?=isset($meta) ? $meta : ''?></textarea>
                             </div>
                         </div>
 
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="data-nota">Nota</label>
-                                <textarea id="data-nota" class="form-control" name="nota"></textarea>
+                                <textarea id="data-nota" class="form-control" name="nota"><?=isset($nota) ? $nota : ''?></textarea>
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" name="accion_id" value="<?=isset($accion_id) ? $accion_id : ''?>">                    
+                    <input type="hidden" name="accion_id" value="<?=isset($accion_id) ? $accion_id : ''?>">  
+                    <?php if(isset($id)): ?>
+                        <input type="hidden" name='id' value="<?=$id?>">
+                    <?php endif; ?>                   
                 </form>
             </div>
             <div class="modal-footer no-bd">

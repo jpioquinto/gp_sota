@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 
-use App\Libraries\Proyecto\{UIProyecto, UIAccion};
+use App\Libraries\Proyecto\{UIProyecto, UIAccion, CProyecto};
 use App\Libraries\Validacion\ValidaAccion;
 use App\Models\{AccionGeneralModel, AccionEspecificaModel};
 use  App\Libraries\Usuario;
@@ -14,8 +14,7 @@ class Seguimiento extends BaseController
     public function __construct()
     {
         @session_start();   
-        $this->usuario = new Usuario();  
-        #$this->uiProyecto = new UIProyecto();  
+        $this->usuario = new Usuario();          
         $this->encrypter = \Config\Services::encrypter();                   
     }
     
@@ -23,33 +22,70 @@ class Seguimiento extends BaseController
     {
         $uiAccion = new UIAccion($this->encrypter->decrypt( base64_decode($this->request->getPost('id')) ));
 
+        $proyecto = new CProyecto($this->encrypter->decrypt( base64_decode($this->request->getPost('id')) ));
+
+        $infoProyecto = $proyecto->obtenerProyecto();
+
         echo json_encode([
             'Solicitud'=>true,
-            'vista'=>view('proyectos/seguimiento/v_contenedor', ['acciones'=>$uiAccion->listadoAcciones()])
+            'vista'=>view(
+                'proyectos/seguimiento/v_contenedor', 
+                [
+                    'acciones'=>$uiAccion->listadoAcciones(), 
+                    'permisos'=>$this->usuario->obtenerPermisosModulo('Proyecto')
+                ]),
+            'header'=>view(
+                'proyectos/parcial/_v_header_titulo', 
+                [
+                    'alias'=>'Gestión de Acciones para el Proyecto'.(isset($infoProyecto['alias']) ? ' de '.$infoProyecto['alias'] : ''), 
+                    'v_acciones'=>$uiAccion->headerTitle()
+                ])
         ]);
     }
 
     public function obtenerVistaNueva()
     {
         $uiProyecto = new UIProyecto();
-         
+        
+        $accion = [];
+        if ($this->request->getPost('id')) {
+            $accionModel = new AccionGeneralModel();
+            $accion = $accionModel->find($this->encrypter->decrypt( base64_decode($this->request->getPost('id')))) ?? [];
+            $accion['id']  = $this->request->getPost('id');
+        }
+        
+
         echo json_encode([
             'Solicitud'=>true, 
-            'vista'=>view('proyectos/seguimiento/v_modal_accion', ['usuarios'=>$uiProyecto->listadoUsuarios($this->usuario->getOrganizacionId())])
+            'vista'=>view(
+                'proyectos/seguimiento/v_modal_accion', 
+                array_merge($accion, ['usuarios'=>$uiProyecto->listadoUsuarios($this->usuario->getOrganizacionId(), isset($accion['coordinador_id']) ? $accion['coordinador_id'] : null)])
+            )
         ]);
     }
 
     public function obtenerVistaFormSubAccion()
     {
         $uiProyecto = new UIProyecto();
+
+        $accion = [];
+        if ($this->request->getPost('id')) {
+            $accionModel = new AccionEspecificaModel();
+            $accion = $accionModel->find($this->encrypter->decrypt( base64_decode($this->request->getPost('id')))) ?? [];
+            $accion['id']  = $this->request->getPost('id');
+        }
          
         echo json_encode([
             'Solicitud'=>true, 
             'vista'=>view('proyectos/seguimiento/v_modal_subaccion',
-             [
-                 'usuarios'=>$uiProyecto->listadoUsuarios($this->usuario->getOrganizacionId()),
-                 'accion_id'=>$this->request->getPost('accion_id')
-             ])
+                array_merge(
+                    $accion,
+                    [
+                        'usuarios'=>$uiProyecto->listadoUsuarios($this->usuario->getOrganizacionId(), isset($accion['responsable_id']) ? $accion['responsable_id'] : null),
+                        'accion_id'=>$this->request->getPost('accion_id')
+                    ]
+                )
+            )
         ]);
     }
 

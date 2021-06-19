@@ -28,7 +28,7 @@ class CProyecto
     public function consultarProyecto($id)
     {
         $proyectoModel = new ProyectoModel();
-        return $proyectoModel->find($id);
+        return $proyectoModel->find($id)??[];
     }
 
     public function obtenerProyecto()

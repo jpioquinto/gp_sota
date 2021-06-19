@@ -4,8 +4,8 @@
             class="card-img-top" 
             src="<?=isset($imagen) ? $imagen : 'images/fondos/image-not-found.png'?>" 
             alt="<?=isset($descripcion) ? $descripcion : ''?>"
-            widthhhhhhhhhhh="389"
-            heightttttttttt="246"
+            widthxx="389"
+            heightxx="246"
         />
         <div class="card-body text-center">
             <p><?=isset($alias) ? $alias : ''?></p>

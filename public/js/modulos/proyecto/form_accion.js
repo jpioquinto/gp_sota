@@ -107,8 +107,6 @@ var $accion = (modulo => {
         }
         $params['responsable'] = $("select[name='responsable'] option:selected").val();
         
-        //console.log($params);return;
-        
         $util.load.show(true);
         $util.post({
             url: "Seguimiento",
