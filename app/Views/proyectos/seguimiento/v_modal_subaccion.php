@@ -106,7 +106,7 @@
             </div>
             <div class="modal-footer no-bd">
                 <button type="button" id="jq_guardar_subaccion" class="btn btn-default">
-                    <span class="btn-label"><i class="fa fa-save"></i></span> Crear																					
+                    <span class="btn-label"><i class="fa fa-save"></i></span> <?=isset($id) ? 'Actualizar' : 'Crear'?>																					
                 </button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">
                     <span class="btn-label"><i class="fa fa-window-close"></i></span> Cerrar

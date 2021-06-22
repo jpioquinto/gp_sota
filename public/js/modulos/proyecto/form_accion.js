@@ -110,7 +110,7 @@ var $accion = (modulo => {
         $util.load.show(true);
         $util.post({
             url: "Seguimiento",
-            metodo:"guardarAccioParticular",
+            metodo:"guardarAccioEspecifica",
             datos:$params,
             funcion: function(data){
                 $util.load.hide();

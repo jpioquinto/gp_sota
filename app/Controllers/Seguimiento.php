@@ -1,9 +1,9 @@
 <?php
 namespace App\Controllers;
 
-use App\Libraries\Proyecto\{UIProyecto, UIAccion, CProyecto};
-use App\Libraries\Validacion\ValidaAccion;
+use App\Libraries\Proyecto\{UIProyecto, UIAccion, CProyecto, CAccion, CSubAccion};
 use App\Models\{AccionGeneralModel, AccionEspecificaModel};
+use App\Libraries\Validacion\ValidaAccion;
 use  App\Libraries\Usuario;
 
 class Seguimiento extends BaseController
@@ -89,7 +89,37 @@ class Seguimiento extends BaseController
         ]);
     }
 
-    public function guardarAccioParticular()
+    public function eliminarAccionGeneral()
+    {
+        if (!$this->request->getPost('id')) {
+            echo json_encode([
+                'Solicitud'=>false, 
+                'Error'=>'No se recibió el Identificador de la Acción.'
+            ]);
+            return;
+        }
+
+        $accion = new CAccion( $this->encrypter->decrypt(base64_decode($this->request->getPost('id'))) );
+
+        echo json_encode($accion->eliminarAccion());        
+    }
+
+    public function eliminarAccionEspecifica()
+    {
+        if (!$this->request->getPost('id')) {
+            echo json_encode([
+                'Solicitud'=>false, 
+                'Error'=>'No se recibió el Identificador de la Acción Específica.'
+            ]);
+            return;
+        }
+
+        $accion = new CSubAccion( $this->encrypter->decrypt(base64_decode($this->request->getPost('id'))) );
+
+        echo json_encode($accion->eliminarAccion());  
+    }
+
+    public function guardarAccioEspecifica()
     {
         if (!$this->request->isAJAX()) {
             redirect('/'); return;
@@ -130,7 +160,7 @@ class Seguimiento extends BaseController
         if ( !is_numeric($id) || $id<1 ) {
             echo json_encode([
                 'Solicitud'=>false, 
-                'Error'=>'Error al intentar '.($this->request->getPost('id') ? 'actualizar' : 'crear').'  la Acción Específica.'
+                'Error'=>'Error al intentar '.($this->request->getPost('id') ? 'actualizar' : 'crear').' la Acción Específica.'
             ]);
             return;
         }
