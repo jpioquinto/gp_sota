@@ -1,6 +1,8 @@
 var $gestion = (modulo => {
     var cargados = {};
 
+    modulo.controlador = '';
+
     modulo.claseSalida = 'animate__backOutLeft animate__delay-5s';
     modulo.claseEntrada = 'animate__fadeInDown animate__delay-5s';
 
@@ -9,12 +11,12 @@ var $gestion = (modulo => {
         if (!$(this).attr('data-control') || $.trim($(this).attr('data-control'))=='') {
             console.log('sin controlador');return;
         }
-        //console.log($(this).attr('data-control'));
+        modulo.controlador = $(this).attr('data-control');
         var $params = {id:$proyecto.getId()};
         var me = $(this);
         $util.load.show(true);
         $util.post({
-            controlador:$(this).attr('data-control'),
+            controlador:modulo.controlador,
             datos:$params,
             funcion: function(data){
                 $util.load.hide();

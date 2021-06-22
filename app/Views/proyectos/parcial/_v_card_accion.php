@@ -3,7 +3,7 @@
       <div class="d-flex align-items-center">
         <h5 class="card-title mr-auto">
           <a class="btn btn-link" data-toggle="collapse" data-target="#collapse-<?=isset($id) ? $id : 0?>" aria-expanded="true" aria-controls="collapse-<?=isset($id) ? $id : 0?>">
-            <?=isset($posicion) ? $posicion . ')' : ''?> <?=isset($definicion) ? $definicion : ''?>
+            <?=isset($posicion) ? $posicion . ')' : ''?> <span class="txt-definicion-gral"><?=isset($definicion) ? $definicion : ''?></span>
           </a>
         </h5>
         <?php if(isset($permisos[14])): ?>
@@ -24,8 +24,8 @@
       <div class="card-body">
 
         <label class="blockquote blockquote-primary">
-          <strong><?=isset($definicion) ? $definicion : ''?></strong>
-          <span class="ponderacion">Podenración: <?=isset($ponderacion) ? $ponderacion : '0'?></span>
+          <strong class="txt-definicion-gral"><?=isset($definicion) ? $definicion : ''?></strong>
+          <span class="txt-ponderacion-gral">Podenración: <?=isset($ponderacion) ? $ponderacion : '0'?></span>
 
           <?php if(isset($permisos[12])): ?>
             <span 
@@ -47,10 +47,10 @@
         </label>
 
         <div class="alert alert-info" role="alert">          
-          <label><strong>Descripción: </strong><?=isset($descripcion) ? $descripcion : ''?></label>
+          <label><strong>Descripción: </strong><span class="txt-descripcion-gral"><?=isset($descripcion) ? $descripcion : ''?></span></label>
         </div>
 
-        <div class="container">
+        <div class="container contenedor-subacciones">
           <?=isset($subacciones) ? $subacciones : ''?>
         </div>
 

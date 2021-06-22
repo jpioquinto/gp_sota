@@ -1,4 +1,5 @@
 var $seguimiento = (modulo => {
+    modulo.me = {};
 
     modulo.clickNuevaAccion = function(e) {
         e.preventDefault();
@@ -8,7 +9,7 @@ var $seguimiento = (modulo => {
 
     modulo.clickEditarAccion = function(e) {
         e.preventDefault();
-
+        modulo.me = $(this);
         obtenerFormAccion($(this).parents('.card').attr('data-id'));
     };
 
@@ -37,7 +38,7 @@ var $seguimiento = (modulo => {
 
     modulo.clickNuevaAccionParticular = function(e) {
         e.preventDefault();
-
+        modulo.me = $(this);
         obtenerFormAccionParticular($(this).parents('.card').attr('data-id'));
     };
 
@@ -47,6 +48,7 @@ var $seguimiento = (modulo => {
         if ( !$(this).parents('.item-accion-especifica').attr('data-id')) {
             return;
         }
+        modulo.me = $(this);
         obtenerFormAccionParticular($(this).parents('.card').attr('data-id'), $(this).parents('.item-accion-especifica').attr('data-id'));
     };
 
@@ -55,7 +57,7 @@ var $seguimiento = (modulo => {
         if ( !$(this).parents('.item-accion-especifica').attr('data-id')) {
             return;
         }
-        var me = $(this);
+        modulo.me = $(this);
         var $params = {id:$(this).parents('.item-accion-especifica').attr('data-id')};
         $util.load.show(true);
         $util.post({
@@ -64,17 +66,59 @@ var $seguimiento = (modulo => {
             datos:$params,
             funcion: function(data){
                 $util.load.hide();
-                if (data.Solicitud) {
-                    verificaReasignacion(data.reasignado);
-                    me.parents("li").remove();                    
+                if (data.Solicitud) {                                       
+                    setTimeout(() => {verificaReasignacion(data);}, 2300);
                 }            
             }
         });
     };
 
-    var verificaReasignacion = resultado => {
-        if (resultado) {
-            $(".jq_submodulo[data-control='Seguimiento']").trigger('click');
+    modulo.actualizaVistaAccion = ($params, $respuesta) => {
+        if ($respuesta.ordenado) {
+            setTimeout(() => {$(".content-modulos .jq_submodulo[data-control='" + $gestion.controlador + "']").trigger('click');}, 2300);
+            return;
+        }else if ($.trim($respuesta.vista) != '') {            
+            modulo.me.parents('.card').find('.card-body .contenedor-subacciones').html($respuesta.vista);
+            modulo.eventosSubAcciones();
+        } 
+        modulo.me.parents('.card').find('.card-body .txt-ponderacion-gral').html("Ponderación: " + $respuesta.ponderacion);
+        modulo.me.parents('.card').find('.txt-definicion-gral').html($params.definicion);
+        modulo.me.parents('.card').find('.txt-descripcion-gral').html($params.descripcion); 
+        
+    };
+
+    modulo.actualizaVistaSubAccion = $respuesta => {
+        if (!$respuesta.hasOwnProperty('ponderacion') || !esNumerico($respuesta.ponderacion)) {
+            return;
+        }
+
+        if (parseFloat($respuesta.ponderacion)>0) {
+            modulo.me.parents('.card').find('.card-body .contenedor-subacciones').html($respuesta.vista);
+            modulo.eventosSubAcciones();
+            return;    
+        }
+        modulo.me.parents('.card').find('.card-body .listado-subacciones').append($respuesta.vista);
+        modulo.eventosSubAcciones();
+    };
+
+    modulo.eventosAcciones = () => {
+        $('.btn-editar-accion').off('click').on('click', modulo.clickEditarAccion);
+        $('.btn-eliminar-accion').off('click').on('click', modulo.clickEliminarAccion);
+        $('.jq_nueva_accion_particular').off('click').on('click', modulo.clickNuevaAccionParticular);
+    };
+
+    modulo.eventosSubAcciones = () => {
+        $('.btn-editar').off('click').on('click', modulo.clickEditarAccionParticular);
+        $('.btn-eliminar').off('click').on('click', modulo.clickEliminarAccionParticular);
+    };
+
+
+    var verificaReasignacion = $respuesta => {
+        var contenedor = modulo.me.parents('.contenedor-subacciones');
+        modulo.me.parents("li").remove(); 
+        if ($respuesta.reasignado) {            
+            contenedor.html($respuesta.vista);
+            modulo.eventosSubAcciones();
         }
     };
 
@@ -128,10 +172,8 @@ var $seguimiento = (modulo => {
 
 $(function() {
     $('[data-toggle="tooltip"]').tooltip();
-    $('.jq_nueva_accion').off('click').on('click', $seguimiento.clickNuevaAccion);
-    $('.btn-editar-accion').off('click').on('click', $seguimiento.clickEditarAccion);
-    $('.btn-eliminar-accion').off('click').on('click', $seguimiento.clickEliminarAccion);
-    $('.jq_nueva_accion_particular').off('click').on('click', $seguimiento.clickNuevaAccionParticular);
-    $('.btn-editar').off('click').on('click', $seguimiento.clickEditarAccionParticular);
-    $('.btn-eliminar').off('click').on('click', $seguimiento.clickEliminarAccionParticular);
+    $('.jq_nueva_accion').off('click').on('click', $seguimiento.clickNuevaAccion);    
+    $seguimiento.eventosAcciones();
+    $seguimiento.eventosSubAcciones();
+    
 });

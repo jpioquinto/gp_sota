@@ -30,6 +30,17 @@ class CAccion
         return $this->id;
     }
 
+    public function obtenerAccion()
+    {
+        return $this->accionModel->find($this->getId()) ?? [];
+    }
+
+    public function obtenerPonderacion()
+    {
+        $accion = $this->accionModel->find($this->getId());
+        return isset($accion['ponderacion']) ? $accion['ponderacion'] : 0;
+    }
+
     public function eliminarAccion()
     {        
         if (!$this->accionModel->update( $this->getId(), ['estatus'=>0] )) {

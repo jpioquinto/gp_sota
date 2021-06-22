@@ -50,6 +50,7 @@ var $accion = (modulo => {
             funcion: function(data){
                 $util.load.hide();
                 if (data.Solicitud) {
+                    actualizarVistaAccion($params, data);
                     $('#jq_modal_accion').modal('hide');                
                 }              
             }
@@ -110,16 +111,31 @@ var $accion = (modulo => {
         $util.load.show(true);
         $util.post({
             url: "Seguimiento",
-            metodo:"guardarAccioEspecifica",
+            metodo:"guardarAccionEspecifica",
             datos:$params,
             funcion: function(data){
                 $util.load.hide();
                 if (data.Solicitud) {
+                    actualizarVistaSubAcciones($params, data);
                     $('#jq_modal_accion').modal('hide');                
                 }              
             }
         });
+    };
 
+    var actualizarVistaAccion = ($params, $respuesta) => {
+        if ($params.hasOwnProperty('id')) {
+            setTimeout(() => { $seguimiento.actualizaVistaAccion($params, $respuesta);}, 2300);            
+        }               
+    };
+
+    var actualizarVistaSubAcciones = ($params, $respuesta) => {
+        if (!$params.hasOwnProperty('id')) {
+            setTimeout(() => { $seguimiento.actualizaVistaSubAccion($respuesta);}, 2300);
+            return;
+        }
+        $seguimiento.me.parents('li').find('.txt-definicion-subaccion').html($params.definicion);
+        $seguimiento.me.parents('li').find('.txt-descripcion-subaccion').html($params.descripcion);
     };
 
     return modulo;

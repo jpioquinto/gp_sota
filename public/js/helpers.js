@@ -46,3 +46,7 @@ var esEnteroPositivo = function(numero) {
     if(!typeInt.test(numero))return false;
     return true;
 };
+var esNumerico = function (dato) {
+    var typeFloat =  /^[-]?[0-9]+\.[0-9]*$/;
+    return (typeFloat.test(dato) || esEntero(dato));
+};

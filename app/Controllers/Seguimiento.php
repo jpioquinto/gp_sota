@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Libraries\Proyecto\{UIProyecto, UIAccion, CProyecto, CAccion, CSubAccion};
+use App\Traits\{AccionGenetalTrait, AccionEspecificaTrait};
 use App\Models\{AccionGeneralModel, AccionEspecificaModel};
 use App\Libraries\Validacion\ValidaAccion;
 use  App\Libraries\Usuario;
@@ -10,6 +11,9 @@ class Seguimiento extends BaseController
 {
     protected $encrypter; 
     protected $usuario;
+
+    use AccionGenetalTrait;
+    use AccionEspecificaTrait;
 
     public function __construct()
     {
@@ -116,10 +120,16 @@ class Seguimiento extends BaseController
 
         $accion = new CSubAccion( $this->encrypter->decrypt(base64_decode($this->request->getPost('id'))) );
 
-        echo json_encode($accion->eliminarAccion());  
+        $respuesta = $accion->eliminarAccion();
+
+        if ($respuesta['reasignado']) {
+            $respuesta['vista'] = $this->vistaListadoSubAccion($accion->obtenerIdAccionGeneral());
+        }
+
+        echo json_encode($respuesta);  
     }
 
-    public function guardarAccioEspecifica()
+    public function guardarAccionEspecifica()
     {
         if (!$this->request->isAJAX()) {
             redirect('/'); return;
@@ -164,9 +174,11 @@ class Seguimiento extends BaseController
             ]);
             return;
         }
-
+        
         echo json_encode([
-            'Solicitud'=>true, 
+            'Solicitud'=>true,
+            'ponderacion'=>($podenracion = $this->asignarPonderacion($id)), 
+            'vista'=>($podenracion>0 ? $this->vistaListadoSubAccion($datos['accion_id']) : $this->vistaItemSubAccion($id)),
             'Msg'=>'Acción Específica '.($this->request->getPost('id') ? 'actualizada correctamente.' : 'creada correctamente.')
         ]);
     }
@@ -201,6 +213,13 @@ class Seguimiento extends BaseController
             $datos['creado_por'] = $this->usuario->getId();
         }
 
+        $oldAccion = null;
+
+        if ($this->request->getPost('id')) {            
+            $accion = new CAccion( $this->encrypter->decrypt(base64_decode($this->request->getPost('id'))) );
+            $oldAccion = $accion->obtenerAccion();
+        }
+
         $id = $this->insertarActualizar($datos, $this->request->getPost('id'));
         if ( !is_numeric($id) || $id<1 ) {
             echo json_encode([
@@ -210,8 +229,18 @@ class Seguimiento extends BaseController
             return;
         }
 
+        $newAccion = null;
+        $accion = new CAccion($id);
+
+        if (isset($oldAccion['id'])) {
+            $newAccion = $accion->obtenerAccion();
+        }
+
         echo json_encode([
             'Solicitud'=>true, 
+            'ponderacion'=>$accion->obtenerPonderacion(),
+            'ordenado'=>$this->cambioOrden($oldAccion, $newAccion),
+            'vista'=>$this->cambioPonderacion($oldAccion, $newAccion) ? $this->vistaListadoSubAccion($newAccion['id']) : '',
             'Msg'=>'Acción General '.($this->request->getPost('id') ? 'actualizada correctamente.' : 'creada correctamente.')
         ]);
     }
