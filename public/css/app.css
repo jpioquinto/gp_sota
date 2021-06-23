@@ -10,6 +10,36 @@
 .sidebar[data-background-color=sota] {
     background: #0C231E!important;
 }
+/*=========================== reset clases principales ===========================*/
+.btn-primary111111 {
+    background-color: #319db5 !important;
+    color: #FFF !important;
+}
+/*============== fin del reset de clases principales =================*/
+/*=========================== tarjetas de modulos ===========================*/
+.card-success-modulos-1 {
+    background-color: #00796b !important;
+    color:#FFF !important;
+}
+.card-success-modulos-1 .btn-light {
+    color:#00796b !important;
+}
+.card-info-modulos-2{
+    background-color: #299DBE !important;
+    color:#FFF !important;
+    /*color:#48abf7!important;*/
+}
+.card-info-modulos-2 .btn-light {
+    color:#299DBE !important;
+}
+.card-modulos-3{
+    background-color: #B38E5D !important;
+    color:#FFF !important;
+}
+.card-modulos-3 .btn-light {
+    color: #B38E5D !important;
+}
+/*=========================== fin clases tarjetas===========================*/
 /*=========================== overly /*===========================*/
 .loader-overlay.loaded {
     -moz-opacity: 0;
