@@ -41,7 +41,7 @@
                         <i class="fa fa-search"></i>
                     </a>
                 </li>
-                <li class="nav-item dropdown hidden-caret">
+                <!--li class="nav-item dropdown hidden-caret">
                     <a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-envelope"></i>
                     </a>
@@ -110,7 +110,7 @@
                             <a class="see-all" href="javascript:void(0);">See all messages<i class="fa fa-angle-right"></i> </a>
                         </li>
                     </ul>
-                </li>
+                </li-->
                 <li class="nav-item dropdown hidden-caret">
                     <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-bell"></i>
@@ -118,7 +118,7 @@
                     </a>
                     <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
                         <li>
-                            <div class="dropdown-title">You have 4 new notification</div>
+                            <div class="dropdown-title">Tienes 4 notificaciones</div>
                         </li>
                         <li>
                             <div class="notif-scroll scrollbar-outer">
@@ -127,45 +127,36 @@
                                         <div class="notif-icon notif-primary"> <i class="fa fa-user-plus"></i> </div>
                                         <div class="notif-content">
                                             <span class="block">
-                                                New user registered
+                                                Nuevo usuario registrado
                                             </span>
-                                            <span class="time">5 minutes ago</span> 
+                                            <span class="time">hace 5 minutos</span> 
                                         </div>
                                     </a>
                                     <a href="#">
                                         <div class="notif-icon notif-success"> <i class="fa fa-comment"></i> </div>
                                         <div class="notif-content">
                                             <span class="block">
-                                                Rahmad commented on Admin
+                                                Pablo realizó un comentario
                                             </span>
-                                            <span class="time">12 minutes ago</span> 
+                                            <span class="time">Hace 12 minutos</span> 
                                         </div>
                                     </a>
                                     <a href="#">
                                         <div class="notif-img"> 
-                                            <img src="../assets/img/profile2.jpg" alt="Img Profile">
+                                            <img src="images/perfiles/default.png" alt="Imagen de perfil">
                                         </div>
                                         <div class="notif-content">
                                             <span class="block">
-                                                Reza send messages to you
+                                                Juan Pérez te envió un mensaje
                                             </span>
-                                            <span class="time">12 minutes ago</span> 
-                                        </div>
-                                    </a>
-                                    <a href="#">
-                                        <div class="notif-icon notif-danger"> <i class="fa fa-heart"></i> </div>
-                                        <div class="notif-content">
-                                            <span class="block">
-                                                Farrah liked Admin
-                                            </span>
-                                            <span class="time">17 minutes ago</span> 
+                                            <span class="time">Hace 16 minutos</span> 
                                         </div>
                                     </a>
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <a class="see-all" href="javascript:void(0);">See all notifications<i class="fa fa-angle-right"></i> </a>
+                            <a class="see-all" href="javascript:void(0);">Ver toda las notificaciones<i class="fa fa-angle-right"></i> </a>
                         </li>
                     </ul>
                 </li>
@@ -175,8 +166,8 @@
                     </a>
                     <div class="dropdown-menu quick-actions quick-actions-info animated fadeIn">
                         <div class="quick-actions-header">
-                            <span class="title mb-1">Quick Actions</span>
-                            <span class="subtitle op-8">Shortcuts</span>
+                            <span class="title mb-1">Accesos directos</span>
+                            <span class="subtitle op-8">Ir a...</span>
                         </div>
                         <div class="quick-actions-scroll scrollbar-outer">
                             <div class="quick-actions-items">
@@ -184,37 +175,37 @@
                                     <a class="col-6 col-md-4 p-0" href="#">
                                         <div class="quick-actions-item">
                                             <i class="flaticon-file-1"></i>
-                                            <span class="text">Generated Report</span>
+                                            <span class="text">Generar reporte</span>
                                         </div>
                                     </a>
                                     <a class="col-6 col-md-4 p-0" href="#">
                                         <div class="quick-actions-item">
                                             <i class="flaticon-database"></i>
-                                            <span class="text">Create New Database</span>
+                                            <span class="text">Consultar documentos</span>
                                         </div>
                                     </a>
                                     <a class="col-6 col-md-4 p-0" href="#">
                                         <div class="quick-actions-item">
                                             <i class="flaticon-pen"></i>
-                                            <span class="text">Create New Post</span>
+                                            <span class="text">Agregar evento</span>
                                         </div>
                                     </a>
                                     <a class="col-6 col-md-4 p-0" href="#">
                                         <div class="quick-actions-item">
                                             <i class="flaticon-interface-1"></i>
-                                            <span class="text">Create New Task</span>
+                                            <span class="text">Estatus del Proyecto</span>
                                         </div>
                                     </a>
                                     <a class="col-6 col-md-4 p-0" href="#">
                                         <div class="quick-actions-item">
                                             <i class="flaticon-list"></i>
-                                            <span class="text">Completed Tasks</span>
+                                            <span class="text">Estatus de Acciones</span>
                                         </div>
                                     </a>
                                     <a class="col-6 col-md-4 p-0" href="#">
                                         <div class="quick-actions-item">
                                             <i class="flaticon-file"></i>
-                                            <span class="text">Create New Invoice</span>
+                                            <span class="text">Crear Ficha Técnica</span>
                                         </div>
                                     </a>
                                 </div>

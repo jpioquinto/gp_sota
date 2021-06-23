@@ -5,14 +5,36 @@
     background: #12352e!important;
 }
 .bg-primary-gradient {
-    background: linear-gradient(-45deg,#385851,#073a2e)!important;
+    /*background: linear-gradient(-45deg,#385851,#073a2e)!important;*/
+    background: linear-gradient(-45deg,#717171,#828282)!important;
 }
 .sidebar[data-background-color=sota] {
     background: #0C231E!important;
 }
+.sidebar.sidebar-style-2 .nav.nav-primary>.nav-item.active>a {
+    background: #B38E5D!important;
+    /*box-shadow: 4px 4px 10px 0 rgba(0,0,0,.1),4px 4px 15px -5px rgba(21,114,232,.4)!important;*/
+}
+.quick-actions.quick-actions-info .quick-actions-header {
+    background: #B38E5D !important;
+}
 /*=========================== reset clases principales ===========================*/
 .btn-primary111111 {
     background-color: #319db5 !important;
+    color: #FFF !important;
+}
+.btn-success {
+    background: #18a689!important;
+    border-color: #18a689!important;
+}
+.btn-warning {
+    background-color: #ff9122 !important;
+    color: #fff !important;
+}
+
+.btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open .dropdown-toggle.btn-success  {
+    background: #13725f!important;
+    border-color: #13725f!important;
     color: #FFF !important;
 }
 /*============== fin del reset de clases principales =================*/
