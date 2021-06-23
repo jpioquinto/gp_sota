@@ -28,7 +28,7 @@ class Perfil extends BaseController
         if (!in_array($foto->getMimeType(), ['image/png', 'image/jpeg', 'image/jp2'])) {
             echo json_encode([
                 'Solicitud' =>false,
-                'Error'=>'El el formato del archivo que intenta cargar no esta permitido.',
+                'Error'=>'El formato del archivo que intenta cargar no esta permitido.',
             ]);	
             return;
         }

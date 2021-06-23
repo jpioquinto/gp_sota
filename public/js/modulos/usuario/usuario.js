@@ -9,13 +9,13 @@ var $usuario = (modulo=>{
             id:$(this).parents('tr').attr('data-id')
         };
         $el = $(this);
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "Usuario",
             metodo:"obtenerVistaCambiarPerfil",
             datos:$params,
             funcion: function(data){
-                //$util.load.hide();
+                $util.load.hide();
                 if (data.Solicitud) {
                     $('.content-modal').html(data.vista);
                     $('#jq_modal_nuevoperfil').modal('show');  
@@ -64,13 +64,13 @@ var $usuario = (modulo=>{
             id:$(this).parents('tr').attr('data-id')
         };
         $el = $(this);
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "Usuario",
             metodo:"obtenerVistaCambiarOrganizacion",
             datos:$params,
             funcion: function(data){
-                //$util.load.hide();
+                $util.load.hide();
                 if (data.Solicitud) {
                     $('.content-modal').html(data.vista);                                       
                     $dependencia.ini(data.opciones, data.organizacion, $params.id);
@@ -89,13 +89,13 @@ var $usuario = (modulo=>{
             id:$(this).parents('tr').attr('data-id')
         };
         $el = $(this);
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "Usuario",
             metodo:"obtenerVistaCambio",
             datos:$params,
             funcion: function(data){
-                //$util.load.hide();
+                $util.load.hide();
                 if (data.Solicitud) {
                     $('.content-modal').html(data.vista);                                                           
                     $('#jq_nuevo_pass').modal('show'); 
@@ -107,13 +107,13 @@ var $usuario = (modulo=>{
 
     modulo.clickAgregar = function(e) {
         e.preventDefault();
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "Usuario",
             metodo:"obtenerVistaNuevo",
             datos:{},
             funcion: function(data){
-                //$util.load.hide();
+                $util.load.hide();
                 if (data.Solicitud) {
                     $('.content-modal').html(data.vista);
                     $('#jq_modal_usuario').modal('show');                    
@@ -136,13 +136,13 @@ var $usuario = (modulo=>{
             perfil:$("select[name='perfil'] option:selected").val(),
             id:$el.parents('tr').attr('data-id')
         };
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "Usuario",
             metodo:"cambiarPerfil",
             datos:$params,
             funcion: function(data){
-                //$util.load.hide();
+                $util.load.hide();
                 if (data.Solicitud) {
                     $el.parents('tr').find("td[data-perfil='true']").html( $.trim($("select[name='perfil'] option:selected").text()) );
                     $('#jq_modal_nuevoperfil').modal('hide');
@@ -159,13 +159,13 @@ var $usuario = (modulo=>{
             id:$el.parents('tr').attr('data-id'),
             estatus:estatus
         };
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "Usuario",
             metodo:"cambiarEstatus",
             datos:$params,
             funcion: function(data){
-                //$util.load.hide();
+                $util.load.hide();
                 if (data.Solicitud) {
                     $el.parents('tr').find("td[data-estatus]").attr('data-estatus', data.estatus);
 

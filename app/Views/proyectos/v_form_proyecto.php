@@ -17,7 +17,7 @@
                     <div class="row">
                         <div class="col-sm-3">
                             <div class="text-center">
-                                <img src="images/fondos/image-not-found-thumbnail.png" class="rounded img-fluid img-thumbnail" alt="...">
+                                <img src="images/fondos/image-not-found-thumbnail.png" class="rounded img-fluid img-thumbnail jq_foto_proyecto" alt="Foto representativa del proyecto">
                                 <span>
                                     <button class="btn btn-primary btn-sm jq_cargar_foto">
                                         <span class="btn-label">
@@ -25,6 +25,7 @@
                                         </span>
                                         Cargar imagen
                                     </button>
+                                    <input type="file" accept=".jpg,.png" class="form-control invisible uploadFile" name="foto" value="" />
                                 </span>
                             </div>
                         </div>

@@ -1,22 +1,17 @@
 <?php 
 namespace App\Libraries\Proyecto;
 use App\Models\ProyectoModel;
-use App\Models\CatalogoModel;
-use App\Models\UsuarioQuery;
-use  App\Libraries\Usuario;
 
 class CProyecto
 {	
-	#protected $proyectoModel;
+    public $dependencia;
     protected $proyecto;
-    protected $id;
-	#protected $usuario;	
+    protected $id;	
 
 	public function __construct($idProyecto=0)
 	{
-        $this->proyecto = $this->consultarProyecto($idProyecto);        
-		#$this->proyectoModel = new ProyectoModel();
-		#$this->usuario = new Usuario();  
+        $this->proyecto = $this->consultarProyecto($idProyecto);
+        $this->dependencia = new CDependencia($this->getOrganizacionId());         
         $this->id = $idProyecto;
 	}
 
@@ -34,5 +29,34 @@ class CProyecto
     public function obtenerProyecto()
     {       
         return $this->proyecto;
+    }
+
+    public function getAlias()
+    {
+        return isset($this->proyecto['alias']) ? $this->proyecto['alias'] : '';
+    }
+
+    public function getAnio()
+    {
+        return isset($this->proyecto['fecha_incorporacion']) ? substr($this->proyecto['fecha_incorporacion'], 0, 4) : '';
+    }
+
+    public function getOrganizacionId()
+    {
+        return isset($this->proyecto['organizacion_id']) ? $this->proyecto['organizacion_id'] : 0;
+    }
+
+    public function getCarpeta()
+    {
+        return $this->dependencia->getCarpeta();
+    }
+
+    public function actualizaProyecto($campos)
+    {
+        if (!isset($campos['id'])) {
+            return false;
+        }
+        $proyectoModel = new ProyectoModel();
+        return $proyectoModel->save($campos);
     }
 }

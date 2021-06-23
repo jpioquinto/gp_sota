@@ -29,13 +29,13 @@ var $uPass = (modulo=>{
             id:usuarioId
         };
 
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "Usuario",
             metodo:"cambiarPasswordDirecto",
             datos:$params,
             funcion: function(data){
-                //$util.load.hide();
+                $util.load.hide();
                 if (data.Solicitud) {
                     $('#jq_nuevo_pass').modal('hide');
                 }            

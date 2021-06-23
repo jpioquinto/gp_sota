@@ -29,7 +29,7 @@ var $dependencia = (modulo=>{
             dependencia:$("select[name='dependencia'] option:selected").val(),
             id:usuarioId
         };
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "Usuario",
             metodo:"cambiarDependencia",
@@ -38,7 +38,7 @@ var $dependencia = (modulo=>{
               if (data.Solicitud) {
                 $('#jq_modal_nuevaorg').modal('hide');
               }
-              //$util.load.hide();
+              $util.load.hide();
             }
           });
     };

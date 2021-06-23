@@ -92,13 +92,13 @@ var $modalUser = (modulo=>{
             perfil:$("select[name='perfil'] option:selected").val()
         };
 
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "Usuario",
             metodo:"agregarUsuario",
             datos:params,
             funcion: function(data){
-                //$util.load.hide();
+                $util.load.hide();
                 if (data.Solicitud) {
                     $('#jq_modal_usuario').modal('hide');
                 }            
@@ -108,13 +108,13 @@ var $modalUser = (modulo=>{
     };
 
     var verificaExistencia = $el => {
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "Usuario",
             metodo:"verficarExistencia",
             datos:{usuario:$.trim($el.val())},
             funcion: function(data){
-                //$util.load.hide();
+                $util.load.hide();
                 if (data.existe) {
                     $el.parents('.form-group').removeClass('has-success').addClass('has-error');
                     $("#jq_aceptar_usuario, input[name='password']").prop('disabled', true);

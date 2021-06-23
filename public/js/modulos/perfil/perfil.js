@@ -57,13 +57,13 @@ var $gPerfil = (modulo=> {
             id:$el.parents('tr').attr('data-id'),
             estatus:estatus
         };
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "PerfilUsuario",
             metodo:"cambiarEstatus",
             datos:$params,
             funcion: function(data){
-                //$util.load.hide();
+                $util.load.hide();
                 if (data.Solicitud) {
                     $el.parents('tr').find("td[data-estatus]").attr('data-estatus', data.estatus);
 
@@ -92,13 +92,13 @@ var $gPerfil = (modulo=> {
     };
 
     var mostrarFormulario = $params => {
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "PerfilUsuario",
             metodo:"obtenerVistaFormPerfil",
             datos:$params,
             funcion: function(data){
-                //$util.load.hide();
+                $util.load.hide();
                 if (data.Solicitud) {
                     $('.content-listado-perfiles').hide('animate__backOutLeft');
 

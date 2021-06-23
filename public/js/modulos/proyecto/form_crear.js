@@ -79,7 +79,7 @@ var $formFicha  = (modulo => {
         $params['responsable'] = $("select[name='responsable'] option:selected").val();
         $params['colaboradores'] = $("select[name='colaboradores']").val();
         
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "Proyecto",
             metodo:"guardar",
@@ -88,13 +88,53 @@ var $formFicha  = (modulo => {
               if (data.Solicitud) {
                 
               }
-              //$util.load.hide();
+              $util.load.hide();
             }
         });        
     };
 
     modulo.clickCargarImagen = function(e) {
         e.preventDefault();
+        $('.uploadFile').trigger('click');
+    };
+
+    modulo.subirFoto = function(e) {
+        var cargado = false;
+        var error   = "";
+        var datos = new FormData();
+        datos.append("foto",this.files[0]);
+
+        if ($(this).parents('.jq_form_proyecto').find("input[name='id']").val()!='') {        
+            datos.append("id", $(this).parents('.jq_form_proyecto').find("input[name='id']").val());        
+        }
+        //datos.append(tkn,v);
+        $util.load.show(true); 
+        $.ajax({
+            url:'FichaTecnica/cargarFoto',
+            type:"POST",
+            data:datos,
+            mimeType:"multipart/form-data",
+            contentType: false,
+            cache: false,
+            processData:false,
+            dataType: "json",
+            success:function(data){
+              if (data.Solicitud) {
+                cargado = true;  
+                $('.jq_foto_proyecto').attr("src", data.url + "?id=" + $util.hash());                             
+                notificacion(data.Msg, "success", 4000, "bottomRight", "fadeInUp", "fadeOutDown"); 
+              }
+
+              if (!data.Solicitud) {
+                error = data.Error;
+              }                        
+            }
+        }).always(function(){
+            $util.load.hide();
+            if (!cargado) {            
+                notificacion(error, "error", 4000, "bottomRight", "fadeInUp", "fadeOutDown"); 
+            }          
+        });
     };
 
     modulo.clickRegresar = function(e) {
@@ -114,5 +154,6 @@ $(function() {
     //setTimeout(function() {$('#data-coordinador, #data-responsable, #data-colaboradores').select2();},500);    
     $('.jq_guardar_ficha').off('click').on('click', $formFicha.clickGuardar);
     $('.jq_cargar_foto').off('click').on('click', $formFicha.clickCargarImagen);
+    $('.uploadFile').off('change').on('change', $formFicha.subirFoto);
     //$('.jq_regresar_fichas').off('click').on('click', $formFicha.clickRegresar); se quitó 23 de Junio de 2021
 });

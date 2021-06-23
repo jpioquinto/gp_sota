@@ -2,8 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Libraries\Proyecto\{UIProyecto, CProyecto};
-use App\Models\ProyectoModel;
+use App\Libraries\Proyecto\{UIProyecto, CProyecto, CFichaTecnica};
 use App\Libraries\Usuario;
 
 class FichaTecnica extends BaseController
@@ -39,6 +38,31 @@ class FichaTecnica extends BaseController
                     'v_listado_colaboradores'=>$this->uiProyecto->listadoUsuarios($this->usuario->getOrganizacionId(),isset($registro['colaboradores']) ? $registro['colaboradores'] : null)                     
                 ])
             ]);
+    }
+
+    public function cargarFoto()
+    {
+        if (!$this->request->getPost('id')) {
+            echo json_encode([
+                'Solicitud' =>false,
+                'Error'=>'No se recibió el Identificador de la Ficha Técnica.',
+            ]);	
+            return; 
+        }
+        
+        $foto = $this->request->getFile('foto');
+        #echo '<pre>';  print_r($foto);exit;
+        if (!in_array($foto->getMimeType(), ['image/png', 'image/jpeg', 'image/jp2'])) {
+            echo json_encode([
+                'Solicitud' =>false,
+                'Error'=>'El formato del archivo que intenta cargar no esta permitido.',
+            ]);	
+            return;
+        }
+
+        $ficha = new CFichaTecnica( new CProyecto( $this->encrypter->decrypt( base64_decode($this->request->getPost('id'))) ) );
+
+        echo json_encode($ficha->moverFoto($foto));
     }
 
 }

@@ -6,13 +6,13 @@ var $formPerfil = (modulo=>{
     modulo.ini = (id, accion) => {
         perfiId = id;
         btnAccion = accion;
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "PerfilUsuario",
             metodo:"obtenerModulos",
             datos:{id:perfiId},
             funcion: function(data){
-                //$util.load.hide();
+                $util.load.hide();
                 if (data.Solicitud) {
                     
                     $('#jq_arbol_modulos').jstree({ 'core' : {
@@ -71,13 +71,13 @@ var $formPerfil = (modulo=>{
         if (perfiId) {
             $params['id'] = perfiId;
         }
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "PerfilUsuario",
             metodo:"guardarPerfil",
             datos:$params,
             funcion: function(data){
-                //$util.load.hide();
+                $util.load.hide();
                 if (data.Solicitud) { 
                     setTimeout(function() { 
                         $('.jq_regresar_perfiles').trigger('click');
