@@ -17,14 +17,13 @@
     <div class="row mt--2 content-listado-proyectos"> 
         <?=isset($listado) ? $listado : ''?>  
         
-        <div class="col-md-4">
+        <!--div class="col-md-4">
             <div class="card card-post card-round">
-                <img class="card-img-top" src="documentos/SOTA/aifa.png" alt="Card image cap">
+                <img class="card-img-top" src="documentos/SOTA/2021/AIFA/fotos/aifa.png" alt="Card image cap">
                 <div class="card-body text-center">
                 <p>AIFA TEST</p>
                 <div class="separator-solid"></div>
-                    <div class="dropdown">
-                        <!--a href="#" class="btn btn-primary btn-rounded btn-sm">Ver Información</a-->
+                    <div class="dropdown">                        
                         <button class="btn btn-primary btn-border dropdown-toggle" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Ver información
                         </button>
@@ -57,7 +56,7 @@
                     </div>
                 </div>
             </div>
-        </div>                
+        </div-->                
     </div>
     <div class='content-modulo jq_content_modulo'></div>
 </div>

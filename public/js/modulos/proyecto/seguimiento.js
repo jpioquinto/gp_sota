@@ -74,29 +74,48 @@ var $seguimiento = (modulo => {
     };
 
     modulo.actualizaVistaAccion = ($params, $respuesta) => {
+        
         if ($respuesta.ordenado) {
             setTimeout(() => {$(".content-modulos .jq_submodulo[data-control='" + $gestion.controlador + "']").trigger('click');}, 2300);
             return;
-        }else if ($.trim($respuesta.vista) != '') {            
-            modulo.me.parents('.card').find('.card-body .contenedor-subacciones').html($respuesta.vista);
+        }
+
+        if (!$params.hasOwnProperty('id') && $.trim($respuesta.vista) != '') {            
+            $('#accordion-acciones').append($respuesta.vista);
+            modulo.eventosSubAcciones();
+            return;
+        }  
+
+        var id = modulo.me.parents('.card').attr('data-id');
+
+        if ($params.hasOwnProperty('id') && $.trim($respuesta.vista) != '') {            
+            modulo.me.parents(`.card[data-id='${id}']`).find('.card-body .contenedor-subacciones').html($respuesta.vista);
             modulo.eventosSubAcciones();
         } 
-        modulo.me.parents('.card').find('.card-body .txt-ponderacion-gral').html("Ponderación: " + $respuesta.ponderacion);
-        modulo.me.parents('.card').find('.txt-definicion-gral').html($params.definicion);
-        modulo.me.parents('.card').find('.txt-descripcion-gral').html($params.descripcion);         
+        modulo.me.parents(`.card[data-id='${id}']`).find('.card-body .txt-ponderacion-gral').html("Ponderación: " + $respuesta.ponderacion);
+        modulo.me.parents(`.card[data-id='${id}']`).find('.txt-definicion-gral').html($params.definicion);
+        modulo.me.parents(`.card[data-id='${id}']`).find('.txt-descripcion-gral').html($params.descripcion);         
     };
 
-    modulo.actualizaVistaSubAccion = $respuesta => {
+    modulo.actualizaVistaSubAccion = ($params, $respuesta) => {
+        if ($params.hasOwnProperty('id')) {
+            modulo.me.parents('li').find('.txt-definicion-subaccion').html($params.definicion);
+            modulo.me.parents('li').find('.txt-descripcion-subaccion').html($params.descripcion);
+            return;
+        }
+
         if (!$respuesta.hasOwnProperty('ponderacion') || !esNumerico($respuesta.ponderacion)) {
             return;
         }
 
+        var id = modulo.me.parents('.card').attr('data-id');//console.log(id);
+
         if (parseFloat($respuesta.ponderacion)>0) {
-            modulo.me.parents('.card').find('.card-body .contenedor-subacciones').html($respuesta.vista);
+            modulo.me.parents(`.card[data-id='${id}']`).find('.card-body .contenedor-subacciones').html($respuesta.vista);
             modulo.eventosSubAcciones();
             return;    
         }
-        modulo.me.parents('.card').find('.card-body .listado-subacciones').append($respuesta.vista);
+        modulo.me.parents(`.card[data-id='${id}']`).find('.card-body .listado-subacciones').append($respuesta.vista);
         modulo.eventosSubAcciones();
     };
 

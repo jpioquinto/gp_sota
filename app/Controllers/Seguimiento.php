@@ -228,19 +228,17 @@ class Seguimiento extends BaseController
             ]);
             return;
         }
-
-        $newAccion = null;
+    
         $accion = new CAccion($id);
+        $newAccion = $accion->obtenerAccion();
 
-        if (isset($oldAccion['id'])) {
-            $newAccion = $accion->obtenerAccion();
-        }
-
+        $uiAccion = new UIAccion($newAccion['id']);
+        
         echo json_encode([
             'Solicitud'=>true, 
             'ponderacion'=>$accion->obtenerPonderacion(),
             'ordenado'=>$this->cambioOrden($oldAccion, $newAccion),
-            'vista'=>$this->cambioPonderacion($oldAccion, $newAccion) ? $this->vistaListadoSubAccion($newAccion['id']) : '',
+            'vista'=>($oldAccion && $this->cambioPonderacion($oldAccion, $newAccion)) ? $this->vistaListadoSubAccion($newAccion['id']) : $uiAccion->generaHTMLAccion($newAccion, $newAccion['orden']),
             'Msg'=>'Acción General '.($this->request->getPost('id') ? 'actualizada correctamente.' : 'creada correctamente.')
         ]);
     }

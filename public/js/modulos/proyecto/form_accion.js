@@ -124,18 +124,11 @@ var $accion = (modulo => {
     };
 
     var actualizarVistaAccion = ($params, $respuesta) => {
-        if ($params.hasOwnProperty('id')) {
-            setTimeout(() => { $seguimiento.actualizaVistaAccion($params, $respuesta);}, 2300);            
-        }               
+        setTimeout(() => { $seguimiento.actualizaVistaAccion($params, $respuesta);}, 2300);               
     };
 
     var actualizarVistaSubAcciones = ($params, $respuesta) => {
-        if (!$params.hasOwnProperty('id')) {
-            setTimeout(() => { $seguimiento.actualizaVistaSubAccion($respuesta);}, 2300);
-            return;
-        }
-        $seguimiento.me.parents('li').find('.txt-definicion-subaccion').html($params.definicion);
-        $seguimiento.me.parents('li').find('.txt-descripcion-subaccion').html($params.descripcion);
+        setTimeout(() => { $seguimiento.actualizaVistaSubAccion($params, $respuesta);}, 2300);
     };
 
     return modulo;
