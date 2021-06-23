@@ -31,7 +31,7 @@
                     <div class="d-flex align-items-center">
                         <h4 class="card-title">Listado de Usuarios</h4>
                         <?php if (isset($permisos[1])): ?>
-                        <button class="btn btn-primary btn-round ml-auto jq_nuevo_usuario">
+                        <button class="btn btn-info btn-round ml-auto jq_nuevo_usuario">
                             <i class="fa fa-plus"></i>
                             Agregar
                         </button>

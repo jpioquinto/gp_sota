@@ -83,8 +83,7 @@ var $seguimiento = (modulo => {
         } 
         modulo.me.parents('.card').find('.card-body .txt-ponderacion-gral').html("Ponderación: " + $respuesta.ponderacion);
         modulo.me.parents('.card').find('.txt-definicion-gral').html($params.definicion);
-        modulo.me.parents('.card').find('.txt-descripcion-gral').html($params.descripcion); 
-        
+        modulo.me.parents('.card').find('.txt-descripcion-gral').html($params.descripcion);         
     };
 
     modulo.actualizaVistaSubAccion = $respuesta => {
@@ -111,7 +110,6 @@ var $seguimiento = (modulo => {
         $('.btn-editar').off('click').on('click', modulo.clickEditarAccionParticular);
         $('.btn-eliminar').off('click').on('click', modulo.clickEliminarAccionParticular);
     };
-
 
     var verificaReasignacion = $respuesta => {
         var contenedor = modulo.me.parents('.contenedor-subacciones');

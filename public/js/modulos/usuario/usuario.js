@@ -197,6 +197,9 @@ var $usuario = (modulo=>{
 $(function() {
     $('#jq_listado_users').DataTable({
         "pageLength": 50,
+        language: {
+            url: 'js/plugin/datatables/Spanish_Mexico.json'
+        }
     });
 
     $('[data-toggle="tooltip"]').tooltip();

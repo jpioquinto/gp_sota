@@ -6,7 +6,7 @@
         Guardar
     </a>
 <?php endif; ?>
-<a href="javascript:;" class="btn btn-warning btn-round jq_regresar_fichas">
+<a href="javascript:;" class="btn btn-warning btn-round jq_regresar_submodulo">
     <span class="btn-label">
         <i class="fa fa-undo"></i>
     </span>

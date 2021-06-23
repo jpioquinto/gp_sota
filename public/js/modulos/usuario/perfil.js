@@ -6,17 +6,17 @@ var $uPerfil = (modulo => {
         return listaTelefonos;
     }
     modulo.ini = () => {
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "Perfil",
             metodo:"obtenerCorreoYTelefono",
             datos:{},
             funcion: function(data){
-            if (data.Solicitud) {
-                listaCorreos = data.listaCorreos;
-                listaTelefonos = data.listaTelefonos;
-            }
-            //$util.load.hide();
+                if (data.Solicitud) {
+                    listaCorreos = data.listaCorreos;
+                    listaTelefonos = data.listaTelefonos;
+                }
+                $util.load.hide();
             }
         });
     };
@@ -28,13 +28,13 @@ var $uPerfil = (modulo => {
 
     modulo.clickCambiarPassword = function(e) {
         e.preventDefault();
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "Usuario",
             metodo:"obtenerVistaCambio",
             datos:{},
             funcion: function(data){
-                //$util.load.hide();
+                $util.load.hide();
                 if (data.Solicitud) {
                     $('.content-modal').html(data.vista);
                     $('#jq_nuevo_pass').modal('show');
@@ -117,13 +117,13 @@ var $uPerfil = (modulo => {
             copianueva:$.trim($("input[name='copianueva']").val())
         };
 
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "Usuario",
             metodo:"cambiarPassword",
             datos:params,
             funcion: function(data){
-                //$util.load.hide();
+                $util.load.hide();
                 if (data.Solicitud) {
                     $('#jq_nuevo_pass').modal('hide');
                 }            
@@ -196,7 +196,7 @@ var $uPerfil = (modulo => {
             params[$(this).attr('name')] = $.trim($(this).val());
         });
 
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "Perfil",
             metodo:"guardarInformacion",
@@ -205,7 +205,7 @@ var $uPerfil = (modulo => {
               if (data.Solicitud) {
                 
               }
-              //$util.load.hide();
+              $util.load.hide();
             }
           });
     };
@@ -299,17 +299,17 @@ var $uPerfil = (modulo => {
         if (cacheMunicipios.hasOwnProperty(idEstado)) {
             $('#id-municipio').select2({data: cacheMunicipios[idEstado]}); return;
         }
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             url: "Perfil",
             metodo:"listadoMunicipios",
             datos:{idEstado:idEstado},
             funcion: function(data){
-              if (data.Solicitud) {
-                data.opciones.length>0 ? (cacheMunicipios[idEstado] = data.opciones) : '';
-                $('#id-municipio').select2({data: data.opciones});
-              }
-              //$util.load.hide();
+                if (data.Solicitud) {
+                    data.opciones.length>0 ? (cacheMunicipios[idEstado] = data.opciones) : '';
+                    $('#id-municipio').select2({data: data.opciones});
+                }
+                $util.load.hide();
             }
           });
     };

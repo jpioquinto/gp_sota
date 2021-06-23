@@ -31,7 +31,7 @@
                     <div class="d-flex align-items-center">
                         <h4 class="card-title">Listado de Perfiles</h4>
                         <?php if (isset($permisos[1])): ?>
-                        <button class="btn btn-primary btn-round ml-auto jq_nuevo_perfil">
+                        <button class="btn btn-info btn-round ml-auto jq_nuevo_perfil">
                             <i class="fa fa-plus"></i>
                             Agregar
                         </button>

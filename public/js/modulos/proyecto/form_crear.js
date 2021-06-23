@@ -114,5 +114,5 @@ $(function() {
     //setTimeout(function() {$('#data-coordinador, #data-responsable, #data-colaboradores').select2();},500);    
     $('.jq_guardar_ficha').off('click').on('click', $formFicha.clickGuardar);
     $('.jq_cargar_foto').off('click').on('click', $formFicha.clickCargarImagen);
-    $('.jq_regresar_fichas').off('click').on('click', $formFicha.clickRegresar);
+    //$('.jq_regresar_fichas').off('click').on('click', $formFicha.clickRegresar); se quitó 23 de Junio de 2021
 });
