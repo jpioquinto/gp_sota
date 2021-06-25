@@ -31,7 +31,8 @@ var $gestion = (modulo => {
                     $('.content-submodulo').removeClass('d-none').addClass(modulo.claseEntrada);
                     
                     data.hasOwnProperty('header') ? modulo.setHeader(data.header) : '';
-                    modulo.me.hasClass('jq_accion') ? modulo.me.parents('.ml-md-auto').addClass('d-none') : '';
+                    //modulo.me.hasClass('jq_accion') ? modulo.me.parents('.ml-md-auto').addClass('d-none') : '';
+                    //modulo.me.parents('.jq_content_modulo').find('.card-header:first .ml-md-auto').addClass('d-none');
                     
                     $('.jq_regresar_submodulo').off('click').on('click',  $gestion.regresar);
                 }                
@@ -53,7 +54,8 @@ var $gestion = (modulo => {
         $('.content-submodulo').html(null);        
         $('.content-submodulo').removeClass(modulo.claseEntrada).addClass('d-none');
 
-        modulo.me.hasClass('jq_accion') ? modulo.me.parents('.ml-md-auto').removeClass('d-none') : '';
+        //modulo.me.hasClass('jq_accion') ? modulo.me.parents('.ml-md-auto').removeClass('d-none') : '';
+        modulo.me.parents('.jq_content_modulo').find('.card-header:first .ml-md-auto').removeClass('d-none');
     };
 
     modulo.setHeader = vista => {

@@ -42,7 +42,7 @@
                     </a>
                 </li>
                 
-                <li class="nav-item dropdown hidden-caret">
+                <!--li class="nav-item dropdown hidden-caret">
                     <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-bell"></i>
                         <span class="notification">4</span>
@@ -90,60 +90,8 @@
                             <a class="see-all" href="javascript:void(0);">Ver toda las notificaciones<i class="fa fa-angle-right"></i> </a>
                         </li>
                     </ul>
-                </li>
-                <li class="nav-item dropdown hidden-caret">
-                    <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                        <i class="fas fa-layer-group"></i>
-                    </a>
-                    <div class="dropdown-menu quick-actions quick-actions-info animated fadeIn">
-                        <div class="quick-actions-header">
-                            <span class="title mb-1">Accesos directos</span>
-                            <span class="subtitle op-8">Ir a...</span>
-                        </div>
-                        <div class="quick-actions-scroll scrollbar-outer">
-                            <div class="quick-actions-items">
-                                <div class="row m-0">
-                                    <a class="col-6 col-md-4 p-0" href="#">
-                                        <div class="quick-actions-item">
-                                            <i class="flaticon-file-1"></i>
-                                            <span class="text">Generar reporte</span>
-                                        </div>
-                                    </a>
-                                    <a class="col-6 col-md-4 p-0" href="#">
-                                        <div class="quick-actions-item">
-                                            <i class="flaticon-database"></i>
-                                            <span class="text">Consultar documentos</span>
-                                        </div>
-                                    </a>
-                                    <a class="col-6 col-md-4 p-0" href="#">
-                                        <div class="quick-actions-item">
-                                            <i class="flaticon-pen"></i>
-                                            <span class="text">Agregar evento</span>
-                                        </div>
-                                    </a>
-                                    <a class="col-6 col-md-4 p-0" href="#">
-                                        <div class="quick-actions-item">
-                                            <i class="flaticon-interface-1"></i>
-                                            <span class="text">Estatus del Proyecto</span>
-                                        </div>
-                                    </a>
-                                    <a class="col-6 col-md-4 p-0" href="#">
-                                        <div class="quick-actions-item">
-                                            <i class="flaticon-list"></i>
-                                            <span class="text">Estatus de Acciones</span>
-                                        </div>
-                                    </a>
-                                    <a class="col-6 col-md-4 p-0" href="#">
-                                        <div class="quick-actions-item">
-                                            <i class="flaticon-file"></i>
-                                            <span class="text">Crear Ficha Técnica</span>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
+                </li-->
+                <?=isset($v_acciones) ? $v_acciones : ''?>
                 <li class="nav-item dropdown hidden-caret">
                     <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                         <div class="avatar-sm">

@@ -27,6 +27,16 @@ class UIAccion
         return $this->proyectoId;
     }
 
+    public function tablaAcciones()
+    {
+        $html = '';
+        foreach ($this->consultarAcciones() as $key => $accion) {
+            $uiAccionParticular = new UIAccionParticular($accion['id']);
+            $html .= $uiAccionParticular->generarFila($accion);
+        }
+        return $html;
+    }
+
     public function listadoAcciones()
     {
         $html = '<div class="accordion-acciones" id="accordion-acciones">';

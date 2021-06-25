@@ -1,5 +1,13 @@
 var $main = (modulo=> {
 
+    modulo.clickAccionHeader = function(e) {
+        e.preventDefault();
+        if (!$(this).attr('data-control') || $(this).attr('data-control')=='') {
+            return;
+        }
+        cargarModulo($(this).attr("data-control"));
+    };
+
     modulo.seleccionarModulo = function(e) {
         e.preventDefault();
         if ($(this).attr("href").length==0 || $(this).attr("href")=='' || $(this).attr("href")=='#') {
@@ -12,12 +20,12 @@ var $main = (modulo=> {
 
     modulo.clickCerrarSesion = function(e) {
         e.preventDefault();
-        //$util.load.show(true);
+        $util.load.show(true);
         $util.post({
             controlador: 'Login',
             metodo: "logout",
             funcion: function(data){
-                //$util.load.hide();
+                $util.load.hide();
                 if (data.Solicitud) {
                     setTimeout(function() {
                         location.reload();
@@ -51,6 +59,7 @@ var $main = (modulo=> {
 })($main || {});
 
 $(function() {
+    $('.navbar-header .jq_acceso_rapido').off('click').on('click', $main.clickAccionHeader)
     $('.jq_sidebar .jq_modulo').off('click').on('click', $main.seleccionarModulo);
     $('.jq_cerrar_sesion').off('click').on('click', $main.clickCerrarSesion);
     $('.jq_ver_perfil').off('click').on('click', $main.clickVerPerfil);

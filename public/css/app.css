@@ -24,6 +24,9 @@
 .quick-actions.quick-actions-info .quick-actions-header {
     background: #B38E5D !important;
 }
+.quick-actions.quick-actions-info:after {
+    border-bottom-color: #B38E5D!important;
+}
 /*=========================== reset clases principales ===========================*/
 .btn-primary111111 {
     background-color: #319db5 !important;

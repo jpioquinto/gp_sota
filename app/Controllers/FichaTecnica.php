@@ -21,7 +21,9 @@ class FichaTecnica extends BaseController
 
     public function index()
     {
-        $proyecto = new CProyecto( $this->encrypter->decrypt( base64_decode($this->request->getPost('id')) ) );
+        $proyecto = $this->request->getPost('id') 
+                ? new CProyecto( $this->encrypter->decrypt( base64_decode($this->request->getPost('id')) ) )
+                : null;
         
 		echo json_encode([
             'Solicitud'=>true, 
@@ -29,7 +31,7 @@ class FichaTecnica extends BaseController
                 'proyectos/v_form_proyecto', 
                 [   
                     'id'=>$this->request->getPost('id'),
-                    'proyecto'=>($registro=$proyecto->obtenerProyecto()),
+                    'proyecto'=>($registro=$proyecto ? $proyecto->obtenerProyecto() : null),
                     'v_acciones'=> view('proyectos/parcial/_v_acciones', ['permisos'=>$this->usuario->obtenerPermisosModulo('Proyecto'), 'submodulo'=>true]),
                     'v_listado_tipos'=>$this->uiProyecto->listadoTipos(isset($registro['tipo_id']) ? $registro['tipo_id'] : null),
                     'v_listado_cobertura'=>$this->uiProyecto->listadoCoberturas(isset($registro['cobertura_id']) ? $registro['cobertura_id'] : null),

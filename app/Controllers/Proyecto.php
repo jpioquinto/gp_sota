@@ -120,7 +120,8 @@ class Proyecto extends BaseController
 
         echo json_encode([
             'Solicitud'=>true, 
-            'Msg'=>'Ficha Técnica '.($this->request->getPost('id') ? 'actualizada correctamente.' : 'creada correctamente.')
+            'Msg'=>'Ficha Técnica '.($this->request->getPost('id') ? 'actualizada correctamente.' : 'creada correctamente.'),
+            'id'=> (!$this->request->getPost('id')  ? base64_encode($this->encrypter->encrypt($id)) : $this->request->getPost('id'))
         ]);
 
     }

@@ -28,6 +28,25 @@ class UIAccionParticular
         return $this->accion_id;
     }
 
+    public function generarFila($accion)
+    {
+        $subacciones = $this->consultarAcciones();
+        $html = ''; $ini = false;
+        foreach ($subacciones as $val) {
+            if (!$ini) {
+                $ini = true;
+                $html .= sprintf("<tr><td rowspan='%s'>%s</td><td>%s</td>", count($subacciones), $accion['definicion'], $val['definicion']);
+                $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td>", $val['programa'], '', $val['fecha_ini'], $val['fecha_fin']);
+                $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td></tr>", $val['meta'], $val['avance'], '');
+                continue;
+            }
+            $html .= sprintf("<tr><td>%s</td>", $val['definicion']);
+            $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td>", $val['programa'], '', $val['fecha_ini'], $val['fecha_fin']);
+            $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td></tr>", $val['meta'], $val['avance'], '');
+        }
+        return $html;
+    }
+
     public function listadoAcciones()
     {
         $html = '<ol class="listado-subacciones">';

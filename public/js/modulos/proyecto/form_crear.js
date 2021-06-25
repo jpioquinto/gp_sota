@@ -1,4 +1,5 @@
 var $formFicha  = (modulo => {
+    var foto = null;
 
     modulo.ini = () => {
         var tempo = 0, itera = 0;
@@ -86,7 +87,7 @@ var $formFicha  = (modulo => {
             datos:$params,
             funcion: function(data){
               if (data.Solicitud) {
-                
+                foto ? cargarFoto(foto, data.id) : '';
               }
               $util.load.hide();
             }
@@ -95,18 +96,35 @@ var $formFicha  = (modulo => {
 
     modulo.clickCargarImagen = function(e) {
         e.preventDefault();
+        
         $('.uploadFile').trigger('click');
     };
 
-    modulo.subirFoto = function(e) {
+    modulo.subirFoto = function(e) { 
+        foto = this.files[0];
+
+        if ($(this).parents('.jq_form_proyecto').find("input[name='id']").length==0 || $.trim($(this).parents('.jq_form_proyecto').find("input[name='id']").val())=='') {        
+            return;        
+        }
+        cargarFoto(foto, $(this).parents('.jq_form_proyecto').find("input[name='id']").val());     
+    };
+
+    modulo.clickRegresar = function(e) {
+        e.preventDefault();
+
+        if ($(this).parents('.content-submodulo').length>0) {
+            $('.content-submodulo').removeClass(modulo.claseEntrada).addClass('d-none ' + modulo.claseSalida);
+            $('.content-modulos').removeClass(modulo.claseSalida).addClass(modulo.claseEntrada).show('slow');
+            $('.content-submodulo').html(''); 
+        }
+    };
+
+    var cargarFoto = ($foto, id) => {
         var cargado = false;
         var error   = "";
         var datos = new FormData();
-        datos.append("foto",this.files[0]);
-
-        if ($(this).parents('.jq_form_proyecto').find("input[name='id']").val()!='') {        
-            datos.append("id", $(this).parents('.jq_form_proyecto').find("input[name='id']").val());        
-        }
+        datos.append("foto", $foto);
+        datos.append("id", id);
         //datos.append(tkn,v);
         $util.load.show(true); 
         $.ajax({
@@ -133,25 +151,16 @@ var $formFicha  = (modulo => {
             $util.load.hide();
             if (!cargado) {            
                 notificacion(error, "error", 4000, "bottomRight", "fadeInUp", "fadeOutDown"); 
-            }          
+            }
+            foto = null;          
         });
-    };
-
-    modulo.clickRegresar = function(e) {
-        e.preventDefault();
-
-        if ($(this).parents('.content-submodulo').length>0) {
-            $('.content-submodulo').removeClass(modulo.claseEntrada).addClass('d-none ' + modulo.claseSalida);
-            $('.content-modulos').removeClass(modulo.claseSalida).addClass(modulo.claseEntrada).show('slow');
-            $('.content-submodulo').html(''); 
-        }
     };
 
     return modulo;
 })($formFicha || {});
 $(function() {
     $formFicha.ini();
-    //setTimeout(function() {$('#data-coordinador, #data-responsable, #data-colaboradores').select2();},500);    
+       
     $('.jq_guardar_ficha').off('click').on('click', $formFicha.clickGuardar);
     $('.jq_cargar_foto').off('click').on('click', $formFicha.clickCargarImagen);
     $('.uploadFile').off('change').on('change', $formFicha.subirFoto);

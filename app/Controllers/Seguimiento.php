@@ -29,6 +29,30 @@ class Seguimiento extends BaseController
         $proyecto = new CProyecto($this->encrypter->decrypt( base64_decode($this->request->getPost('id')) ));
 
         $infoProyecto = $proyecto->obtenerProyecto();
+        echo json_encode([
+            'Solicitud'=>true,
+            'vista'=>view(
+                'proyectos/seguimiento/v_contenedor_modulo', 
+                [
+                    'listado'=>$uiAccion->tablaAcciones(), 
+                    'permisos'=>$this->usuario->obtenerPermisosModulo('Proyecto')
+                ]),
+            'header'=>view(
+                'proyectos/parcial/_v_header_titulo', 
+                [
+                    'alias'=>'Seguimiento'.(isset($infoProyecto['alias']) ? ' - '.$infoProyecto['alias'] : ''), 
+                    'v_acciones'=>$uiAccion->headerTitle()
+                ])
+        ]);
+    }
+
+    public function index11212()
+    {
+        $uiAccion = new UIAccion($this->encrypter->decrypt( base64_decode($this->request->getPost('id')) ));
+
+        $proyecto = new CProyecto($this->encrypter->decrypt( base64_decode($this->request->getPost('id')) ));
+
+        $infoProyecto = $proyecto->obtenerProyecto();
 
         echo json_encode([
             'Solicitud'=>true,
