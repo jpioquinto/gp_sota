@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="css/plugins/rowGroup.dataTables.min.css" />
 <div class="content-acciones">
     <?=isset($acciones) ? $acciones : ''?>
 </div>

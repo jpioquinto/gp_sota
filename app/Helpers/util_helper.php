@@ -12,3 +12,13 @@ function obtenExtension($archivo)
 
     return $ext == "" ? 'undefined' : $ext;
 }
+
+function headerRegresar()
+{
+    return '<a href="javascript:;" class="btn btn-warning btn-round jq_regresar_submodulo">
+                <span class="btn-label">
+                    <i class="fa fa-undo"></i>
+                </span>
+                Regresar
+            </a>';
+}

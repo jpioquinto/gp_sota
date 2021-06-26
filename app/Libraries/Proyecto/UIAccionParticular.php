@@ -32,15 +32,15 @@ class UIAccionParticular
     {
         $subacciones = $this->consultarAcciones();
         $html = ''; $ini = false;
-        foreach ($subacciones as $val) {
+        foreach ($subacciones as $key=>$val) {
             if (!$ini) {
                 $ini = true;
-                $html .= sprintf("<tr><td rowspan='%s'>%s</td><td>%s</td>", count($subacciones), $accion['definicion'], $val['definicion']);
+                $html .= sprintf("<tr data-index='%d'><td rowspan='%s'>%s</td><td>%s</td>", $key, count($subacciones), $accion['definicion'], $val['definicion']);
                 $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td>", $val['programa'], '', $val['fecha_ini'], $val['fecha_fin']);
                 $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td></tr>", $val['meta'], $val['avance'], '');
                 continue;
             }
-            $html .= sprintf("<tr><td>%s</td>", $val['definicion']);
+            $html .= sprintf("<tr data-index='%d'><td>%s</td>", $key, $val['definicion']);
             $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td>", $val['programa'], '', $val['fecha_ini'], $val['fecha_fin']);
             $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td></tr>", $val['meta'], $val['avance'], '');
         }
