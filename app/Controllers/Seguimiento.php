@@ -28,7 +28,7 @@ class Seguimiento extends BaseController
 
         $proyecto = new CProyecto($this->encrypter->decrypt( base64_decode($this->request->getPost('id')) ));
 
-        $infoProyecto = $proyecto->obtenerProyecto();
+        $infoProyecto = $proyecto->obtenerProyecto();#echo '<pre>';print_r($uiAccion->tablaAcciones());exit;
         echo json_encode([
             'Solicitud'=>true,
             'vista'=>view(

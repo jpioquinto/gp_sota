@@ -131,7 +131,7 @@
 		<?= csrf_field() ?>
 	</div>
 	<script src="js/library/jquery-3.6.0.min.js"></script>
-	<script src="js/plugins/jquery.noty.packaged.min.js"></script>
+	<script src="js/app/jquery.noty.packaged.min.js"></script>
 	<script src="js/helpers.js"></script>
 	<script src="js/util.js"></script>	
 	<script src="js/modulos/login/login.js"></script>

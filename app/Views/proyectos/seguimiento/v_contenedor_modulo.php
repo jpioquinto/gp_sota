@@ -1,26 +1,33 @@
-<link rel="stylesheet" href="css/plugins/rowGroup.dataTables.min.css" />
+<link href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css" rel="stylesheet">
+
+<script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
 <div class="content-acciones">
     <?=isset($acciones) ? $acciones : ''?>
 </div>
 <div class="container">
-    <div class="table-responsive">
-        <table id="jq_listado_acciones" class="display table table-striped table-hover tabla-listado-usuarios" >
+    <div class="table-responsivse1">
+        <table id="jq_listado_acciones" class="display table table-striped table-hover tabla-listado-usuarios"
+            data-toggle="table"
+            data-search="true"            
+            data-show-columns="true"
+            data-show-columns-search="true"
+        >
             <thead>
                 <tr>
-                    <th class="text-center">Acción General</th>
-                    <th class="text-center">Acción Específica</th>
-                    <th class="text-center">Programa Ramo</th>
-                    <th class="text-center">Responsable</th>
-                    <th class="text-center">Inicio</th>
-                    <th class="text-center">Fin</th>
-                    <th class="text-center">Meta</th>
-                    <th class="text-center">Avance</th>
-                    <th style="width: 10%" class="text-center">Acciones</th>
+                    <th class="text-center" data-field="general">Acción General</th>
+                    <th class="text-center" data-field="especifica">Acción Específica</th>
+                    <th class="text-center" data-field="programa">Programa Ramo</th>
+                    <th class="text-center" data-field="responsable">Responsable</th>
+                    <th class="text-center" data-field="inicio">Inicio</th>
+                    <th class="text-center" data-field="fin">Fin</th>
+                    <th class="text-center" data-field="meta">Meta</th>
+                    <th class="text-center" data-field="avance">Avance</th>
+                    <th style="width: 10%" class="text-center" data-field="btn-accion" >Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <?=isset($listado) ? $listado : ''?>
-            </tbody>
+            </tbody>            
         </table>
     </div>
 </div>

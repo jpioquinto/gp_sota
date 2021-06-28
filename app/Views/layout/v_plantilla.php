@@ -16,7 +16,7 @@
 	<link rel="stylesheet" href="css/plugins/animate.min.css"/>
 
 	<!-- Fonts and icons -->
-	<script src="js/plugin/webfont/webfont.min.js"></script>
+	<script src="js/plugins/webfont/webfont.min.js"></script>
     <script>
 		WebFont.load({
 			google: {"families":["Lato:300,400,700,900"]},
@@ -27,7 +27,11 @@
 		});
 	</script>
 	<script src="js/library/jquery-3.6.0.min.js"></script>
-	<script src="js/plugins/jquery.noty.packaged.min.js"></script>	
+	<script src="js/app/jquery.noty.packaged.min.js"></script>	
+
+	<link rel="stylesheet" href="css/plugins/bootstrap-table.min.css" /><!-- quitar este estilo -->
+
+
 	<script src="js/helpers.js"></script>
 	<script src="js/util.js"></script>
 </head>
@@ -64,39 +68,42 @@
 	<script src="js/core/bootstrap.min.js"></script>
 
 	<!-- jQuery UI -->
-	<script src="js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-	<script src="js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+	<script src="js/plugins/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+	<script src="js/plugins/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
 
 	<!-- jQuery Scrollbar -->
-	<script src="js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+	<script src="js/plugins/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 
 
 	<!-- Chart JS -->
-	<script src="js/plugin/chart.js/chart.min.js"></script>
+	<script src="js/plugins/chart.js/chart.min.js"></script>
 
 	<!-- jQuery Sparkline -->
-	<script src="js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+	<script src="js/plugins/jquery.sparkline/jquery.sparkline.min.js"></script>
 
 	<!-- Chart Circle -->
-	<script src="js/plugin/chart-circle/circles.min.js"></script>
+	<script src="js/plugins/chart-circle/circles.min.js"></script>
 
 	<!-- Datatables -->
-	<script src="js/plugin/datatables/datatables.min.js"></script>
-	<script src="js/plugin/datatables/dataTables.rowGroup.min.js"></script>
+	<script src="js/plugins/datatables/datatables.min.js"></script>
+	<script src="js/plugins/datatables/dataTables.rowGroup.min.js"></script>
 
 	<!-- Bootstrap Notify -->
-	<script src="js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+	<script src="js/plugins/bootstrap-notify/bootstrap-notify.min.js"></script>
 
 	<!-- jQuery Vector Maps -->
-	<script src="js/plugin/jqvmap/jquery.vmap.min.js"></script>
-	<script src="js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+	<script src="js/plugins/jqvmap/jquery.vmap.min.js"></script>
+	<script src="js/plugins/jqvmap/maps/jquery.vmap.world.js"></script>
 
 	<!-- Sweet Alert -->
-	<script src="js/plugin/sweetalert/sweetalert.min.js"></script>
+	<script src="js/plugins/sweetalert/sweetalert.min.js"></script>
 
 	<!-- Atlantis JS -->
 	<script src="js/atlantis.min.js"></script>
 
 	<script src="js/main.js"></script>
+
+	<script src="js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+	<script src="js/plugins/bootstrap-table/bootstrap-table-es-MX.min.js"></script>
 </body>
 </html>
