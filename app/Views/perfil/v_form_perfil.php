@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="js/plugin/jstree/themes/default/style.min.css" />
+<link rel="stylesheet" href="js/plugins/jstree/themes/default/style.min.css" />
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -57,5 +57,5 @@
         </div>
     </div>
 </div>
-<script src="js/plugin/jstree/jstree.min.js"></script>
+<script src="js/plugins/jstree/jstree.min.js"></script>
 <script src="js/modulos/perfil/crear.js"></script>

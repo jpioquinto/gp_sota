@@ -118,7 +118,7 @@ $(function() {
     $('#jq_listado_perfiles').DataTable({
         "pageLength": 50,
         language: {
-            url: 'js/plugin/datatables/Spanish_Mexico.json'
+            url: 'js/plugins/datatables/Spanish_Mexico.json'
         }
     });
 

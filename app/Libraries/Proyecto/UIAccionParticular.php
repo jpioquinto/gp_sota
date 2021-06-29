@@ -30,20 +30,21 @@ class UIAccionParticular
 
     public function generarFila($accion)
     {
+        $accionPermitida = view('proyectos/seguimiento/parcial/_v_acciones_tabla', ['permisos'=>$this->usuario->obtenerPermisosModulo('Proyecto')]);
         $subacciones = $this->consultarAcciones();
         $html = ''; $ini = false;
         foreach ($subacciones as $key=>$val) {
             if (!$ini) {
                 $ini = true;
-                $html .= sprintf("<tr id='tr-id-%d'><td rowspan='%s'>%s</td><td>%s</td>", $key, count($subacciones), $accion['definicion'], $val['definicion']);
+                $html .= sprintf("<tr id='%s'><td rowspan='%s'>%s</td><td>%s</td>", base64_encode($this->encrypter->encrypt($val['id'])), count($subacciones), $accion['definicion'], $val['definicion']);
                 #$html .= sprintf("<tr id='tr-id-%d'><td>%s</td>", $key, $val['definicion']);
                 $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td>", $val['programa'], '', $val['fecha_ini'], $val['fecha_fin']);
-                $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td></tr>", $val['meta'], $val['avance'], '');
+                $html .= sprintf("<td>%s</td><td data-avance='true'>%s</td><td>%s</td></tr>", $val['meta'], $val['avance'], $accionPermitida);
                 continue;
             }
-            $html .= sprintf("<tr id='tr-id-%d'><td>%s</td>", $key, $val['definicion']);
+            $html .= sprintf("<tr id='%s'><td>%s</td>", base64_encode($this->encrypter->encrypt($val['id'])), $val['definicion']);
             $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td>", $val['programa'], '', $val['fecha_ini'], $val['fecha_fin']);
-            $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td></tr>", $val['meta'], $val['avance'], '');
+            $html .= sprintf("<td>%s</td><td data-avance='true'>%s</td><td>%s</td></tr>", $val['meta'], $val['avance'], $accionPermitida);
         }
         return $html;
     }
