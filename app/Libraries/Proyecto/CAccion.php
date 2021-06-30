@@ -70,4 +70,13 @@ class CAccion
         return $id;
     }
 
+    public function obtenerSubAcciones($id=null)
+    {   $condicion = ['accion_id'=> $this->getId()];
+
+        if ($id) {
+            $condicion['id'] = $id;
+        }
+        
+        return $this->subAccionModel->where($condicion)->orderBy('fecha_ini', 'ASC')->findAll() ?? [];
+    }
 }

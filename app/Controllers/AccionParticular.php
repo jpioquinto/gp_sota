@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 
-use App\Libraries\Proyecto\{CProyecto, CCargaArchivo};
+use App\Libraries\Proyecto\{CProyecto, CCargaArchivo, CAccion, CSubAccion};
 use App\Models\{AccionEspecificaModel};
 use  App\Libraries\Usuario;
 
@@ -88,14 +88,20 @@ class AccionParticular extends BaseController
         ]);
     }
 
-    public function verificarDirectorio()
+    public function generarNombre($id)
     {
-        $this->ruta = 'documentos/' . $this->proyecto->getCarpeta() . '/' . $this->proyecto->getAnio() .'/' . $this->proyecto->getAlias() . '/fotos/';
-        
-        if (!($directorio = is_dir($this->ruta)) ) {
-            $directorio = mkdir($this->ruta,0777,true);
-        }
+        $especifica = new CSubAccion($id);
+        $general = new CAccion( $especifica->obtenerIdAccionGeneral() );
 
-        return $directorio;
+        $accion = $general->obtenerAccion();
+
+        $nombre = "accion-{$accion['orden']}-especifica-".$this->posicionAccionEspecifica($general->obtenerSubAcciones(), $id);
+    }
+
+    protected function posicionAccionEspecifica($subAcciones, $id)
+    {
+        $indice = array_search($id, array_column($subAcciones, 'id'));
+
+        return $indice===FALSE ? 0 : $indice + 1;
     }
 }
