@@ -1,10 +1,8 @@
 <?php
 namespace App\Controllers;
 
-use App\Libraries\Proyecto\{UIProyecto, UIAccion, CProyecto, CAccion, CSubAccion};
-use App\Traits\{AccionGenetalTrait, AccionEspecificaTrait};
+use App\Libraries\Proyecto\{CProyecto, CCargaArchivo};
 use App\Models\{AccionEspecificaModel};
-use App\Libraries\Validacion\ValidaAccion;
 use  App\Libraries\Usuario;
 
 class AccionParticular extends BaseController
@@ -71,5 +69,33 @@ class AccionParticular extends BaseController
         }
 
         return false;
+    }
+
+    public function cargarArchivo()
+    {
+        if (!$this->request->getPost('id')) {
+            echo json_encode([
+                'Solicitud' =>false,
+                'Error'=>'No se recibió el Identificador de la Acción.',
+            ]);	
+            return; 
+        }
+
+        $carga = new CCargaArchivo(new CProyecto( $this->encrypter->decrypt( base64_decode($this->request->getPost('proyectoId'))) ));
+        echo json_encode([
+            'Solicitud'=>true, 
+            'Msg'=>'Carga hecha.'
+        ]);
+    }
+
+    public function verificarDirectorio()
+    {
+        $this->ruta = 'documentos/' . $this->proyecto->getCarpeta() . '/' . $this->proyecto->getAnio() .'/' . $this->proyecto->getAlias() . '/fotos/';
+        
+        if (!($directorio = is_dir($this->ruta)) ) {
+            $directorio = mkdir($this->ruta,0777,true);
+        }
+
+        return $directorio;
     }
 }

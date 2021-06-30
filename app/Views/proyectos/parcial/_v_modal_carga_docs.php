@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div class="modal fade" id="jq_modal_carga" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header no-bd">
                 <h5 class="modal-title">
@@ -19,36 +19,28 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="data-usuario">Archivo</label>
-                                <input type="text" id="data-usuario" name="usuario" class="form-control" placeholder="Eje. juan.perez" minlength="8">
-                                <small id="mensaje-usuario" class="form-text text-danger"></small>
+                                <label for="data-archivo">Documento(s)</label>
+                                <input 
+                                    type="file" 
+                                    id="data-archivo" 
+                                    name="archivo" 
+                                    class="form-control"
+                                    <?=isset($multiple) ? $multiple : ''?>
+                                    <?=(isset($accept) && $accept!='') ? "accept='{$accept}'" : ''?>
+                                >                                
+                            </div>
+                            <div class="progress invisible">
+                                <div class="progress-bar bg-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                    0%
+                                </div>
                             </div>
                         </div>
-
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="data-pass">Contraseña</label>
-                                <input type="password" id="data-pass" name="password" class="form-control" minlength="minlength" disabled>
-                                <small id="mensaje-password" class="form-text text-danger"></small>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="data-copiapass">Repetir contraseña</label>
-                                <input type="password" id="data-copiapass" name="copiapassword" class="form-control" minlength="8" disabled>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label for="data-perfil">Perfil</label>
-                                <select name="perfil" id="data-perfil" class="form-control">
-                                    <?=isset($perfiles) ? $perfiles : ''?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>                    
+                    </div>  
+                    <div class="row content-archivos mh-100 d-none" data-spy="scroll" data-target="#jq_modal_carga" data-offset="0">                        
+                        <div class="col-sm-12 col-md-12 mt-3">
+                            <span class="h4 font-weight-bold">Listado de documentos</span>
+                        </div>                        
+                    </div>                  
                 </form>
             </div>
             <div class="modal-footer no-bd">
@@ -62,3 +54,4 @@
         </div>
     </div>
 </div>
+<script src="js/modulos/proyecto/cargar_documentos.js"></script>

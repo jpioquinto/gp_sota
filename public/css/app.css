@@ -159,3 +159,20 @@
 }
 
 /*=========== fin de estilos para el overlay ============*/
+
+/*=========== adaptando la funcionalidad para scroll en modales ============*/
+
+.modal-dialog-scrollable {
+    display: -ms-flexbox;
+    display: flex;
+    max-height: calc(100% - 1rem);
+}
+
+.modal-dialog-scrollable .modal-body {
+    overflow-y: auto;
+}
+
+@media (min-width: 576px)
+.modal-dialog-scrollable {
+    max-height: calc(100% - 3.5rem);
+}

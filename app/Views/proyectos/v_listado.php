@@ -60,4 +60,4 @@
     </div>
     <div class='content-modulo jq_content_modulo'></div>
 </div>
-<script src="js/modulos/proyecto/proyecto.js"></script>
+<script src="js/modulos/proyecto/proyecto.js?hash=<?=mt_rand()?>"></script>

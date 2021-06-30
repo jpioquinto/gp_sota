@@ -10,8 +10,9 @@ var $modSeguimiento = (modulo=>{
             search: true,            
         });
         
-        $('#jq_listado_acciones').find('[data-toggle="tooltip"]').tooltip();
+        $('#jq_listado_acciones').find('[data-toggle="tooltip"]').tooltip();        
         modulo.eventosTabla();
+        $(".jq_subir_archivos").off("click").on("click", modulo.subirArchivos);
     };
 
     modulo.eventosTabla = () => {
@@ -26,7 +27,7 @@ var $modSeguimiento = (modulo=>{
         $util.post({
             url: "AccionParticular",
             metodo:"vistaCargarDocs",
-            datos:{multiple:true},
+            datos:{multiple:'multiple'},
             funcion: function(data){
                 $util.load.hide();
                 if (data.Solicitud) {
@@ -66,6 +67,58 @@ var $modSeguimiento = (modulo=>{
 
         $("#input-avance").val($.trim($(this).parents('tr').find('td[data-avance="true"').text()));
     };
+
+    modulo.subirArchivos = function(e) {
+        e.preventDefault();
+
+        if (objArchivos.length<1 || !modulo.me.parents('tr').attr('id')) {
+            return;
+        }
+
+        var totacargar  = objArchivos.length;
+		var totcargados = 0;
+		var cont = 0;
+
+        var tkn = "csrf_gp_name";
+	    var v   = $("input[name='" + tkn + "']").val();
+
+        $util.load.show(true);
+
+        $.each(objArchivos, function(index, archivo) {
+            var formData = new FormData();
+            formData.append("id", modulo.me.parents('tr').attr('id'));
+            formData.append("descripcion", archivo.descripcion);
+            formData.append("proyectoId", $proyecto.getId());
+            formData.append("archivo", archivo.archivo);
+            formData.append(tkn,v);
+            $.ajax({
+                url:'AccionParticular/cargarArchivo',
+                type:"POST",
+                data:formData,
+                mimeType:"multipart/form-data",
+                contentType: false,
+                cache: false,
+                processData:false,
+                dataType: "json",
+                success:function(data) {
+                    if (data.Solicitud) {
+                        //data.hasOwnProperty('iconoVer') ? modulo.agregarIconoVer(data.iconoVer) : '';
+                        //objUtil.notificacion(data.Msg, "success", 4000, "bottomRight", "fadeInUp", "fadeOutDown");
+                        totcargados++;
+                    }
+                }
+            }).always(function() {
+                cont++;
+                if (cont==totacargar) {
+                    parametros = {docs:'', proyecto:0, seguimiento:0 };
+                    (totcargados>0) ? notificacion("Se cargaron "+totcargados+" documentos", "success", 4000, "bottomRight", "fadeInUp", "fadeOutDown") : '';
+                    $util.load.hide();
+                    acciones = []; modulo.me.removeAttr('disabled');
+                }
+            });
+            
+        });
+    }
 
     var editarAvance = dato => {
         if (!dato || !modulo.me.parents('tr').attr('id')) {

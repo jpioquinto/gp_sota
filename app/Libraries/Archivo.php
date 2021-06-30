@@ -34,4 +34,12 @@ class Archivo
 		return $ext == "" ? 'pdf' : $ext;
     }
 
+    public function quitaExtension($nombre)
+	{
+		$ext = explode(".", $nombre);
+		$ext = end($ext);
+
+		return rtrim($nombre, ".{$ext}") == "" ? 'undefined' : rtrim($nombre, ".{$ext}");
+	}
+
 }

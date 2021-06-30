@@ -5,7 +5,7 @@
     <?=isset($acciones) ? $acciones : ''?>
 </div>
 <div class="container">
-    <div class="table-responsivse1">
+    <div class="table-responsive">
         <table id="jq_listado_acciones" class="display table table-striped table-hover tabla-listado-usuarios"
             data-toggle="table"
             data-search="true"            
@@ -30,6 +30,7 @@
             </tbody>            
         </table>
     </div>
+    <a class="jq_subir_archivos d-none"></a>
 </div>
 <div class="content-modal"></div>
 <script src="js/modulos/proyecto/modulo_seguimiento.js?hash=<?=mt_rand()?>"></script>
