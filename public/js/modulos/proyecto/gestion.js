@@ -33,7 +33,7 @@ var $gestion = (modulo => {
                     data.hasOwnProperty('header') ? modulo.setHeader(data.header) : '';
                     //modulo.me.hasClass('jq_accion') ? modulo.me.parents('.ml-md-auto').addClass('d-none') : '';
                     //modulo.me.parents('.jq_content_modulo').find('.card-header:first .ml-md-auto').addClass('d-none');
-                    
+                    $('.content-modulos .jq_submodulo, .content-modulo .jq_accion').off('click').on('click', modulo.clickCargarModulo);
                     $('.jq_regresar_submodulo').off('click').on('click',  $gestion.regresar);
                 }                
             }

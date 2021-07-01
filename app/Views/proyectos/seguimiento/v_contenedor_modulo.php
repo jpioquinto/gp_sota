@@ -1,6 +1,3 @@
-<link href="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.css" rel="stylesheet">
-
-<script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
 <div class="content-acciones">
     <?=isset($acciones) ? $acciones : ''?>
 </div>

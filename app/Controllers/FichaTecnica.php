@@ -26,7 +26,8 @@ class FichaTecnica extends BaseController
                 : null;
         
 		echo json_encode([
-            'Solicitud'=>true, 
+            'Solicitud'=>true,
+            'header'=>'', 
             'vista'=>view(
                 'proyectos/v_form_proyecto', 
                 [   

@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Libraries\Proyecto\{UIProyecto, UIAccion, CProyecto, CAccion, CSubAccion};
-use App\Traits\{AccionGenetalTrait, AccionEspecificaTrait};
+use App\Traits\{AccionGenetalTrait, AccionEspecificaTrait, PermisoTrait};
 use App\Models\{AccionGeneralModel, AccionEspecificaModel};
 use App\Libraries\Validacion\ValidaAccion;
 use  App\Libraries\Usuario;
@@ -14,6 +14,7 @@ class Seguimiento extends BaseController
 
     use AccionGenetalTrait;
     use AccionEspecificaTrait;
+    use PermisoTrait;
 
     public function __construct()
     {
@@ -29,11 +30,17 @@ class Seguimiento extends BaseController
         $proyecto = new CProyecto($this->encrypter->decrypt( base64_decode($this->request->getPost('id')) ));
 
         $infoProyecto = $proyecto->obtenerProyecto();#echo '<pre>';print_r($uiAccion->tablaAcciones());exit;
+
+        $btnAcciones = view(
+            'proyectos/parcial/_v_btn_accion_submodulo', ['permisos'=>$this->usuario->obtenerPermisosModulo('Proyecto'), 'acciones'=>$this->obtenerAccionesModulo('Proyecto')]
+        );#echo '<pre>';print_r($btnAcciones.$uiAccion->headerTitle());exit;
+
         echo json_encode([
             'Solicitud'=>true,
             'vista'=>view(
                 'proyectos/seguimiento/v_contenedor_modulo', 
                 [
+                    'acciones'=>'',
                     'listado'=>$uiAccion->tablaAcciones(), 
                     'permisos'=>$this->usuario->obtenerPermisosModulo('Proyecto')
                 ]),
@@ -41,12 +48,12 @@ class Seguimiento extends BaseController
                 'proyectos/parcial/_v_header_titulo', 
                 [
                     'alias'=>'Seguimiento'.(isset($infoProyecto['alias']) ? ' - '.$infoProyecto['alias'] : ''), 
-                    'v_acciones'=>$uiAccion->headerTitle()
+                    'v_acciones'=>($btnAcciones.$uiAccion->headerTitle())
                 ])
         ]);
     }
 
-    public function index11212()
+    public function gestionAcciones()
     {
         $uiAccion = new UIAccion($this->encrypter->decrypt( base64_decode($this->request->getPost('id')) ));
 
