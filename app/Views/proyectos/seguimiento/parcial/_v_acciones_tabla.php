@@ -21,4 +21,14 @@
             <i class="fas fa-upload"></i>
         </button>
     <?php endif; ?>
+
+    <button 
+            type="button"
+            data-toggle="tooltip" 
+            title="" 
+            data-original-title="Ver documentos" 
+            class="btn btn-icon btn-round btn-success btn-xs jq_ver_docs"
+        >
+            <i class="fas fa-file-alt"></i>
+    </button>
 </p>

@@ -172,7 +172,22 @@
     overflow-y: auto;
 }
 
-@media (min-width: 576px)
-.modal-dialog-scrollable {
-    max-height: calc(100% - 3.5rem);
+@media (min-width: 576px) {
+    .modal-dialog-scrollable {
+        max-height: calc(100% - 3.5rem);
+    }
 }
+
+@media (min-width: 992px) {
+    .modal-lg, .modal-xl {
+        max-width: 900px !important;/*800px*/
+    }
+}
+
+@media (min-width: 1200px) {
+    .modal-xl {
+        max-width: 1140px !important;
+    }
+}
+
+/*=========== adaptando la funcionalidad para scroll en modales ============*/

@@ -18,11 +18,12 @@ var $modSeguimiento = (modulo=>{
     modulo.eventosTabla = () => {
         $('#jq_listado_acciones .jq_actualiza_avance').off('click').on('click', modulo.clickEditarAvance);
         $('#jq_listado_acciones .jq_carga_docs').off('click').on('click', modulo.clickCargarEvidencia);
+        $('#jq_listado_acciones .jq_ver_docs').off('click').on('click', modulo.clickVerEvidencia);
     };
 
     modulo.clickCargarEvidencia = function(e) {
         e.preventDefault();
-        modulo.me = $(this);
+        modulo.me = $(this);        
         $util.load.show(true);
         $util.post({
             url: "AccionParticular",
@@ -31,8 +32,34 @@ var $modSeguimiento = (modulo=>{
             funcion: function(data){
                 $util.load.hide();
                 if (data.Solicitud) {
+                    modulo.me.prop('disable', true);
                     $('.content-modal').html(data.vista);
                     $('#jq_modal_carga').modal('show');
+                }            
+            }
+        });
+    };
+
+    modulo.clickVerEvidencia = function(e) {
+        e.preventDefault();
+        if (!$(this).parents('tr').attr('id')) {
+            notificacion('ingrese una cantidad numérica.', "error", 200, "bottomRight", "fadeInUp", "fadeOutDown");
+            return;
+        }
+
+        modulo.me = $(this);        
+        var $params = {id:modulo.me.parents('tr').attr('id'), proyectoId:$proyecto.getId()};
+        $util.load.show(true);
+        $util.post({
+            url: "AccionParticular",
+            metodo:"verDocumentos",
+            datos:$params,
+            funcion: function(data){
+                $util.load.hide();
+                if (data.Solicitud) {
+                    modulo.me.prop('disable', true);
+                    $('.content-modal').html(data.vista);
+                    $('#jq_modal_docs').modal('show');
                 }            
             }
         });
@@ -109,11 +136,10 @@ var $modSeguimiento = (modulo=>{
                 }
             }).always(function() {
                 cont++;
-                if (cont==totacargar) {
-                    parametros = {docs:'', proyecto:0, seguimiento:0 };
+                if (cont==totacargar) {                    
                     (totcargados>0) ? notificacion("Se cargaron "+totcargados+" documentos", "success", 4000, "bottomRight", "fadeInUp", "fadeOutDown") : '';
                     $util.load.hide();
-                    acciones = []; modulo.me.removeAttr('disabled');
+                    modulo.me.removeAttr('disabled');
                 }
             });
             
