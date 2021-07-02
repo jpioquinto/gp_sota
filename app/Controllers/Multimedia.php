@@ -37,4 +37,19 @@ class Multimedia extends BaseController
                 ])
         ]);
     }
+
+    public function vistaFormulario()
+    {
+        if (!isset($_SESSION['GP_SOTA']) || empty($_SESSION['GP_SOTA'])) {			
+			return redirect()->to('/'); 
+		}
+
+		echo json_encode([
+            'Solicitud'=>true,
+            'vista'=>view(
+			    'proyectos/multimedia/parcial/_v_modal_media',
+                ['vistaContenedor'=>view('proyectos/multimedia/parcial/_v_form_imagen')]
+            )
+        ]);	
+    }
 }

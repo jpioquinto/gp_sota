@@ -191,3 +191,7 @@
 }
 
 /*=========== adaptando la funcionalidad para scroll en modales ============*/
+
+/*=========== utilidades generales ============*/
+  .custom-file-input:lang(es)~.custom-file-label::after{content:"Elegir"}
+/*=========== fin de utilidades generales ============*/
