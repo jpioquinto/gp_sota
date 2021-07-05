@@ -37,14 +37,15 @@ var $formMedia = (modulo => {
 
         reader = new FileReader();
         reader.onerror = function(evt) { archivo = undefined; };
-        reader.onprogress = function(evt) { archivo = undefined; };        
+        reader.onprogress = function(evt) {  };        
         reader.onabort = function(evt) { archivo = undefined; };
+        reader.onload = function(e) { $('#jq_aceptar_form').prop('disabled', false); }
 
         reader.readAsBinaryString(e.target.files[0]);
     };
 
     var guardarImagen = () => {
-        var $params = {};
+        var $params = new FormData();
 
         if (!archivo) {
             notificacion('No se ha seleccion ningún archivo.', "error", 200, "bottomRight", "fadeInUp", "fadeOutDown");
@@ -62,16 +63,55 @@ var $formMedia = (modulo => {
             if (!$(this).attr('name')) {
                 return true;
             }
-            $params[$(this).attr('name')] = $.trim( $(this).val() );
+            //$params[$(this).attr('name')] = $.trim( $(this).val() );
+            $params.append($(this).attr('name'), $.trim( $(this).val() ));
         });
 
-        if (Object.keys($params).length==0) {
+        if (!$params.has('descripcion')) {
             return $params;
         }
         
         if ($("select[name='clave']").val().length>0) {
-            $params['clave'] = $("select[name='clave']").val();
-        }return $params;
+            //$params['clave'] = $("select[name='clave']").val();
+            $params.append('clave', $("select[name='clave']").val());
+        }
+        
+        //$params['proyectoId'] = $proyecto.getId();
+        $params.append('proyectoId', $proyecto.getId());
+        $params.append('foto', archivo);
+
+        var cargado = false;
+        var error   = "";
+
+        $util.load.show(true);
+        $.ajax({
+            url:'Multimedia/guardarImagen',
+            type:"POST",
+            data:$params,
+            mimeType:"multipart/form-data",
+            contentType: false,
+            cache: false,
+            processData:false,
+            dataType: "json",
+            success:function(data) {
+              if (data.Solicitud) {
+                cargado = true;                     
+                $('#jq_modal_form').modal('hide');                          
+                notificacion(data.Msg, "success", 4000, "bottomRight", "fadeInUp", "fadeOutDown"); 
+              }
+
+              if (!data.Solicitud) {
+                error = data.Error;
+              }                        
+            }
+        }).always(function() {
+            $util.load.hide();
+            if (!cargado) {            
+                notificacion(error, "error", 4000, "bottomRight", "fadeInUp", "fadeOutDown"); 
+            }
+            foto = null;          
+        });
+        return $params;
     };
 
     var guardarVideo = () => {

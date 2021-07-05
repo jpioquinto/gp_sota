@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="css/plugins/select2.min.css" />
+<link rel="stylesheet" href="css/modulos/media/imagenes.css" />
 <div class="row">
     <div class="col-12 col-md-5  offset-md-7">
         <div class="form-group">
@@ -34,9 +35,7 @@
     <div class="col-10 col-md-10">        
         <div class="tab-content" id="v-pills-with-icon-tabContent">
             <div class="tab-pane fade show active" id="v-pills-picture-icons" role="tabpanel" aria-labelledby="v-pills-picture-tab-icons">
-                <p>Aquí mis fotos.</p>
-
-                
+                <?=isset($fotos) ? $fotos : ''?>                
             </div>
             <div class="tab-pane fade" id="v-pills-film-icons" role="tabpanel" aria-labelledby="v-pills-film-tab-icons">
                 <p>Aquí mis videos.</p>
