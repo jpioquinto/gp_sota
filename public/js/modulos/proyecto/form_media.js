@@ -21,14 +21,10 @@ var $formMedia = (modulo => {
     };
 
     modulo.clickGuardar = function(e) {
-        e.preventDefault();
+        e.preventDefault();//
         
-        if ($("input[name='foto']").length>0) {
-            return guardarImagen();
-        }
-
-        if ($("input[name='video']").length>0) {
-            return guardarVideo();
+        if ($("#data-media").length>0) {
+            return guardarMedia($("#data-media").attr('name'));
         }
     };
 
@@ -44,7 +40,7 @@ var $formMedia = (modulo => {
         reader.readAsBinaryString(e.target.files[0]);
     };
 
-    var guardarImagen = () => {
+    var guardarMedia = $media => {
         var $params = new FormData();
 
         if (!archivo) {
@@ -62,8 +58,7 @@ var $formMedia = (modulo => {
         $('.ficha-media').find('input').each(function() {
             if (!$(this).attr('name')) {
                 return true;
-            }
-            //$params[$(this).attr('name')] = $.trim( $(this).val() );
+            }            
             $params.append($(this).attr('name'), $.trim( $(this).val() ));
         });
 
@@ -71,21 +66,19 @@ var $formMedia = (modulo => {
             return $params;
         }
         
-        if ($("select[name='clave']").val().length>0) {
-            //$params['clave'] = $("select[name='clave']").val();
+        if ($("select[name='clave']").val().length>0) {            
             $params.append('clave', $("select[name='clave']").val());
         }
         
-        //$params['proyectoId'] = $proyecto.getId();
         $params.append('proyectoId', $proyecto.getId());
-        $params.append('foto', archivo);
+        $params.append($media, archivo);
 
         var cargado = false;
         var error   = "";
 
         $util.load.show(true);
         $.ajax({
-            url:'Multimedia/guardarImagen',
+            url:'Multimedia/' + ($media=='video' ? 'guardarVideo' : 'guardarImagen'),
             type:"POST",
             data:$params,
             mimeType:"multipart/form-data",
@@ -112,10 +105,6 @@ var $formMedia = (modulo => {
             foto = null;          
         });
         return $params;
-    };
-
-    var guardarVideo = () => {
-        
     };
 
     return modulo;

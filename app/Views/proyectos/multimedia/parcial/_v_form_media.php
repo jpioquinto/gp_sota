@@ -1,11 +1,11 @@
 <form class="ficha-media">
-    <div class="row">
+    <div class="row">        
         <div class="col-sm-12 col-md-12">
             <div class="custom-file">
-                <input type="file" class="custom-file-input" id="data-media" name="foto" accept=".jpg, .jpeg, .png, .gif, .bmp, .webp, .tif, .tiff" lang="es">
+                <input type="file" class="custom-file-input" id="data-media" name="<?=isset($media) ? $media : 'na'?>" accept="<?=isset($accept) ? $accept : ''?>" lang="es">
                 <label class="custom-file-label" for="data-media">Seleccionar Archivo</label>
             </div>
-        </div>
+        </div>        
         <div class="col-sm-12 col-md-12">
             <div class="form-group">
                 <label for="data-descripcion">Descripción</label>
@@ -24,6 +24,17 @@
                 >                
             </div>
         </div>
+        <?php if(isset($media) && $media=='video'): ?>
+            <div class="col-sm-12 col-md-12">
+                <div class="form-group">
+                    <label for="data-publicado">Fecha de publicación</label>
+                    <input 
+                        type="date" id="data-publicado" name="publicado" 
+                        class="form-control" value="<?=isset($media['publicado']) ? $media['publicado']:''?>"
+                    >                
+                </div>
+            </div>
+        <?php endif; ?>
         <div class="col-sm-12 col-md-12">
             <div class="form-group">
                 <label for="data-licencia">Licencia o restricción de acceso</label>

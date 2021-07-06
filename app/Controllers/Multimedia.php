@@ -49,14 +49,43 @@ class Multimedia extends BaseController
         if (!isset($_SESSION['GP_SOTA']) || empty($_SESSION['GP_SOTA'])) {			
 			return redirect()->to('/'); 
 		}
-
+        #var_dump( $this->request->getPost());exit;
+        $form = [
+            'media'=>$this->request->getPost('media'), 
+            'accept'=>$this->request->getPost('foto') ? '.jpg, .jpeg, .png, .gif, .bmp, .webp, .tif, .tiff' : '.mpeg, .ogv, .webm, .3gp, .3g2, .avi, .flv, .mp4, .ts, .mov, .wmv, .mkv'
+        ];
 		echo json_encode([
             'Solicitud'=>true,
             'vista'=>view(
 			    'proyectos/multimedia/parcial/_v_modal_media',
-                ['vistaContenedor'=>view('proyectos/multimedia/parcial/_v_form_imagen')]
+                [
+                    'vistaContenedor'=>view('proyectos/multimedia/parcial/_v_form_media', $form),
+                    'media'=> ucwords($this->request->getPost('media'))
+                ]
             )
         ]);	
+    }
+
+    public function vistaVerImagen()
+    {
+        if (!isset($_SESSION['GP_SOTA']) || empty($_SESSION['GP_SOTA'])) {			
+			return redirect()->to('/'); 
+		}
+
+        $proyecto = new CProyecto($this->desencriptar( base64_decode($this->request->getPost('proyectoId')) ));
+        $uiImagen = new UIImagen($proyecto);
+        $imagen = $uiImagen->obtenerImagen($this->desencriptar( base64_decode($this->request->getPost('id')) ));
+        
+        if (isset($imagen['id'])) {
+            $imagen['id'] = $this->request->getPost('id');
+        }
+		echo json_encode([
+            'Solicitud'=>true,
+            'vista'=>view(
+			    'proyectos/multimedia/parcial/_v_modal_show_media', array_merge($imagen, ['permisos'=>$this->usuario->obtenerPermisosModulo('Proyecto')])
+            )
+        ]);	
+
     }
 
     public function guardarImagen()
@@ -76,7 +105,7 @@ class Multimedia extends BaseController
         $image = \Config\Services::image()
                 ->withFile($this->request->getFile('foto'));
         if ($image->getHeight()<800) {
-            $this->redimensionarAltura($image, 800, true, 'height');
+            $this->redimensionarAltura($image, 600);
         }
 
         $campos = [
@@ -91,7 +120,7 @@ class Multimedia extends BaseController
             'p_serie'=>$this->request->getPost('p_serie'),            
             'creado_por'=>$this->usuario->getId(),
         ];
-        #var_dump($campos);exit;
+        
         $validacion = new ValidaMedia();
 
         $validar = $validacion->esSolicitudImagenValida($campos);
@@ -104,7 +133,7 @@ class Multimedia extends BaseController
             echo json_encode(['Solicitud'=>false, 'Error'=>'No se encontró el directorio: '.$carga->getDirectorio()]);return;
         }
 
-        #var_dump($image->save($campos['ruta']));exit;        
+               
         if (!$image->save($campos['ruta'])) {
             echo json_encode(['Solicitud'=>false, 'Error'=>'Error al intentar cargar la imagen.']);return;
         }
@@ -123,9 +152,15 @@ class Multimedia extends BaseController
         echo json_encode(['Solicitud'=>true, 'Msg'=>'Imagen cargada correctamente.']);
     }
 
-    public function redimensionarAltura(&$imagen, $alto=800, $maintainRatio=false, $masterDim = 'auto')
+    public function guardarVideo()
     {
-        $ancho = round( ($alto * $imagen->getWidth()) / $imagen->getHeight() );
-        return $imagen->resize($ancho=800, $alto, $maintainRatio, $masterDim);
+        
+
+    }
+
+    public function redimensionarAltura(&$imagen, $alto = 800, $maintainRatio = false, $masterDim = 'auto')
+    {
+        $ancho = $imagen->getWidth();#round( ($alto * $imagen->getWidth()) / $imagen->getHeight() );
+        return $imagen->resize($ancho, $alto, $maintainRatio, $masterDim);        
     }
 }

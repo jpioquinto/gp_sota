@@ -1,4 +1,4 @@
-.item-img {
-    width: 200px !important;
-    height: 200px !important;
+.item-img {    
+    height: 67px !important;
+    /*object-fit: cover;*/
 }

@@ -25,9 +25,34 @@ var $media = (modulo => {
         });
     };
 
+    modulo.clickVerImagen = function(e) {
+        e.preventDefault();
+
+        if (!$(this).attr('data-id')) {
+            return;
+        }
+        modulo.me = $(this);
+        $util.load.show(true);
+        $util.post({
+            url: "Multimedia",
+            metodo:"vistaVerImagen",
+            datos:{id:modulo.me.attr('data-id'), proyectoId:$proyecto.getId()},
+            funcion: function(data){
+                $util.load.hide();
+                if (data.Solicitud) {
+                    modulo.me.prop('disable', true);
+                    $('.content-modal').html(data.vista);
+                    $('#jq_modal_show_media').modal('show');
+                }            
+            }
+        });
+    };
+
     return modulo;
 })($media || {});
 
 $(function() {
+    $('.tab-content .jq_imagen').off('click').on('click', $media.clickVerImagen);
     $('.jq_subir').off('click').on('click', $media.clickSubirMedia);
+    $('.tab-content').find('[data-toggle="tooltip"]').tooltip();
 });

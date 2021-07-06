@@ -7,7 +7,7 @@
                     <span class="fw-mediumbold">
                     Ficha</span> 
                     <span class="fw-light">
-                        Foto
+                        <?=isset($media) ? $media : ''?>
                     </span>
                 </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

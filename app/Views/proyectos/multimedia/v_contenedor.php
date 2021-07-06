@@ -9,11 +9,13 @@
                     <button class="btn btn-outline-secondary" type="button" id="button-addon2">Buscar</button>
                 </div>
                 <div class="ml-4">
+                    <?php if(isset($permisos[27])): ?>
                     <button class="btn btn-success jq_subir" type="button">
                         <span class="btn-label">
                             <i class="fa fa-upload"></i>
                         </span> Subir                        
                     </button>
+                    <?php endif; ?>
                     <input type="file" class="d-none" name="foto" accept=".jpg, .jpeg, .png, .gif, .bmp, .webp, .tif, .tiff" multiple />
                     <input type="file" class="d-none" name="video" accept=".mpeg, .ogv, .webm, .3gp, .3g2, .avi, .flv, .mp4, .ts, .mov, .wmv" multiple />
                 </div>
