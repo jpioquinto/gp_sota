@@ -1,9 +1,11 @@
 <?php 
-namespace App\Libraries\Proyecto;
+namespace App\Libraries\Proyecto\Multimedia;
+
+use App\Libraries\Proyecto\CProyecto;
 use App\Traits\CifradoTrait;
 use App\Models\ImagenModel;
 
-class UIImagen
+class UIFoto
 {
     protected $imagenModel;
     protected $encrypter; 

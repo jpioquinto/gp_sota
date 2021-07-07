@@ -18,7 +18,7 @@ class CCargaArchivo
             return ['Solicitud'=>false, 'Error'=>'No se encontró el directorio: '. $this->ruta];
         }
         
-        $nombre = $this->verificaDuplicados($nombre ? $nombre.'.'.$this->obtenExtension($archivo->getName()) : $archivo->getName());
+        $nombre = $this->verificaDuplicados($nombre ? $nombre.'.'.strtolower($this->obtenExtension($archivo->getName())) : $archivo->getName());
         
         $archivo->move( $this->getDirectorio(), $nombre );
 
@@ -55,7 +55,7 @@ class CCargaArchivo
 			return $this->verificaDuplicados( $nombre, ++$consecutivo );
 		}
 
-		return $_nombre . '-'.$consecutivo.'.'.$this->obtenExtension($nombre);
+		return $_nombre . '-'.$consecutivo.'.'.strtolower($this->obtenExtension($nombre));
     }
 
     protected function obtenExtension($nombreArchivo)
@@ -71,6 +71,6 @@ class CCargaArchivo
 		$ext = explode(".", $nombre);
 		$ext = end($ext);
 
-		return rtrim($nombre, ".{$ext}") == "" ? 'undefined' : rtrim($nombre, ".{$ext}");
+		return trim( str_replace(".{$ext}", "", $nombre) );
 	}
 }

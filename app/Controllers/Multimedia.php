@@ -1,7 +1,8 @@
 <?php
 namespace App\Controllers;
 
-use App\Libraries\Proyecto\{CProyecto, CCargaArchivo, UIImagen};
+use App\Libraries\Proyecto\Multimedia\{Multimedia AS CMultimedia, Foto, Video, UIFoto};
+use App\Libraries\Proyecto\{CProyecto, CCargaArchivo};
 use App\Libraries\Validacion\ValidaMedia;
 use App\Traits\CifradoTrait;
 use App\Models\ImagenModel;
@@ -24,7 +25,7 @@ class Multimedia extends BaseController
     public function index()
     {        
         $proyecto = new CProyecto($this->encrypter->decrypt( base64_decode($this->request->getPost('id')) ));
-        $uiImagen = new UIImagen($proyecto);
+        $uiImagen = new UIFoto($proyecto);
 
         $infoProyecto = $proyecto->obtenerProyecto();
         echo json_encode([
@@ -44,6 +45,23 @@ class Multimedia extends BaseController
         ]);
     }
 
+    public function obtenerMultimedia()
+    {
+        $proyecto = new CProyecto($this->desencriptar( base64_decode($this->request->getPost('proyectoId')) ));
+
+        $clases = ['foto'=>new UIFoto($proyecto)];
+
+        if (!isset($clases[$this->request->getPost('media')])) {
+            echo json_encode(['Solicitud'=>false, 'Error'=>'No se encontró el Gestor para esta vista.']); return; 
+        }
+        
+
+        $uiMedia = $clases[$this->request->getPost('media')];
+        
+        echo json_encode(['Solicitud'=>true, 'vista'=>'<div class="row">'.$uiMedia->obtenerListado().'</div>']);
+
+    }
+
     public function vistaFormulario()
     {
         if (!isset($_SESSION['GP_SOTA']) || empty($_SESSION['GP_SOTA'])) {			
@@ -52,7 +70,7 @@ class Multimedia extends BaseController
         #var_dump( $this->request->getPost());exit;
         $form = [
             'media'=>$this->request->getPost('media'), 
-            'accept'=>$this->request->getPost('foto') ? '.jpg, .jpeg, .png, .gif, .bmp, .webp, .tif, .tiff' : '.mpeg, .ogv, .webm, .3gp, .3g2, .avi, .flv, .mp4, .ts, .mov, .wmv, .mkv'
+            'accept'=>$this->request->getPost('media')=='foto' ? '.jpg, .jpeg, .png, .gif, .bmp, .webp, .tif, .tiff' : '.mpeg, .ogv, .webm, .3gp, .3g2, .avi, .flv, .mp4, .ts, .mov, .wmv, .mkv'
         ];
 		echo json_encode([
             'Solicitud'=>true,
@@ -73,7 +91,7 @@ class Multimedia extends BaseController
 		}
 
         $proyecto = new CProyecto($this->desencriptar( base64_decode($this->request->getPost('proyectoId')) ));
-        $uiImagen = new UIImagen($proyecto);
+        $uiImagen = new UIFoto($proyecto);
         $imagen = $uiImagen->obtenerImagen($this->desencriptar( base64_decode($this->request->getPost('id')) ));
         
         if (isset($imagen['id'])) {
@@ -93,74 +111,29 @@ class Multimedia extends BaseController
         if (!$this->request->getPost('proyectoId')) {
             echo json_encode([
                 'Solicitud' =>false,
-                'Error'=>'No se recibió el Identificador de la Acción.',
+                'Error'=>'No se recibió el Identificador del Proyecto.',
             ]);	
             return; 
         }
 
-        helper('util');
-
-        $carga = new CCargaArchivo(new CProyecto($this->desencriptar(base64_decode($this->request->getPost('proyectoId')))), 'multimedia/imagenes');
-
         $image = \Config\Services::image()
                 ->withFile($this->request->getFile('foto'));
-        if ($image->getHeight()<800) {
-            $this->redimensionarAltura($image, 600);
-        }
 
-        $campos = [
-            'proyecto_id'=>$this->desencriptar(base64_decode($this->request->getPost('proyectoId'))),
-            'nombre'=>$nombre=$carga->verificaDuplicados( limpiarCadena($this->request->getFile('foto')->getName()) ),
-            'ruta'=>$carga->getDirectorio().$nombre,
-            'descripcion'=>trim($this->request->getPost('descripcion')),
-            'autor'=>trim($this->request->getPost('autor')),
-            'formato'=>strtolower( obtenExtension($this->request->getFile('foto')->getName()) ),            
-            'resolucion'=>$image->getWidth() . 'x' . $image->getHeight(),
-            'tamanio'=>$image->getSize(),
-            'p_serie'=>$this->request->getPost('p_serie'),            
-            'creado_por'=>$this->usuario->getId(),
-        ];
-        
-        $validacion = new ValidaMedia();
-
-        $validar = $validacion->esSolicitudImagenValida($campos);
-
-        if ($validar['Solicitud']===FALSE) {
-            echo json_encode($validar);return;
-        }
-
-        if (!$carga->existeDirectorio()) {
-            echo json_encode(['Solicitud'=>false, 'Error'=>'No se encontró el directorio: '.$carga->getDirectorio()]);return;
-        }
-
-               
-        if (!$image->save($campos['ruta'])) {
-            echo json_encode(['Solicitud'=>false, 'Error'=>'Error al intentar cargar la imagen.']);return;
-        }
-                
-        if ($this->request->getPost('clave') && !empty($this->request->getPost('clave'))) {
-            $campos['palabra_clave'] = str_replace(',', ' ', $this->request->getPost('clave'));
-        }
-
-        if (!empty($this->request->getPost('licencia'))) {
-            $campos['licencia'] = trim( $this->request->getPost('licencia') );
-        }
-
-        $imagenModel = new ImagenModel();
-        $imagenModel->insert($campos);
-
-        echo json_encode(['Solicitud'=>true, 'Msg'=>'Imagen cargada correctamente.']);
+        $media = new CMultimedia(new Foto);
+        echo json_encode($media->guardar($this->request, new CProyecto($this->desencriptar(base64_decode($this->request->getPost('proyectoId')))), $image) );
     }
 
     public function guardarVideo()
     {
-        
+        if (!$this->request->getPost('proyectoId')) {
+            echo json_encode([
+                'Solicitud' =>false,
+                'Error'=>'No se recibió el Identificador del Proyecto.',
+            ]);	
+            return; 
+        }
 
-    }
-
-    public function redimensionarAltura(&$imagen, $alto = 800, $maintainRatio = false, $masterDim = 'auto')
-    {
-        $ancho = $imagen->getWidth();#round( ($alto * $imagen->getWidth()) / $imagen->getHeight() );
-        return $imagen->resize($ancho, $alto, $maintainRatio, $masterDim);        
+        $media = new CMultimedia(new Video);
+        echo json_encode($media->guardar($this->request, new CProyecto($this->desencriptar(base64_decode($this->request->getPost('proyectoId')))), $this->request->getFile('video')) );
     }
 }

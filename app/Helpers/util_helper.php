@@ -10,7 +10,15 @@ function obtenExtension($archivo)
     $ext = explode(".", $archivo);
     $ext = end($ext);
 
-    return $ext == "" ? 'undefined' : $ext;
+    return $ext == "" ? 'undefined' : trim($ext);
+}
+
+function quitaExtension($nombre)
+{
+    $ext = explode(".", $nombre);
+    $ext = end($ext);
+
+    return trim( str_replace(".{$ext}", "", $nombre) );
 }
 
 function limpiarCadena($cadena)

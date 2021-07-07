@@ -16,15 +16,13 @@
                         </span> Subir                        
                     </button>
                     <?php endif; ?>
-                    <input type="file" class="d-none" name="foto" accept=".jpg, .jpeg, .png, .gif, .bmp, .webp, .tif, .tiff" multiple />
-                    <input type="file" class="d-none" name="video" accept=".mpeg, .ogv, .webm, .3gp, .3g2, .avi, .flv, .mp4, .ts, .mov, .wmv" multiple />
                 </div>
             </div>
         </div>
     </div>
     <div class="col-2 col-md-">
         <div class="nav flex-column nav-pills nav-secondary nav-pills-no-bd nav-pills-icons" id="v-pills-tab-with-icon" role="tablist" aria-orientation="vertical">
-            <a class="nav-link active" id="v-pills-picture-tab-icons" data-toggle="pill" href="#v-pills-picture-icons" role="tab" aria-controls="v-pills-picture-icons" aria-selected="true" data-media="foto">
+            <a class="nav-link" id="v-pills-picture-tab-icons" data-toggle="pill" href="#v-pills-picture-icons" role="tab" aria-controls="v-pills-picture-icons" aria-selected="false" data-media="foto">
                 <i class="fas flaticon-picture"></i>
                 Fotos
             </a>
@@ -36,7 +34,7 @@
     </div>
     <div class="col-10 col-md-10">        
         <div class="tab-content" id="v-pills-with-icon-tabContent">
-            <div class="tab-pane fade show active" id="v-pills-picture-icons" role="tabpanel" aria-labelledby="v-pills-picture-tab-icons">
+            <div class="tab-pane fade" id="v-pills-picture-icons" role="tabpanel" aria-labelledby="v-pills-picture-tab-icons">
                 <?=isset($fotos) ? $fotos : ''?>                
             </div>
             <div class="tab-pane fade" id="v-pills-film-icons" role="tabpanel" aria-labelledby="v-pills-film-tab-icons">
