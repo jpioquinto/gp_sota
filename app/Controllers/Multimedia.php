@@ -2,10 +2,8 @@
 namespace App\Controllers;
 
 use App\Libraries\Proyecto\Multimedia\{Multimedia AS CMultimedia, Foto, Video, UIFoto, UIVideo};
-use App\Libraries\Proyecto\{CProyecto, CCargaArchivo};
-use App\Libraries\Validacion\ValidaMedia;
+use App\Libraries\Proyecto\{CProyecto};
 use App\Traits\CifradoTrait;
-use App\Models\ImagenModel;
 use App\Libraries\Usuario;
 
 class Multimedia extends BaseController
@@ -26,7 +24,7 @@ class Multimedia extends BaseController
     public function index()
     {        
         $proyecto = new CProyecto($this->encrypter->decrypt( base64_decode($this->request->getPost('id')) ));
-        $uiImagen = new UIFoto($proyecto);
+        #$uiImagen = new UIFoto($proyecto);
 
         $infoProyecto = $proyecto->obtenerProyecto();
         echo json_encode([
@@ -34,7 +32,7 @@ class Multimedia extends BaseController
             'vista'=>view(
                 'proyectos/multimedia/v_contenedor', 
                 [
-                    'fotos'=>'<div class="row">'.$uiImagen->obtenerListado().'</div>',
+                    'fotos'=>'',
                     'permisos'=>$this->usuario->obtenerPermisosModulo('Proyecto')
                 ]),
             'header'=>view(
@@ -48,17 +46,27 @@ class Multimedia extends BaseController
 
     public function obtenerMultimedia()
     {
-        $proyecto = new CProyecto($this->desencriptar( base64_decode($this->request->getPost('proyectoId')) ));
+        $params = $this->request->getPost();
 
-        $clases = ['foto'=>new UIFoto($proyecto), 'video'=>new UIVideo($proyecto)];
+        $proyecto = new CProyecto($this->desencriptar( base64_decode($params['proyectoId']) ));
 
-        if (!isset($clases[$this->request->getPost('media')])) {
+        $clase = self::_SPACE_.'UI'.ucwords($params['media']);
+        
+        if (!class_exists($clase)) {
             echo json_encode(['Solicitud'=>false, 'Error'=>'No se encontró el Gestor para esta vista.']); return; 
         }  
               
-        $uiMedia = $clases[$this->request->getPost('media')];
+        $uiMedia = new $clase($proyecto);
+
+        if (!$params['ini']) {
+            $params['ini'] = true;
+            $params['total'] = count($uiMedia->consultarMedia());
+        }
         
-        echo json_encode(['Solicitud'=>true, 'vista'=>'<div class="row">'.$uiMedia->obtenerListado().'</div>']);
+        echo json_encode([
+            'Solicitud'=>true, 
+            'vista'=>'<div class="row content-media">'.$uiMedia->obtenerListado().'</div>'
+        ]);
     }
 
     public function vistaFormulario()
@@ -91,14 +99,14 @@ class Multimedia extends BaseController
 
         $clase = self::_SPACE_.'UI'.ucwords($this->request->getPost('media'));
 
+        if (!class_exists($clase)) {
+            echo json_encode(['Solicitud'=>false, 'Error'=>'No se encontró el Gestor para esta vista.']); return; 
+        }  
+
         $proyecto = new CProyecto($this->desencriptar( base64_decode($this->request->getPost('proyectoId')) ));
         
         $uiMedia = new $clase($proyecto);
-        /*$media = $uiMedia->obtenerMedia($this->desencriptar( base64_decode($this->request->getPost('id')) ));
-        
-        if (isset($media['id'])) {
-            $media['id'] = $this->request->getPost('id');
-        }*/#array_merge($media, ['permisos'=>$this->usuario->obtenerPermisosModulo('Proyecto')])
+
 		echo json_encode([
             'Solicitud'=>true,
             'vista'=>view(

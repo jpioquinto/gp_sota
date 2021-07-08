@@ -34,8 +34,10 @@ var notificacion = function(texto, tipo, tiempo, colocacion, animacionEntrada, a
     setTimeout(function() {
         $.noty.closeAll();
     }, 6300);
-}
-
+};
+var clone = function(obj) {
+    return JSON.parse(JSON.stringify(obj));
+};
 var esEntero = function(numero) {
     var typeInt = /^[-]?[0-9]+$/;
     if(!typeInt.test(numero))return false;

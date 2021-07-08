@@ -10,6 +10,7 @@ class UIVideo
     protected $videoModel;
     protected $encrypter; 
     protected $proyecto;
+    protected $count;
 
     use CifradoTrait;
 
@@ -19,23 +20,41 @@ class UIVideo
         $this->videoModel = new VideoModel(); 
         $this->proyecto = $proyecto;      
     }
+
+    public function getCount()
+    {
+        return $this->count;
+    }
+
+    public function setCount($count)
+    {
+        $this->count = $count;
+    }
     
     public function obtenerListado()
     {
         $html = '';
-        foreach ($this->consultarVideos() as $video) {
+        $videos = $this->consultarMedia(); 
+        foreach ($videos as $video) {
             $video['id'] = base64_encode( $this->encriptar($video['id']) );
             $html .= view('proyectos/multimedia/parcial/_v_item_video', $video);
         }
+        $this->setCount(count($videos));
+
         return $html;
     }
 
-    public function consultarVideos()
+    public function consultarMedia($limit=null, $offset=null)
     {
-        return $this->videoModel
+        $registros = $this->videoModel
         ->where(['estatus'=>1, 'proyecto_id'=>$this->proyecto->getId()])
-        ->orderBy('nombre', 'ASC')
-        ->findAll();
+        ->orderBy('nombre', 'ASC');
+
+        if (!is_null($limit) && !is_null($offset)) {
+            return $registros->findAll($limit, $offset);
+        }
+
+        return $registros->findAll();
     }
 
     public function obtenerMedia($id)

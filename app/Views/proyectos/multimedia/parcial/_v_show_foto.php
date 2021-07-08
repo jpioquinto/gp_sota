@@ -9,7 +9,9 @@
         </div>
         <div class="separator-solid"></div>
         <?php if(isset($permisos[28])): ?>
-        <a href="" onclick="return false;" class="btn btn-warning btn-rounded btn-sm"><i class="fas fa-trash-alt"></i> Eliminar</a>
+            <a href="" onclick="return false;" class="btn btn-warning btn-rounded btn-sm">
+                <i class="fas fa-trash-alt"></i> Eliminar
+            </a>
         <?php endif; ?>
     </div>
 </div>

@@ -2,40 +2,42 @@
 namespace App\Libraries\Proyecto\Multimedia;
 
 use App\Libraries\Proyecto\CProyecto;
-use App\Traits\CifradoTrait;
 use App\Models\ImagenModel;
 
-class UIFoto
+class UIFoto extends UIMedia
 {
     protected $imagenModel;
-    protected $encrypter; 
-    protected $proyecto;
-
-    use CifradoTrait;
 
     public function __construct(CProyecto $proyecto)
-    {
-        $this->encrypter = \Config\Services::encrypter();  
-        $this->imagenModel = new ImagenModel(); 
-        $this->proyecto = $proyecto;      
+    {        
+        $this->imagenModel = new ImagenModel();         
+        parent::__construct($proyecto);   
     }
     
     public function obtenerListado()
     {
         $html = '';
-        foreach ($this->consultarImagenes() as $imagen) {
+        $imagenes = $this->consultarMedia();
+        foreach ($imagenes as $imagen) {
             $imagen['id'] = base64_encode( $this->encriptar($imagen['id']) );
             $html .= view('proyectos/multimedia/parcial/_v_item_media.php', $imagen);
         }
+        $this->setCount(count($imagenes));
+
         return $html;
     }
 
-    public function consultarImagenes()
+    public function consultarMedia($limit=null, $offset=null)
     {
-        return $this->imagenModel
+        $registros = $this->imagenModel
         ->where(['estatus'=>1, 'proyecto_id'=>$this->proyecto->getId()])
-        ->orderBy('nombre', 'ASC')
-        ->findAll();
+        ->orderBy('nombre', 'ASC');
+
+        if (!is_null($limit) && !is_null($offset)) {
+            return $registros->findAll($limit, $offset);
+        }
+
+        return $registros->findAll();
     }
 
     public function obtenerMedia($id)

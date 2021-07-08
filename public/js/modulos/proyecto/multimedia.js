@@ -51,22 +51,38 @@ var $media = (modulo => {
     modulo.clickVerContenido = function(e) {
         e.preventDefault();
         
-        var me = $(this);
+        modulo.me = $(this); 
+
+        var $params = clone(config[modulo.me.attr('data-media')]);
+        $params['paginacion'] = config.paginacion;
+
+        if ($params.hasOwnProperty('busqueda')) {
+            delete $params.busqueda;
+        }
+        
+        modulo.obtenerMultimedia( Object.assign($params,{media:modulo.me.attr('data-media'), proyectoId:$proyecto.getId()}) );       
+    };
+
+    modulo.obtenerMultimedia = ($params) => {        
         $util.load.show(true);
         $util.post({
             url: "Multimedia",
             metodo:"obtenerMultimedia",
-            datos:{media:me.attr('data-media'), proyectoId:$proyecto.getId()},
+            datos:$params,
             funcion: function(data) {   
-                me.tab('show');             
+                modulo.me.tab('show');             
                 if (data.Solicitud) {                
-                    $(me.attr('href')).html(data.vista);
-                    me.attr('data-media')=='foto' ? eventosImagenes() : eventosVideos();
+                    $(modulo.me.attr('href')).html(data.vista);
+                    modulo.me.attr('data-media')=='foto' ? eventosImagenes() : eventosVideos();
                     $('.tab-content').find('[data-toggle="tooltip"]').tooltip();
                 }                
                 $util.load.hide();          
             }
         });
+    };
+
+    modulo.inicializaContenido = (media, data, busqueda) => {
+        config[media].ini = true;
     };
 
     var eventosImagenes = () => {
@@ -77,6 +93,11 @@ var $media = (modulo => {
         $('.tab-content .jq_video').off('click').on('click', modulo.clickVerMedia);
     };
 
+    var config = {
+        paginacion:2,
+        foto:{ini:false, vista:'', pagina:0, total:0, busqueda:{ini:false, vista:'', pagina:0, total:0}},
+        video:{ini:false, vista:'', pagina:0, total:0, busqueda:{ini:false, vista:'', pagina:0, total:0}}
+    };
 
     return modulo;
 })($media || {});
