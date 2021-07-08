@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 
-use App\Libraries\Proyecto\Multimedia\{Multimedia AS CMultimedia, Foto, Video, UIFoto};
+use App\Libraries\Proyecto\Multimedia\{Multimedia AS CMultimedia, Foto, Video, UIFoto, UIVideo};
 use App\Libraries\Proyecto\{CProyecto, CCargaArchivo};
 use App\Libraries\Validacion\ValidaMedia;
 use App\Traits\CifradoTrait;
@@ -12,6 +12,7 @@ class Multimedia extends BaseController
 {   
     protected $encrypter; 
     protected $usuario;
+    const _SPACE_ = "App\Libraries\Proyecto\Multimedia\\";
 
     use CifradoTrait;
 
@@ -49,17 +50,15 @@ class Multimedia extends BaseController
     {
         $proyecto = new CProyecto($this->desencriptar( base64_decode($this->request->getPost('proyectoId')) ));
 
-        $clases = ['foto'=>new UIFoto($proyecto)];
+        $clases = ['foto'=>new UIFoto($proyecto), 'video'=>new UIVideo($proyecto)];
 
         if (!isset($clases[$this->request->getPost('media')])) {
             echo json_encode(['Solicitud'=>false, 'Error'=>'No se encontró el Gestor para esta vista.']); return; 
-        }
-        
-
+        }  
+              
         $uiMedia = $clases[$this->request->getPost('media')];
         
         echo json_encode(['Solicitud'=>true, 'vista'=>'<div class="row">'.$uiMedia->obtenerListado().'</div>']);
-
     }
 
     public function vistaFormulario()
@@ -84,26 +83,31 @@ class Multimedia extends BaseController
         ]);	
     }
 
-    public function vistaVerImagen()
+    public function vistaVerMedia()
     {
         if (!isset($_SESSION['GP_SOTA']) || empty($_SESSION['GP_SOTA'])) {			
 			return redirect()->to('/'); 
 		}
 
+        $clase = self::_SPACE_.'UI'.ucwords($this->request->getPost('media'));
+
         $proyecto = new CProyecto($this->desencriptar( base64_decode($this->request->getPost('proyectoId')) ));
-        $uiImagen = new UIFoto($proyecto);
-        $imagen = $uiImagen->obtenerImagen($this->desencriptar( base64_decode($this->request->getPost('id')) ));
         
-        if (isset($imagen['id'])) {
-            $imagen['id'] = $this->request->getPost('id');
-        }
+        $uiMedia = new $clase($proyecto);
+        /*$media = $uiMedia->obtenerMedia($this->desencriptar( base64_decode($this->request->getPost('id')) ));
+        
+        if (isset($media['id'])) {
+            $media['id'] = $this->request->getPost('id');
+        }*/#array_merge($media, ['permisos'=>$this->usuario->obtenerPermisosModulo('Proyecto')])
 		echo json_encode([
             'Solicitud'=>true,
             'vista'=>view(
-			    'proyectos/multimedia/parcial/_v_modal_show_media', array_merge($imagen, ['permisos'=>$this->usuario->obtenerPermisosModulo('Proyecto')])
+			    'proyectos/multimedia/parcial/_v_modal_show_media', 
+                [
+                    'v_media'=>$uiMedia->vistaMedia($this->desencriptar( base64_decode($this->request->getPost('id')) ), $this->usuario->obtenerPermisosModulo('Proyecto'))
+                ]
             )
         ]);	
-
     }
 
     public function guardarImagen()

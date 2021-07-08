@@ -3,11 +3,11 @@ namespace App\Libraries\Proyecto\Multimedia;
 
 use App\Libraries\Proyecto\CProyecto;
 use App\Traits\CifradoTrait;
-use App\Models\ImagenModel;
+use App\Models\VideoModel;
 
-class UIFoto
+class UIVideo
 {
-    protected $imagenModel;
+    protected $videoModel;
     protected $encrypter; 
     protected $proyecto;
 
@@ -16,23 +16,23 @@ class UIFoto
     public function __construct(CProyecto $proyecto)
     {
         $this->encrypter = \Config\Services::encrypter();  
-        $this->imagenModel = new ImagenModel(); 
+        $this->videoModel = new VideoModel(); 
         $this->proyecto = $proyecto;      
     }
     
     public function obtenerListado()
     {
         $html = '';
-        foreach ($this->consultarImagenes() as $imagen) {
-            $imagen['id'] = base64_encode( $this->encriptar($imagen['id']) );
-            $html .= view('proyectos/multimedia/parcial/_v_item_media.php', $imagen);
+        foreach ($this->consultarVideos() as $video) {
+            $video['id'] = base64_encode( $this->encriptar($video['id']) );
+            $html .= view('proyectos/multimedia/parcial/_v_item_video', $video);
         }
         return $html;
     }
 
-    public function consultarImagenes()
+    public function consultarVideos()
     {
-        return $this->imagenModel
+        return $this->videoModel
         ->where(['estatus'=>1, 'proyecto_id'=>$this->proyecto->getId()])
         ->orderBy('nombre', 'ASC')
         ->findAll();
@@ -40,7 +40,7 @@ class UIFoto
 
     public function obtenerMedia($id)
     {
-        return $this->imagenModel->find($id) ?? [];
+        return $this->videoModel->find($id) ?? [];
     }
 
     public function vistaMedia($id, $permisos)
@@ -50,9 +50,9 @@ class UIFoto
         if (isset($media['id'])) {
             $media['id'] = base64_encode($this->encriptar($media['id']));
         }
-        
+
         return view(
-            'proyectos/multimedia/parcial/_v_show_foto', array_merge($media, ['permisos'=>$permisos])
+            'proyectos/multimedia/parcial/_v_show_video', array_merge($media, ['permisos'=>$permisos])
         );
     }
 }

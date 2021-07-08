@@ -25,7 +25,7 @@ var $media = (modulo => {
         });
     };
 
-    modulo.clickVerImagen = function(e) {
+    modulo.clickVerMedia = function(e) {
         e.preventDefault();
 
         if (!$(this).attr('data-id')) {
@@ -35,8 +35,8 @@ var $media = (modulo => {
         $util.load.show(true);
         $util.post({
             url: "Multimedia",
-            metodo:"vistaVerImagen",
-            datos:{id:modulo.me.attr('data-id'), proyectoId:$proyecto.getId()},
+            metodo: "vistaVerMedia",
+            datos:{id:modulo.me.attr('data-id'), proyectoId:$proyecto.getId(), media:$('.nav-link.active').attr('data-media')},
             funcion: function(data) {
                 $util.load.hide();
                 if (data.Solicitud) {
@@ -70,11 +70,11 @@ var $media = (modulo => {
     };
 
     var eventosImagenes = () => {
-        $('.tab-content .jq_imagen').off('click').on('click', modulo.clickVerImagen);
+        $('.tab-content .jq_imagen').off('click').on('click', modulo.clickVerMedia);
     };
 
     var eventosVideos = () => {
-        
+        $('.tab-content .jq_video').off('click').on('click', modulo.clickVerMedia);
     };
 
 
