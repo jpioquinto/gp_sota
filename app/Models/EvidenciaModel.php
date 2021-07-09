@@ -13,5 +13,5 @@ class EvidenciaModel extends Model
 
     protected $returnType     = 'array';
 
-    protected $allowedFields = ['proyecto_id', 'registro_id', 'seccion', 'estatus', 'ruta', 'descripcion', 'creado_por', 'eliminado_el', 'eliminado_por'];
+    protected $allowedFields = ['proyecto_id', 'registro_id', 'seccion', 'estatus', 'ruta', 'descripcion', 'bloque', 'creado_por', 'eliminado_el', 'eliminado_por'];
 }

@@ -6,11 +6,12 @@
             title="" 
             data-original-title="Actualizar avance"
             class="btn btn-icon btn-round btn-default btn-xs jq_actualiza_avance"
+            data-evidencia="<?=isset($evidencia) ? $evidencia : 0?>"
         >
             <i class="fas fa-pencil-alt"></i>
         </button>
     <?php endif; ?>
-    <?php if (isset($permisos[26])): ?>
+    <?php if (isset($permisos[-26])): ?>
         <button 
             type="button"
             data-toggle="tooltip" 
@@ -21,14 +22,15 @@
             <i class="fas fa-upload"></i>
         </button>
     <?php endif; ?>
-
-    <button 
-            type="button"
-            data-toggle="tooltip" 
-            title="" 
-            data-original-title="Ver documentos" 
-            class="btn btn-icon btn-round btn-success btn-xs jq_ver_docs"
-        >
-            <i class="fas fa-file-alt"></i>
-    </button>
+    <?php if (isset($evidencia) && $evidencia==1): ?>
+        <button 
+                type="button"
+                data-toggle="tooltip" 
+                title="" 
+                data-original-title="Ver documentos" 
+                class="btn btn-icon btn-round btn-success btn-xs jq_ver_docs"
+            >
+                <i class="fas fa-file-alt"></i>
+        </button>
+    <?php endif; ?>
 </p>

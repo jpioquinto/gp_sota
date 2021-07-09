@@ -1,4 +1,5 @@
 var $modSeguimiento = (modulo=>{
+    modulo.bloque = undefined;
     modulo.me = {};
 
     modulo.ini = () => {
@@ -21,7 +22,7 @@ var $modSeguimiento = (modulo=>{
         $('#jq_listado_acciones .jq_ver_docs').off('click').on('click', modulo.clickVerEvidencia);
     };
 
-    modulo.clickCargarEvidencia = function(e) {
+    /*modulo.clickCargarEvidencia = function(e) {
         e.preventDefault();
         modulo.me = $(this);        
         $util.load.show(true);
@@ -38,7 +39,7 @@ var $modSeguimiento = (modulo=>{
                 }            
             }
         });
-    };
+    };*/
 
     modulo.clickVerEvidencia = function(e) {
         e.preventDefault();
@@ -67,32 +68,22 @@ var $modSeguimiento = (modulo=>{
 
     modulo.clickEditarAvance = function(e) {
         e.preventDefault();
+        modulo.bloque = undefined;  
         modulo.me = $(this);
-        swal({
-            title: 'Ingrese el avance',
-            html: '<br><input type="number" class="form-control" id="input-avance">',
-            content: {
-                element: "input",
-                attributes: {                    
-                    type: "number",
-                    id: "input-avance",
-                    className: "form-control"
-                },
-            },
-            buttons: {
-                cancel: {
-                    visible: true,
-                    className: 'btn btn-danger',
-                    text:'Cancelar'
-                },        			
-                confirm: {
-                    className : 'btn btn-success',
-                    text:'Aceptar'
-                }
-            },
-        }).then(editarAvance);
-
-        $("#input-avance").val($.trim($(this).parents('tr').find('td[data-avance="true"').text()));
+        $util.load.show(true);
+        $util.post({
+            url: "AccionParticular",
+            metodo:"vistaEditarAvance",
+            datos:{multiple:'multiple', evidencia:modulo.me.attr('data-evidencia'), accion_id:modulo.me.parents('tr').attr('id')},
+            funcion: function(data){
+                $util.load.hide();
+                if (data.Solicitud) {
+                    modulo.me.prop('disable', true);
+                    $('.content-modal').html(data.vista);
+                    $('#jq_modal_carga').modal('show');
+                }            
+            }
+        });
     };
 
     modulo.subirArchivos = function(e) {
@@ -117,6 +108,7 @@ var $modSeguimiento = (modulo=>{
             formData.append("descripcion", archivo.descripcion);
             formData.append("proyectoId", $proyecto.getId());
             formData.append("archivo", archivo.archivo);
+            formData.append("bloque", modulo.bloque);
             formData.append(tkn,v);
             $.ajax({
                 url:'AccionParticular/cargarArchivo',
@@ -143,30 +135,6 @@ var $modSeguimiento = (modulo=>{
                 }
             });
             
-        });
-    }
-
-    var editarAvance = dato => {
-        if (!dato || !modulo.me.parents('tr').attr('id')) {
-            return;
-        }
-        if (!esNumerico(dato)) {
-            notificacion('ingrese una cantidad numérica.', "error", 200, "bottomRight", "fadeInUp", "fadeOutDown");
-            $("#input-avance").val(null).focus();
-			return;
-        }
-        var $params = {id:modulo.me.parents('tr').attr('id'), avance:dato};
-        $util.load.show(true);
-        $util.post({
-            url: "AccionParticular",
-            metodo:"actualizarAvance",
-            datos:$params,
-            funcion: function(data){
-                $util.load.hide();
-                if (data.Solicitud) {
-                    modulo.me.parents('tr').find('td[data-avance="true"').text(parseFloat($params.avance).toFixed(2));
-                }            
-            }
         });
     };
 

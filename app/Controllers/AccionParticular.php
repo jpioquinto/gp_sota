@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Libraries\Proyecto\{CProyecto, CCargaArchivo, CAccion, CSubAccion};
-use App\Models\{AccionEspecificaModel, EvidenciaModel};
+use App\Models\{AccionEspecificaModel, EvidenciaModel, AvanceModel};
 use App\Traits\CifradoTrait;
 use  App\Libraries\Usuario;
 
@@ -30,6 +30,18 @@ class AccionParticular extends BaseController
         echo json_encode([
             'Solicitud'=>true, 
             'vista'=>view('proyectos/parcial/_v_modal_carga_docs', $this->request->getPost())
+        ]);
+    }
+
+    public function vistaEditarAvance()
+    {
+        $params = $this->request->getPost();
+        if ($params['evidencia']==1) {
+            $params['v_elige_archivo'] = view('proyectos/parcial/_v_elige_archivos', $params);
+        }
+        echo json_encode([
+            'Solicitud'=>true, 
+            'vista'=>view('proyectos/parcial/_v_modal_reporta_avance', $params)
         ]);
     }
 
@@ -73,7 +85,7 @@ class AccionParticular extends BaseController
             return;
         }
 
-        if (!$this->actualizar(['id'=>$this->encrypter->decrypt(base64_decode($this->request->getPost('id'))), 'avance'=>$this->request->getPost('avance')])) {
+        if (!$this->actualizar($campos=['id'=>$this->desencriptar(base64_decode($this->request->getPost('id'))), 'avance'=>$this->request->getPost('avance')])) {
             echo json_encode([
                 'Solicitud'=>false, 
                 'Error'=>'Error al intentar actualizar el avance.'
@@ -82,6 +94,7 @@ class AccionParticular extends BaseController
         }
         echo json_encode([
             'Solicitud'=>true, 
+            'reporte'=>$this->reportarAvance($campos['id'], $campos['avance']),
             'Msg'=>'Avance actualizado correctamente.'
         ]);
     }
@@ -97,6 +110,13 @@ class AccionParticular extends BaseController
         }
 
         return false;
+    }
+
+    public function reportarAvance($accionId, $avance)
+    {
+        $avanceModel = new AvanceModel();
+
+        return $avanceModel->insert(['avance'=>$avance, 'accion_id'=>$accionId, 'creado_por'=>$this->usuario->getId()]);
     }
 
     public function cargarArchivo()
@@ -122,10 +142,11 @@ class AccionParticular extends BaseController
         $this->guardarEvidencia([            
             'proyecto_id'=> $this->encrypter->decrypt( base64_decode($this->request->getPost('proyectoId'))),
             'registro_id'=> $this->encrypter->decrypt( base64_decode($this->request->getPost('id'))),            
-            'seccion'=> self::SECCION,
-            'ruta'=>$carga['url'],
+            'bloque'=>$this->request->getPost('bloque') ? $this->request->getPost('bloque') : '',
             'descripcion'=>$this->request->getPost('descripcion'),
             'creado_por'=>$this->usuario->getId(),
+            'seccion'=> self::SECCION,
+            'ruta'=>$carga['url'],
         ]);
 
         echo json_encode($carga);

@@ -1,7 +1,7 @@
 <?php 
 namespace App\Libraries\Proyecto;
 
-use App\Models\AccionEspecificaModel;
+use App\Models\{AccionEspecificaModel, AccionEspecificaQuery};
 use App\Traits\PermisoTrait;
 use App\Libraries\Usuario;
 
@@ -30,20 +30,22 @@ class UIAccionParticular
 
     public function generarFila($accion)
     {
-        $accionPermitida = view('proyectos/seguimiento/parcial/_v_acciones_tabla', ['permisos'=>$this->usuario->obtenerPermisosModulo('Proyecto')]);
-        $subacciones = $this->consultarAcciones();
+        $subacciones = $this->consulta();
         $html = ''; $ini = false;
         foreach ($subacciones as $key=>$val) {
+            $accionPermitida = view(
+                'proyectos/seguimiento/parcial/_v_acciones_tabla', 
+                ['permisos'=>$this->usuario->obtenerPermisosModulo('Proyecto'), 'evidencia'=>$val['evidencia']]
+            );
             if (!$ini) {
                 $ini = true;
-                $html .= sprintf("<tr id='%s'><td rowspan='%s'>%s</td><td>%s</td>", base64_encode($this->encrypter->encrypt($val['id'])), count($subacciones), $accion['definicion'], $val['definicion']);
-                #$html .= sprintf("<tr id='tr-id-%d'><td>%s</td>", $key, $val['definicion']);
-                $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td>", $val['programa'], '', $val['fecha_ini'], $val['fecha_fin']);
+                $html .= sprintf("<tr id='%s'><td rowspan='%s'>%s</td><td>%s</td>", base64_encode($this->encrypter->encrypt($val['id'])), count($subacciones), $accion['definicion'], $val['definicion']);                
+                $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td>", $val['programa'], $val['sigla'], $val['fecha_ini'], $val['fecha_fin']);
                 $html .= sprintf("<td>%s</td><td data-avance='true'>%s</td><td>%s</td></tr>", $val['meta'], $val['avance'], $accionPermitida);
                 continue;
             }
             $html .= sprintf("<tr id='%s'><td>%s</td>", base64_encode($this->encrypter->encrypt($val['id'])), $val['definicion']);
-            $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td>", $val['programa'], '', $val['fecha_ini'], $val['fecha_fin']);
+            $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td>", $val['programa'], $val['sigla'], $val['fecha_ini'], $val['fecha_fin']);
             $html .= sprintf("<td>%s</td><td data-avance='true'>%s</td><td>%s</td></tr>", $val['meta'], $val['avance'], $accionPermitida);
         }
         return $html;
@@ -71,5 +73,12 @@ class UIAccionParticular
                     ->where(['accion_id'=>$this->getAccionId(), 'estatus'=>1])
                     ->orderBy('fecha_ini', 'ASC')
                     ->findAll();
+    }
+
+    public function consulta()
+    {
+        $accionQuery = new AccionEspecificaQuery();
+
+        return $accionQuery->listarAcciones($this->getAccionId());
     }
 }
