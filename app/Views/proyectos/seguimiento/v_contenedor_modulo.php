@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="css/modulos/seguimiento/seguimiento.css" />
 <div class="content-acciones">
     <?=isset($acciones) ? $acciones : ''?>
 </div>

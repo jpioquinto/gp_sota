@@ -47,7 +47,7 @@ class AccionParticular extends BaseController
 
     public function verDocumentos()
     {
-        helper('icons');
+        helper(['icons','util']);
         $docs = $this->listadoEvidencias(base64_decode($this->request->getPost('id')), base64_decode($this->request->getPost('proyectoId')));
         
         $datos = [
@@ -55,7 +55,7 @@ class AccionParticular extends BaseController
                 'proyectos/parcial/_v_dos_columnas', 
                 [
                     'docs'=>$docs, 
-                    'vistaListado'=>"<div class='row'>".view('proyectos/parcial/_v_listado_docs',['docs'=>$docs])."</div>",
+                    'vistaListado'=>$this->agruparEvidencias(base64_decode($this->request->getPost('id')), $docs),
                     'vistaContenido'=>view('proyectos/parcial/_v_visor_doc', ['titulo'=>'Evidencia', 'url'=>isset($docs[0]['ruta']) ? $docs[0]['ruta'] : ''])
                 ]
             ),
@@ -65,6 +65,31 @@ class AccionParticular extends BaseController
             'Solicitud'=>true, 
             'vista'=>view('proyectos/parcial/_v_modal_ver_docs', $datos)
         ]);
+    }
+
+    public function agruparEvidencias($idAccion, $docs)
+    {   
+        $html = '';     
+        foreach ($this->obtenerAvances($this->desencriptar($idAccion)) as $avance) {
+
+            $html .= view('proyectos/seguimiento/parcial/_v_separador_avance', $avance);
+            $html .= $this->iterarEvidencias($docs, $avance['id']);
+        }
+
+        return $html;
+    }
+
+    public function iterarEvidencias($docs, $bloque)
+    {
+        $html = "<div class='row'>";
+        foreach ($docs as $doc) {
+            if ($doc['bloque']!=$bloque) {
+                continue;
+            }
+            $html .= view('proyectos/seguimiento/parcial/_v_item_doc', $doc);
+        }
+
+        return $html."</div>";
     }
 
     public function actualizarAvance()
@@ -186,7 +211,7 @@ class AccionParticular extends BaseController
     {
         return $this->evidenciaModel
         ->where(['registro_id'=>$id, 'proyecto_id'=>$proyectoId, 'seccion'=>self::SECCION, 'estatus'=>1])
-        ->orderBy('ruta', 'ASC')
+        ->orderBy('bloque ASC, ruta ASC')
         ->findAll() ?? [];
     }
 
@@ -200,5 +225,11 @@ class AccionParticular extends BaseController
             $documentos[]  = $doc;
         }
         return $documentos;
+    }
+
+    protected function obtenerAvances($idAccion)
+    {
+        $avanceModel = new AvanceModel();
+        return $avanceModel->where(['accion_id'=>$idAccion, 'estatus'=>1])->findAll() ?? [];
     }
 }

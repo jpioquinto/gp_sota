@@ -61,6 +61,7 @@ var $modSeguimiento = (modulo=>{
                     modulo.me.prop('disable', true);
                     $('.content-modal').html(data.vista);
                     $('#jq_modal_docs').modal('show');
+                    $('.listado-docs').find('[data-toggle="tooltip"]').tooltip(); 
                 }            
             }
         });

@@ -6,7 +6,7 @@
 			src="<?=$url?>"
 			type="application/pdf"
 			width="100%" style="min-height: 400px !important;"
-			id="jq_contenedor_doc"
+			id="jq_contenedor_archivo"
 		></embed>
 	</div>
 </div>

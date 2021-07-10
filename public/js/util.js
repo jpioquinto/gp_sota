@@ -205,7 +205,7 @@ var $util = (modulo => {
             }            
         });
         ajaxRequests.push(ajx);
-    }    
+    };    
 
     modulo.hash = (longitud) => {
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#$!¡_";
@@ -218,7 +218,19 @@ var $util = (modulo => {
             has += possible.charAt(Math.floor(Math.random() * possible.length));
         }      
 	    return has;
-	}
+	};
+
+    modulo.obtenerTipoMIME = function(ext){//,"gif":"application/x-download"
+        var mimes = {"gif":"image/gif","jpg":"image/jpeg","jpeg":"image/jpeg","pjpeg":"image/pjpeg","pjpg":"image/pjpeg",
+                    "png":"image/png","x-png":"image/x-png","txt":"text/plain","word":"application/msword","doc":"application/msword",
+                    "xml":"text/xml","pdf":"application/pdf","docx":"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    "odp":"application/vnd.oasis.opendocument.presentation","ods":"application/vnd.oasis.opendocument.spreadsheet",
+                    "odt":"application/vnd.oasis.opendocument.text","ppt":"application/vnd.ms-powerpoint","tif":"image/tiff","tiff":"image/tiff",
+                    "xls":"application/vnd.ms-excel","xlsx":"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    "pptx":"application/vnd.openxmlformats-officedocument.presentationml.presentation"};
+        var predet = "application/octet-stream";
+        return (mimes.hasOwnProperty(ext))?mimes[ext]:predet;
+    };
 
     return modulo;
 })($util || {});

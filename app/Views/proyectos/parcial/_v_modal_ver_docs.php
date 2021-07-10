@@ -37,4 +37,4 @@
         </div>
     </div>
 </div>
-<script src="js/modulos/proyecto/cargar_documentos.js"></script>
+<script src="js/modulos/proyecto/evidencia.js"></script>

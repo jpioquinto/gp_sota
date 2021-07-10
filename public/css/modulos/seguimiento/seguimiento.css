@@ -1,0 +1,38 @@
+.listado-docs {
+    max-height: 500px !important;
+    overflow-y:scroll !important;
+    overflow-x:none !important;
+}
+
+.listado-docs .jq_evidencia {
+    cursor: pointer !important;
+    color: #FFF!important;
+}
+
+.listado-docs .jq_evidencia .item-seleccionado {
+    border: 3px solid transparent;
+    background: #f5f5f5!important;
+    border-color: #ccc !important;
+}
+
+.listado-docs .jq_evidencia .item-seleccionado .check:after{
+    content: "";
+    font-family: "Font Awesome 5 Solid";
+    font-size: 13px;
+    content: "\f00c";
+    display: inline-block;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+}
+
+.listado-docs .jq_evidencia .item-seleccionado  .corner:after {
+    content: "";
+    display: inline-block;
+    border-left: 40px solid transparent;
+    border-bottom: 40px solid transparent;
+    border-right: 40px solid #ccc;
+    position: absolute;
+    top: -3px;
+    right: -3px;
+}

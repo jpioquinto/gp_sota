@@ -193,5 +193,12 @@
 /*=========== adaptando la funcionalidad para scroll en modales ============*/
 
 /*=========== utilidades generales ============*/
-  .custom-file-input:lang(es)~.custom-file-label::after{content:"Elegir"}
+.custom-file-input:lang(es)~.custom-file-label::after{content:"Elegir"}
+.overflow-auto {
+    overflow:auto!important;
+}
+.overflow-hidden{
+    overflow:hidden!important;
+};
+
 /*=========== fin de utilidades generales ============*/

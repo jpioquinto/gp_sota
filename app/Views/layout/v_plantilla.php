@@ -30,8 +30,7 @@
 	<script src="js/app/jquery.noty.packaged.min.js"></script>	
 
 	<link rel="stylesheet" href="css/plugins/bootstrap-table.min.css" /><!-- quitar este estilo -->
-
-
+	
 	<script src="js/helpers.js"></script>
 	<script src="js/util.js"></script>
 </head>
