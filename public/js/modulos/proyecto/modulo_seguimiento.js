@@ -44,7 +44,7 @@ var $modSeguimiento = (modulo=>{
     modulo.clickVerEvidencia = function(e) {
         e.preventDefault();
         if (!$(this).parents('tr').attr('id')) {
-            notificacion('ingrese una cantidad numérica.', "error", 200, "bottomRight", "fadeInUp", "fadeOutDown");
+            notificacion('No se encontró el Identificador de la Acción Específica.', "error", 200, "bottomRight", "fadeInUp", "fadeOutDown");
             return;
         }
 

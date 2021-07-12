@@ -29,7 +29,8 @@ class UIProyecto
 	public function obtenerListado()
 	{
 		$items = '';
-		foreach ($this->proyectoModel->findAll() as $proyecto) {
+		$proyectos = $this->proyectoModel->orderBy('alias', 'ASC')->findAll() ?? [];
+		foreach ($proyectos as $proyecto) {
 			$items .= $this->generarItemCard($proyecto);
 		}
 		return $items;

@@ -2,7 +2,7 @@
 namespace App\Libraries\Proyecto;
 
 use App\Models\{AccionEspecificaModel, AccionEspecificaQuery};
-use App\Traits\PermisoTrait;
+use App\Traits\{PermisoTrait, CifradoTrait};
 use App\Libraries\Usuario;
 
 
@@ -12,6 +12,8 @@ class UIAccionParticular
     protected $accion_id;
     protected $encrypter; 
     protected $usuario;
+
+    use CifradoTrait;
 
     use PermisoTrait;
 	
@@ -37,18 +39,29 @@ class UIAccionParticular
                 'proyectos/seguimiento/parcial/_v_acciones_tabla', 
                 ['permisos'=>$this->usuario->obtenerPermisosModulo('Proyecto'), 'evidencia'=>$val['evidencia']]
             );
+            
+            $avance = ($val['evidencia']==1 && $val['validado']==0) 
+                    ? "<span class='badge badge-danger'>{$val['avance']}</span>" 
+                    : "<span class='badge badge-light'>{$val['avance']}</span>";
+
             if (!$ini) {
                 $ini = true;
-                $html .= sprintf("<tr id='%s'><td rowspan='%s'>%s</td><td>%s</td>", base64_encode($this->encrypter->encrypt($val['id'])), count($subacciones), $accion['definicion'], $val['definicion']);                
+                $html .= sprintf("<tr id='%s'><td rowspan='%s'>%s</td><td>%s</td>", base64_encode($this->encriptar($val['id'])), count($subacciones), $accion['definicion'], $val['definicion']);                
                 $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td>", $val['programa'], $val['sigla'], $val['fecha_ini'], $val['fecha_fin']);
-                $html .= sprintf("<td>%s</td><td data-avance='true'>%s</td><td>%s</td></tr>", $val['meta'], $val['avance'], $accionPermitida);
+                $html .= sprintf("<td>%s</td><td data-avance='true'>%s</td><td>%s</td></tr>", $val['meta'], $avance, $accionPermitida);
                 continue;
             }
-            $html .= sprintf("<tr id='%s'><td>%s</td>", base64_encode($this->encrypter->encrypt($val['id'])), $val['definicion']);
-            $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td>", $val['programa'], $val['sigla'], $val['fecha_ini'], $val['fecha_fin']);
-            $html .= sprintf("<td>%s</td><td data-avance='true'>%s</td><td>%s</td></tr>", $val['meta'], $val['avance'], $accionPermitida);
+            $html .= $this->generaCelda($val, $avance, $accionPermitida);
         }
         return $html;
+    }
+
+    public function generaCelda($val, $avance, $accionPermitida)
+    {
+        
+        $html = sprintf("<tr id='%s'><td>%s</td>", base64_encode($this->encriptar($val['id'])), $val['definicion']);
+        $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td>", $val['programa'], $val['sigla'], $val['fecha_ini'], $val['fecha_fin']);
+        return $html .= sprintf("<td>%s</td><td data-avance='true'>%s</td><td>%s</td></tr>", $val['meta'], $avance, $accionPermitida);
     }
 
     public function listadoAcciones()
@@ -62,7 +75,7 @@ class UIAccionParticular
 
     public function generaHTMLAccion($accion, $first=false)
     {
-        $accion['id'] = base64_encode( $this->encrypter->encrypt($accion['id']) );
+        $accion['id'] = base64_encode( $this->encriptar($accion['id']) );
         $accion['first'] = $first;
         return view('proyectos/parcial/_v_subaccion', array_merge($accion, ['permisos'=>$this->usuario->obtenerPermisosModulo('Proyecto')]));
     }
