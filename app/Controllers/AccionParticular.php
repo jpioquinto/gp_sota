@@ -56,7 +56,7 @@ class AccionParticular extends BaseController
                 [
                     'docs'=>$docs, 
                     'vistaListado'=>$this->agruparEvidencias(base64_decode($this->request->getPost('id')), $docs),
-                    'vistaContenido'=>view('proyectos/parcial/_v_visor_doc', ['titulo'=>'Evidencia', 'url'=>isset($docs[0]['ruta']) ? $docs[0]['ruta'] : ''])
+                    'vistaContenido'=>count($docs)>0 ? view('proyectos/parcial/_v_visor_doc', ['titulo'=>'Evidencia', 'url'=>isset($docs[0]['ruta']) ? $docs[0]['ruta'] : '']) : ''
                 ]
             ),
             'docs'=>$docs

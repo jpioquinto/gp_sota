@@ -1,6 +1,6 @@
 .listado-docs {
     max-height: 500px !important;
-    overflow-y:scroll !important;
+    overflow-y:auto !important;
     overflow-x:none !important;
 }
 

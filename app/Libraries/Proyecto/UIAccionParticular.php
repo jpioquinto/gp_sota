@@ -4,6 +4,7 @@ namespace App\Libraries\Proyecto;
 use App\Models\{AccionEspecificaModel, AccionEspecificaQuery};
 use App\Traits\{PermisoTrait, CifradoTrait};
 use App\Libraries\Usuario;
+use App\Libraries\Proyecto\Seguimiento\VigenciaAccion;
 
 
 class UIAccionParticular
@@ -43,7 +44,7 @@ class UIAccionParticular
             $avance = ($val['evidencia']==1 && $val['validado']==0) 
                     ? "<span class='badge badge-danger'>{$val['avance']}</span>" 
                     : "<span class='badge badge-light'>{$val['avance']}</span>";
-
+            $vigencia = new VigenciaAccion($val['fecha_ini'], $val['fecha_fin']);echo '<pre>';print_r($vigencia->icono());exit;
             if (!$ini) {
                 $ini = true;
                 $html .= sprintf("<tr id='%s'><td rowspan='%s'>%s</td><td>%s</td>", base64_encode($this->encriptar($val['id'])), count($subacciones), $accion['definicion'], $val['definicion']);                
