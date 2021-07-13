@@ -44,10 +44,10 @@ class UIAccionParticular
             $avance = ($val['evidencia']==1 && $val['validado']==0) 
                     ? "<span class='badge badge-danger'>{$val['avance']}</span>" 
                     : "<span class='badge badge-light'>{$val['avance']}</span>";
-            $vigencia = new VigenciaAccion($val['fecha_ini'], $val['fecha_fin']);echo '<pre>';print_r($vigencia->icono());exit;
+            #$vigencia = new VigenciaAccion($val['fecha_ini'], $val['fecha_fin']);echo '<pre>';print_r($vigencia->icono());exit;
             if (!$ini) {
                 $ini = true;
-                $html .= sprintf("<tr id='%s'><td rowspan='%s'>%s</td><td>%s</td>", base64_encode($this->encriptar($val['id'])), count($subacciones), $accion['definicion'], $val['definicion']);                
+                $html .= sprintf("<tr id='%s'><td rowspan='%s'>%s</td><td>%s</td><td>%s</td>", base64_encode($this->encriptar($val['id'])), count($subacciones), $accion['definicion'], "<p><img src='images/iconos/semaforo/clock-2.png' class='img-thumbnail'/></p>", $val['definicion']);                
                 $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td>", $val['programa'], $val['sigla'], $val['fecha_ini'], $val['fecha_fin']);
                 $html .= sprintf("<td>%s</td><td data-avance='true'>%s</td><td>%s</td></tr>", $val['meta'], $avance, $accionPermitida);
                 continue;
@@ -60,7 +60,7 @@ class UIAccionParticular
     public function generaCelda($val, $avance, $accionPermitida)
     {
         
-        $html = sprintf("<tr id='%s'><td>%s</td>", base64_encode($this->encriptar($val['id'])), $val['definicion']);
+        $html = sprintf("<tr id='%s'><td>%s</td><td>%s</td>", base64_encode($this->encriptar($val['id'])), "<p><img src='images/iconos/semaforo/clock-3.png' class='img-thumbnail'/></p>", $val['definicion']);
         $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td>", $val['programa'], $val['sigla'], $val['fecha_ini'], $val['fecha_fin']);
         return $html .= sprintf("<td>%s</td><td data-avance='true'>%s</td><td>%s</td></tr>", $val['meta'], $avance, $accionPermitida);
     }

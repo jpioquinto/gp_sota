@@ -13,6 +13,7 @@
             <thead>
                 <tr>
                     <th class="text-center" data-field="general">Acción General</th>
+                    <th class="text-center" data-field="estatus">Estatus</th>
                     <th class="text-center" data-field="especifica">Acción Específica</th>
                     <th class="text-center" data-field="programa">Programa Ramo</th>
                     <th class="text-center" data-field="responsable">Responsable</th>
