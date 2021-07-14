@@ -1,10 +1,10 @@
 <?php 
 namespace App\Libraries\Proyecto;
 
+use App\Libraries\Proyecto\Seguimiento\Semaforo\{Semaforo, Vigencia, Avance, Estatus};
 use App\Models\{AccionEspecificaModel, AccionEspecificaQuery};
 use App\Traits\{PermisoTrait, CifradoTrait};
 use App\Libraries\Usuario;
-use App\Libraries\Proyecto\Seguimiento\VigenciaAccion;
 
 
 class UIAccionParticular
@@ -47,9 +47,18 @@ class UIAccionParticular
             #$vigencia = new VigenciaAccion($val['fecha_ini'], $val['fecha_fin']);echo '<pre>';print_r($vigencia->icono());exit;
             if (!$ini) {
                 $ini = true;
-                $html .= sprintf("<tr id='%s'><td rowspan='%s'>%s</td><td>%s</td><td>%s</td>", base64_encode($this->encriptar($val['id'])), count($subacciones), $accion['definicion'], "<p><img src='images/iconos/semaforo/clock-2.png' class='img-thumbnail'/></p>", $val['definicion']);                
-                $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td>", $val['programa'], $val['sigla'], $val['fecha_ini'], $val['fecha_fin']);
-                $html .= sprintf("<td>%s</td><td data-avance='true'>%s</td><td>%s</td></tr>", $val['meta'], $avance, $accionPermitida);
+                $html .= sprintf(
+                    "<tr id='%s'><td rowspan='%s'>%s</td><td>%s</td><td>%s</td>", 
+                    base64_encode($this->encriptar($val['id'])), count($subacciones), $accion['definicion'], $this->vistaIndicadores($val), $val['definicion']
+                );                
+                $html .= sprintf(
+                    "<td>%s</td><td>%s</td><td>%s</td><td>%s</td>", 
+                    $val['programa'], $val['sigla'], $val['fecha_ini'], $val['fecha_fin']
+                );
+                $html .= sprintf(
+                    "<td>%s</td><td data-avance='true'>%s</td><td>%s</td></tr>", 
+                    $val['meta'], $avance, $accionPermitida
+                );
                 continue;
             }
             $html .= $this->generaCelda($val, $avance, $accionPermitida);
@@ -60,9 +69,18 @@ class UIAccionParticular
     public function generaCelda($val, $avance, $accionPermitida)
     {
         
-        $html = sprintf("<tr id='%s'><td>%s</td><td>%s</td>", base64_encode($this->encriptar($val['id'])), "<p><img src='images/iconos/semaforo/clock-3.png' class='img-thumbnail'/></p>", $val['definicion']);
-        $html .= sprintf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td>", $val['programa'], $val['sigla'], $val['fecha_ini'], $val['fecha_fin']);
-        return $html .= sprintf("<td>%s</td><td data-avance='true'>%s</td><td>%s</td></tr>", $val['meta'], $avance, $accionPermitida);
+        $html = sprintf(
+            "<tr id='%s'><td>%s</td><td>%s</td>", 
+            base64_encode($this->encriptar($val['id'])), $this->vistaIndicadores($val), $val['definicion']
+        );
+        $html .= sprintf(
+            "<td>%s</td><td>%s</td><td>%s</td><td>%s</td>", 
+            $val['programa'], $val['sigla'], $val['fecha_ini'], $val['fecha_fin']
+        );
+        return $html .= sprintf(
+            "<td>%s</td><td data-avance='true'>%s</td><td>%s</td></tr>",
+            $val['meta'], $avance, $accionPermitida
+        );
     }
 
     public function listadoAcciones()
@@ -94,5 +112,14 @@ class UIAccionParticular
         $accionQuery = new AccionEspecificaQuery();
 
         return $accionQuery->listarAcciones($this->getAccionId());
+    }
+
+    protected function vistaIndicadores($accion)
+    {
+        $iTiempo  = new Semaforo($tiempo = new Vigencia($accion['fecha_ini'], $accion['fecha_fin']));
+        $iAvance  = new Semaforo($avance = new Avance($accion['id']));
+        $iEstatus = new Semaforo(new Estatus($tiempo->getPorcentaje(), $avance->getPorcentaje()));
+
+        return "<div class='d-flex indicador-accion'>".$iTiempo->getIcono().$iAvance->getIcono().$iEstatus->getIcono()."</div>";
     }
 }

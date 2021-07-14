@@ -1,16 +1,17 @@
 <?php 
-namespace App\Libraries\Proyecto\Seguimiento;
+namespace App\Libraries\Proyecto\Seguimiento\Semaforo;
 
 use Carbon\{Carbon, CarbonInterval};
 use DateTime;
 use DateTimeZone;
 
-class VigenciaAccion implements ISemaforo
+class Vigencia implements Indicador
 {
-    protected $ini;
-    protected $fin;
+    protected $leyenda;
     protected $rangos;
     protected $porc;
+    protected $ini;
+    protected $fin;
     
     public function __construct($ini, $fin)
     {
@@ -24,13 +25,21 @@ class VigenciaAccion implements ISemaforo
         ]);
         
         $this->rangos = [
-            ['min'=>0,  'max'=>20,  'estatus'=>1, 'icon'=>'images/iconos/semaforo/clock-1.png'],
-            ['min'=>21, 'max'=>40,  'estatus'=>2, 'icon'=>'images/iconos/semaforo/clock-2.png'],
-            ['min'=>41, 'max'=>60,  'estatus'=>3, 'icon'=>'images/iconos/semaforo/clock-3.png'],
-            ['min'=>61, 'max'=>80,  'estatus'=>4, 'icon'=>'images/iconos/semaforo/clock-4.png'],
-            ['min'=>81, 'max'=>100, 'estatus'=>5, 'icon'=>'images/iconos/semaforo/clock-5.png'],
+            ['min'=>0,  'max'=>20,  'estatus'=>1, 'icon'=>'images/iconos/semaforo/clock-1.png', 'alt'=>'Días transcurridos '],
+            ['min'=>21, 'max'=>40,  'estatus'=>2, 'icon'=>'images/iconos/semaforo/clock-2.png', 'alt'=>'Días transcurridos '],
+            ['min'=>41, 'max'=>60,  'estatus'=>3, 'icon'=>'images/iconos/semaforo/clock-3.png', 'alt'=>'Días transcurridos '],
+            ['min'=>61, 'max'=>80,  'estatus'=>4, 'icon'=>'images/iconos/semaforo/clock-4.png', 'alt'=>'Días transcurridos '],
+            ['min'=>81, 'max'=>100, 'estatus'=>5, 'icon'=>'images/iconos/semaforo/clock-5.png', 'alt'=>'Días transcurridos '],
         ];
+
+        $this->leyenda = '';
     }
+
+    public function setLeyenda($leyenda)
+    {
+        $this->leyenda = $leyenda;
+    }
+
 
     public function getPorcentaje()
     {
@@ -71,6 +80,7 @@ class VigenciaAccion implements ISemaforo
 
         foreach ($this->rangos as $rango) {
             if ($this->porc>=$rango['min'] && $this->porc<=$rango['max']) {
+                $this->setLeyenda($rango['alt'].round($dias).' de '.$tope);
                 $icono = $rango['icon'];
             }
         }
@@ -78,4 +88,8 @@ class VigenciaAccion implements ISemaforo
         return $icono;
     }
 
+    public function getLeyenda()
+    {
+        return $this->leyenda;
+    }
 }

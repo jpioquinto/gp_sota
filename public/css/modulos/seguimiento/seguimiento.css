@@ -40,3 +40,7 @@
 .btn-valida-avance {
     cursor: pointer !important;
 }
+
+.indicador-accion img {
+    cursor: pointer !important;
+}
