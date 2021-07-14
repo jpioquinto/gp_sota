@@ -22,16 +22,11 @@ var $avance = (modulo => {
             return;
         }
     
-        /*$modSeguimiento.avance = $('#data-avance').val();
-        
-        if ($("input[name='archivo']").length>0) {
-            $('#jq_aceptar_carga').trigger('click');
-        }*/
         editarAvance($('#data-avance').val(), ($("input[name='archivo']").length>0));
     };
 
     var editarAvance = (dato, carga) => {
-        var $params = {id:$modSeguimiento.me.parents('tr').attr('id'), avance:dato};
+        var $params = {id:$modSeguimiento.me.parents('tr').attr('id'), avance:dato, anterior:$('#data-avance').attr('data-avance')};
         $util.load.show(true);
         $util.post({
             url: "AccionParticular",
@@ -41,7 +36,7 @@ var $avance = (modulo => {
                 $util.load.hide();
                 if (data.Solicitud) {
                     $modSeguimiento.bloque = data.reporte;
-                    $modSeguimiento.me.parents('tr').find('td[data-avance="true"').text(parseFloat($params.avance).toFixed(2));
+                    $modSeguimiento.me.parents('tr').find('td[data-avance="true"').html("<span class='badge badge-danger'>"+parseFloat($params.avance).toFixed(2)+"</span>");
                     carga ? $('#jq_aceptar_carga').trigger('click') : $('#jq_modal_carga').modal('hide');
                 }            
             }

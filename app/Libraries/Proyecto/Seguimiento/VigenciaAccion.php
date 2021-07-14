@@ -5,11 +5,12 @@ use Carbon\{Carbon, CarbonInterval};
 use DateTime;
 use DateTimeZone;
 
-class VigenciaAccion
+class VigenciaAccion implements ISemaforo
 {
     protected $ini;
     protected $fin;
     protected $rangos;
+    protected $porc;
     
     public function __construct($ini, $fin)
     {
@@ -29,6 +30,11 @@ class VigenciaAccion
             ['min'=>61, 'max'=>80,  'estatus'=>4, 'icon'=>'images/iconos/semaforo/clock-4.png'],
             ['min'=>81, 'max'=>100, 'estatus'=>5, 'icon'=>'images/iconos/semaforo/clock-5.png'],
         ];
+    }
+
+    public function getPorcentaje()
+    {
+        return $this->porc;
     }
 
     public function getTope()
@@ -59,12 +65,12 @@ class VigenciaAccion
             return $this->rangos[4]['icon'];
         }
 
-        $porc = round(($dias*100/$tope));
+        $this->porc = round(($dias*100/$tope));
 
         $icono = "";
 
         foreach ($this->rangos as $rango) {
-            if ($porc>=$rango['min'] && $porc<=$rango['max']) {
+            if ($this->porc>=$rango['min'] && $this->porc<=$rango['max']) {
                 $icono = $rango['icon'];
             }
         }

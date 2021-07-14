@@ -22,7 +22,8 @@
                                 <label for="data-avance">Avance</label>
                                 <input 
                                     type="number" id="data-avance" name="avance" 
-                                    data-id="<?=isset($accion_id) ? $accion_id:''?>"
+                                    data-id="<?=isset($accion_id) ? $accion_id : ''?>"
+                                    data-avance="<?=isset($avance) ? $avance : ''?>"
                                     class="form-control" value=""
                                 />                                
                             </div>

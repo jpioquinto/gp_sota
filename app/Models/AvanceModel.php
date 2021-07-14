@@ -14,6 +14,6 @@ class AvanceModel extends Model
     protected $returnType     = 'array';
 
     protected $allowedFields = [
-        'avance', 'accion_id', 'estatus', 'creado_por', 'validado', 'validado_el', 'validado_por' 
+        'avance', 'anterior', 'accion_id', 'estatus', 'creado_por', 'validado', 'validado_el', 'validado_por' 
     ];
 }

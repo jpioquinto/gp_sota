@@ -110,7 +110,12 @@ class AccionParticular extends BaseController
             return;
         }
 
-        if (!$this->actualizar($campos=['id'=>$this->desencriptar(base64_decode($this->request->getPost('id'))), 'avance'=>$this->request->getPost('avance')])) {
+        $campos = [
+            'id'=>$this->desencriptar(base64_decode($this->request->getPost('id'))), 
+            'avance'=>$this->request->getPost('avance')
+        ];
+
+        if (!$this->actualizar($campos)) {
             echo json_encode([
                 'Solicitud'=>false, 
                 'Error'=>'Error al intentar actualizar el avance.'
@@ -119,7 +124,7 @@ class AccionParticular extends BaseController
         }
         echo json_encode([
             'Solicitud'=>true, 
-            'reporte'=>$this->reportarAvance($campos['id'], $campos['avance']),
+            'reporte'=>$this->reportarAvance($campos['id'], $campos['avance'], $this->request->getPost('anterior') ?? null),
             'Msg'=>'Avance actualizado correctamente.'
         ]);
     }
@@ -137,11 +142,16 @@ class AccionParticular extends BaseController
         return false;
     }
 
-    public function reportarAvance($accionId, $avance)
+    public function reportarAvance($accionId, $avance, $anterior=null)
     {
         $avanceModel = new AvanceModel();
 
-        return $avanceModel->insert(['avance'=>$avance, 'accion_id'=>$accionId, 'creado_por'=>$this->usuario->getId()]);
+        $campos = ['avance'=>$avance, 'accion_id'=>$accionId, 'creado_por'=>$this->usuario->getId()];
+
+        if (is_numeric($anterior)) {
+            $campos['anterior'] = $anterior;
+        }
+        return $avanceModel->insert($campos);
     }
 
     public function cargarArchivo()

@@ -75,7 +75,7 @@ var $modSeguimiento = (modulo=>{
         $util.post({
             url: "AccionParticular",
             metodo:"vistaEditarAvance",
-            datos:{multiple:'multiple', evidencia:modulo.me.attr('data-evidencia'), accion_id:modulo.me.parents('tr').attr('id')},
+            datos:{multiple:'multiple', evidencia:modulo.me.attr('data-evidencia'), accion_id:modulo.me.parents('tr').attr('id'), avance:$.trim(modulo.me.parents('tr').find('td[data-avance="true"] span').text())},
             funcion: function(data){
                 $util.load.hide();
                 if (data.Solicitud) {
