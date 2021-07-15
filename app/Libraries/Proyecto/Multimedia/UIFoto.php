@@ -8,16 +8,16 @@ class UIFoto extends UIMedia
 {
     protected $imagenModel;
 
-    public function __construct(CProyecto $proyecto)
+    public function __construct(CProyecto $proyecto, $params = [])
     {        
         $this->imagenModel = new ImagenModel();         
-        parent::__construct($proyecto);   
+        parent::__construct($proyecto, $params);   
     }
     
-    public function obtenerListado($params = [])
+    public function obtenerListado($offset=null, $limit=null)
     {
         $html = '';
-        $imagenes = $this->consultarMedia(($params['pagina']*$params['paginacion']), ($params['paginacion']*($params['pagina']+1)));
+        $imagenes = $this->consultarMedia($offset, $limit);
         foreach ($imagenes as $imagen) {
             $imagen['id'] = base64_encode( $this->encriptar($imagen['id']) );
             $html .= view('proyectos/multimedia/parcial/_v_item_media.php', $imagen);

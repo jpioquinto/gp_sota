@@ -9,17 +9,29 @@ class UIMedia
 {    
     protected $encrypter; 
     protected $proyecto;
+    protected $config;
     protected $count;
     protected $total;
 
     use CifradoTrait;
 
-    public function __construct(CProyecto $proyecto)
+    public function __construct(CProyecto $proyecto, $config=[])
     {
         $this->encrypter = \Config\Services::encrypter();  
         $this->imagenModel = new ImagenModel(); 
         $this->proyecto = $proyecto;      
+        $this->config = $config;
     }
+
+    public function offset()
+    {
+        return $this->config['pagina'] * $this->config['paginacion'];   
+    }
+
+    public function limit()
+    {
+        return $this->config['paginacion'];
+    }   
 
     public function setTotal($total)
     {

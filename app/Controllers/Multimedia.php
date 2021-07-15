@@ -56,11 +56,11 @@ class Multimedia extends BaseController
             echo json_encode(['Solicitud'=>false, 'Error'=>'No se encontró el Gestor para esta vista.']); return; 
         }  
               
-        $uiMedia = new $clase($proyecto);
+        $uiMedia = new $clase($proyecto, $params);
         
         $listado = $params['ini']==='false'
-                ? '<div class="row content-media">'.$uiMedia->obtenerListado($params).'</div>'
-                : $uiMedia->obtenerListado($params);
+                ? '<div class="row content-media">'.$uiMedia->obtenerListado($uiMedia->offset(), $uiMedia->limit()).'</div>'
+                : $uiMedia->obtenerListado($uiMedia->offset(), $uiMedia->limit());
         
         ++$params['pagina'];
         
