@@ -57,15 +57,23 @@ class Multimedia extends BaseController
         }  
               
         $uiMedia = new $clase($proyecto);
-
-        if (!$params['ini']) {
+        
+        $listado = $params['ini']==='false'
+                ? '<div class="row content-media">'.$uiMedia->obtenerListado($params).'</div>'
+                : $uiMedia->obtenerListado($params);
+        
+        ++$params['pagina'];
+        
+        if ($params['ini']==='false') {            
             $params['ini'] = true;
             $params['total'] = count($uiMedia->consultarMedia());
+            $listado .= ($params['pagina']*$params['paginacion'])<$params['total'] ? view('proyectos/multimedia/parcial/_v_mas_media') : '';
         }
         
         echo json_encode([
             'Solicitud'=>true, 
-            'vista'=>'<div class="row content-media">'.$uiMedia->obtenerListado().'</div>'
+            'vista'=>$listado,            
+            'info'=>$params
         ]);
     }
 

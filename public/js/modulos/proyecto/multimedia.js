@@ -53,7 +53,7 @@ var $media = (modulo => {
         
         modulo.me = $(this); 
 
-        var $params = clone(config[modulo.me.attr('data-media')]);
+        var $params = (config[modulo.me.attr('data-media')]);
         $params['paginacion'] = config.paginacion;
 
         if ($params.hasOwnProperty('busqueda')) {
@@ -61,6 +61,19 @@ var $media = (modulo => {
         }
         
         modulo.obtenerMultimedia( Object.assign($params,{media:modulo.me.attr('data-media'), proyectoId:$proyecto.getId()}) );       
+    };
+
+    modulo.clickVerMasMedia = function(e) {
+        e.preventDefault();
+        
+        var $params = (config[modulo.me.attr('data-media')]);
+        $params['paginacion'] = config.paginacion;
+
+        if ($params.hasOwnProperty('busqueda')) {
+            delete $params.busqueda;
+        }
+        
+        modulo.obtenerMultimedia( Object.assign($params,{media:modulo.me.attr('data-media'), proyectoId:$proyecto.getId()}) );  
     };
 
     modulo.obtenerMultimedia = ($params) => {        
@@ -71,8 +84,8 @@ var $media = (modulo => {
             datos:$params,
             funcion: function(data) {   
                 modulo.me.tab('show');             
-                if (data.Solicitud) {                
-                    $(modulo.me.attr('href')).html(data.vista);
+                if (data.Solicitud) {                                    
+                    modulo.inicializaContenido(modulo.me.attr('data-media'), data);
                     modulo.me.attr('data-media')=='foto' ? eventosImagenes() : eventosVideos();
                     $('.tab-content').find('[data-toggle="tooltip"]').tooltip();
                 }                
@@ -82,7 +95,11 @@ var $media = (modulo => {
     };
 
     modulo.inicializaContenido = (media, data, busqueda) => {
+        data.info.pagina==1 ? $(modulo.me.attr('href')).html(data.vista) : $(modulo.me.attr('href') + ' .content-media').append(data.vista);
         config[media].ini = true;
+        config[media].pagina = parseInt(data.info.pagina);
+        config[media].total  = parseInt(data.info.total);
+        $('.jq_mas_media').off('click').on('click', modulo.clickVerMasMedia);
     };
 
     var eventosImagenes = () => {

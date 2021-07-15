@@ -14,10 +14,10 @@ class UIFoto extends UIMedia
         parent::__construct($proyecto);   
     }
     
-    public function obtenerListado()
+    public function obtenerListado($params = [])
     {
         $html = '';
-        $imagenes = $this->consultarMedia();
+        $imagenes = $this->consultarMedia(($params['pagina']*$params['paginacion']), ($params['paginacion']*($params['pagina']+1)));
         foreach ($imagenes as $imagen) {
             $imagen['id'] = base64_encode( $this->encriptar($imagen['id']) );
             $html .= view('proyectos/multimedia/parcial/_v_item_media.php', $imagen);
@@ -27,8 +27,8 @@ class UIFoto extends UIMedia
         return $html;
     }
 
-    public function consultarMedia($limit=null, $offset=null)
-    {
+    public function consultarMedia($offset=null, $limit=null)
+    {#var_dump($offset);exit;
         $registros = $this->imagenModel
         ->where(['estatus'=>1, 'proyecto_id'=>$this->proyecto->getId()])
         ->orderBy('nombre', 'ASC');
