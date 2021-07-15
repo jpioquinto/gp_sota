@@ -74,11 +74,11 @@
                             <div class="form-check">
                                 <label>¿Requiere evidencia?</label><br/>
                                 <label class="form-radio-label">
-                                    <input class="form-radio-input" type="radio" name="evidencia" value="1">
+                                    <input class="form-radio-input" type="radio" name="evidencia" value="1" checked>
                                     <span class="form-radio-sign">Si</span>
                                 </label>
                                 <label class="form-radio-label ml-3">
-                                    <input class="form-radio-input" type="radio" name="evidencia" value="0" checked>
+                                    <input class="form-radio-input" type="radio" name="evidencia" value="0">
                                     <span class="form-radio-sign">No</span>
                                 </label>
                             </div>

@@ -5,13 +5,14 @@ use App\Models\AvanceModel;
 
 class Avance implements Indicador
 {
+    protected $evidencia;
     protected $accionId;
     protected $leyenda;
     protected $avance;
     protected $rangos;
     protected $porc;
     
-    public function __construct($accionId)
+    public function __construct($accionId, $evidencia=true)
     {
         $this->rangos = [
             ['min'=>0,  'max'=>20,  'estatus'=>1, 'icon'=>'images/iconos/semaforo/avance-1.png', 'alt'=>'Avance '],
@@ -21,8 +22,15 @@ class Avance implements Indicador
             ['min'=>81, 'max'=>100, 'estatus'=>5, 'icon'=>'images/iconos/semaforo/avance-5.png', 'alt'=>'Avance '],
         ];
 
-        $this->accionId = $accionId;
-        $this->leyenda = '';
+        $this->accionId  = $accionId;
+        $this->evidencia = $evidencia;
+        $this->leyenda   = '';
+        $this->porc      = $this->avanceActual($this->obtenerAvance());
+    }
+
+    public function requiereEvidencia()
+    {
+        return $this->evidencia;
     }
 
     public function getPorcentaje()
@@ -31,9 +39,7 @@ class Avance implements Indicador
     }
 
     public function icono()
-    {        
-        $this->porc = $this->avanceActual($this->obtenerAvance());
-
+    {                
         $icono = "";
 
         foreach ($this->rangos as $rango) {
@@ -67,6 +73,10 @@ class Avance implements Indicador
     {
         if (!isset($avance['avance'])) {
             return 0;
+        }
+
+        if (!$this->requiereEvidencia()) {
+            return $avance['avance'];
         }
 
         return round($avance['validado']==1 ? $avance['avance'] : $avance['anterior']);

@@ -33,6 +33,8 @@ class Vigencia implements Indicador
         ];
 
         $this->leyenda = '';
+
+        $this->porc = $this->calcularPorcentaje();
     }
 
     public function setLeyenda($leyenda)
@@ -72,14 +74,12 @@ class Vigencia implements Indicador
 
         if ($dias>=$tope) {
             return $this->rangos[4]['icon'];
-        }
-
-        $this->porc = round(($dias*100/$tope));
+        }        
 
         $icono = "";
 
         foreach ($this->rangos as $rango) {
-            if ($this->porc>=$rango['min'] && $this->porc<=$rango['max']) {
+            if ($this->getPorcentaje()>=$rango['min'] && $this->getPorcentaje()<=$rango['max']) {
                 $this->setLeyenda($rango['alt'].round($dias).' de '.$tope);
                 $icono = $rango['icon'];
             }
@@ -91,5 +91,17 @@ class Vigencia implements Indicador
     public function getLeyenda()
     {
         return $this->leyenda;
+    }
+
+    protected function calcularPorcentaje()
+    {
+        $tope = $this->getTope();
+        $dias = $this->diasTranscurridos();
+
+        if ($dias>=$tope) {
+            return $dias = $tope;
+        }
+
+        return round(($dias*100/$tope));
     }
 }

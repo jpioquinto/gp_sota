@@ -2,7 +2,7 @@
 namespace App\Libraries\Proyecto;
 
 use App\Libraries\Proyecto\Seguimiento\Semaforo\{Semaforo, Vigencia, Avance, Estatus};
-use App\Models\{AccionEspecificaModel, AccionEspecificaQuery};
+use App\Models\{AccionEspecificaModel, AccionEspecificaQuery, CriticidadModel};
 use App\Traits\{PermisoTrait, CifradoTrait};
 use App\Libraries\Usuario;
 
@@ -10,6 +10,7 @@ use App\Libraries\Usuario;
 class UIAccionParticular
 {	
 	protected $accionModel;	
+    protected $criticidad;
     protected $accion_id;
     protected $encrypter; 
     protected $usuario;
@@ -24,6 +25,7 @@ class UIAccionParticular
         $this->accionModel = new AccionEspecificaModel(); 
         $this->usuario = new Usuario();        
         $this->accion_id = $accion_id;
+        $this->criticidad = $this->obtenMatrizCriticidad();
 	}
 
     public function getAccionId()
@@ -44,7 +46,7 @@ class UIAccionParticular
             $avance = ($val['evidencia']==1 && $val['validado']==0) 
                     ? "<span class='badge badge-danger'>{$val['avance']}</span>" 
                     : "<span class='badge badge-light'>{$val['avance']}</span>";
-            #$vigencia = new VigenciaAccion($val['fecha_ini'], $val['fecha_fin']);echo '<pre>';print_r($vigencia->icono());exit;
+            
             if (!$ini) {
                 $ini = true;
                 $html .= sprintf(
@@ -117,9 +119,16 @@ class UIAccionParticular
     protected function vistaIndicadores($accion)
     {
         $iTiempo  = new Semaforo($tiempo = new Vigencia($accion['fecha_ini'], $accion['fecha_fin']));
-        $iAvance  = new Semaforo($avance = new Avance($accion['id']));
-        $iEstatus = new Semaforo(new Estatus($tiempo->getPorcentaje(), $avance->getPorcentaje()));
+        $iAvance  = new Semaforo($avance = new Avance($accion['id'], $accion['evidencia']));
+        $iEstatus = new Semaforo(new Estatus($tiempo->getPorcentaje(), $avance->getPorcentaje(), $this->criticidad));
 
         return "<div class='d-flex indicador-accion'>".$iTiempo->getIcono().$iAvance->getIcono().$iEstatus->getIcono()."</div>";
+    }
+
+    protected function obtenMatrizCriticidad()
+    {
+        $criticidadModel = new CriticidadModel();
+
+        return $criticidadModel->findAll() ?? [];
     }
 }

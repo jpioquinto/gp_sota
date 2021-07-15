@@ -106,6 +106,7 @@ var $accion = (modulo => {
         if (Object.keys($params).length==0 || !$params.hasOwnProperty('accion_id')) {
             return;
         }
+        $params['evidencia'] = $("input[name='evidencia']:checked").val();
         $params['responsable'] = $("select[name='responsable'] option:selected").val();
         
         $util.load.show(true);
