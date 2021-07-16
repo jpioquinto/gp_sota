@@ -33,7 +33,7 @@ class UIVideo extends UIMedia
         return $videoQuery->listado(['estatus'=>1, 'proyectoId'=>$this->proyecto->getId()], $this->busqueda(), $offset, $limit);
     }
 
-    public function consultarMedia($limit=null, $offset=null)
+    public function consultarMedia($offset=null, $limit=null)
     {
         if ($this->busqueda()!='') {
             return $this->queryMedia($offset, $limit);

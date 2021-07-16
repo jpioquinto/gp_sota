@@ -6,7 +6,7 @@
                 <h5 class="modal-title">
                     <span class="fw-mediumbold">Mostrando imagen</span> 
                 </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -16,4 +16,4 @@
         </div>
     </div>
 </div>
-<!--script src="js/modulos/proyecto/form_media.js"></script-->
+<script src="js/modulos/proyecto/ver_media.js"></script>
