@@ -2,7 +2,7 @@
 namespace App\Libraries\Proyecto\Multimedia;
 
 use App\Libraries\Proyecto\CProyecto;
-use App\Models\ImagenModel;
+use App\Models\{ImagenModel, ImagenQuery};
 
 class UIFoto extends UIMedia
 {
@@ -27,8 +27,18 @@ class UIFoto extends UIMedia
         return $html;
     }
 
+    public function queryMedia($offset=null, $limit=null)
+    {
+        $imagenQuery = new ImagenQuery();
+        return $imagenQuery->listado(['estatus'=>1, 'proyectoId'=>$this->proyecto->getId()], $this->busqueda(), $offset, $limit);
+    }
+
     public function consultarMedia($offset=null, $limit=null)
-    {#var_dump($offset);exit;
+    {
+        if ($this->busqueda()!='') {
+            return $this->queryMedia($offset, $limit);
+        }
+
         $registros = $this->imagenModel
         ->where(['estatus'=>1, 'proyecto_id'=>$this->proyecto->getId()])
         ->orderBy('nombre', 'ASC');

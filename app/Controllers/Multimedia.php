@@ -24,8 +24,7 @@ class Multimedia extends BaseController
     public function index()
     {        
         $proyecto = new CProyecto($this->encrypter->decrypt( base64_decode($this->request->getPost('id')) ));
-        #$uiImagen = new UIFoto($proyecto);
-
+        
         $infoProyecto = $proyecto->obtenerProyecto();
         echo json_encode([
             'Solicitud'=>true,
@@ -54,7 +53,9 @@ class Multimedia extends BaseController
         
         if (!class_exists($clase)) {
             echo json_encode(['Solicitud'=>false, 'Error'=>'No se encontró el Gestor para esta vista.']); return; 
-        }  
+        }
+        
+        #$params['proyecto_id'] = $proyecto->getId();
               
         $uiMedia = new $clase($proyecto, $params);
         
@@ -70,11 +71,7 @@ class Multimedia extends BaseController
             $listado .= ($params['pagina']*$params['paginacion'])<$params['total'] ? view('proyectos/multimedia/parcial/_v_mas_media') : '';
         }
         
-        echo json_encode([
-            'Solicitud'=>true, 
-            'vista'=>$listado,            
-            'info'=>$params
-        ]);
+        echo json_encode(['Solicitud'=>true, 'vista'=>$listado, 'info'=>$params]);
     }
 
     public function vistaFormulario()

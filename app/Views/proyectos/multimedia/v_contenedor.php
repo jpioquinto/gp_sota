@@ -4,9 +4,9 @@
     <div class="col-12 col-md-5  offset-md-7">
         <div class="form-group">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="buscar...">
+                <input type="text" class="form-control" name="entrada" placeholder="buscar...">
                 <div class="input-group-append"">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Buscar</button>
+                    <button class="btn btn-outline-secondary jq_buscar" type="button" id="btn-buscar">Buscar</button>
                 </div>
                 <div class="ml-4">
                     <?php if(isset($permisos[27])): ?>

@@ -3,32 +3,16 @@ namespace App\Libraries\Proyecto\Multimedia;
 
 use App\Libraries\Proyecto\CProyecto;
 use App\Traits\CifradoTrait;
-use App\Models\VideoModel;
+use App\Models\{VideoModel, VideoQuery};
 
-class UIVideo
+class UIVideo extends UIMedia
 {
     protected $videoModel;
-    protected $encrypter; 
-    protected $proyecto;
-    protected $count;
 
-    use CifradoTrait;
-
-    public function __construct(CProyecto $proyecto)
-    {
-        $this->encrypter = \Config\Services::encrypter();  
-        $this->videoModel = new VideoModel(); 
-        $this->proyecto = $proyecto;      
-    }
-
-    public function getCount()
-    {
-        return $this->count;
-    }
-
-    public function setCount($count)
-    {
-        $this->count = $count;
+    public function __construct(CProyecto $proyecto, $params = [])
+    {         
+        $this->videoModel = new VideoModel();         
+        parent::__construct($proyecto, $params);       
     }
     
     public function obtenerListado()
@@ -44,8 +28,18 @@ class UIVideo
         return $html;
     }
 
+    public function queryMedia($offset=null, $limit=null)
+    {
+        $videoQuery = new VideoQuery();
+        return $videoQuery->listado(['estatus'=>1, 'proyectoId'=>$this->proyecto->getId()], $this->busqueda(), $offset, $limit);
+    }
+
     public function consultarMedia($limit=null, $offset=null)
     {
+        if ($this->busqueda()!='') {
+            return $this->queryMedia($offset, $limit);
+        }
+
         $registros = $this->videoModel
         ->where(['estatus'=>1, 'proyecto_id'=>$this->proyecto->getId()])
         ->orderBy('nombre', 'ASC');

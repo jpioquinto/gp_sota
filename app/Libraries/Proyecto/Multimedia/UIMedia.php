@@ -21,6 +21,29 @@ class UIMedia
         $this->imagenModel = new ImagenModel(); 
         $this->proyecto = $proyecto;      
         $this->config = $config;
+
+        isset($config['entrada']) ? $this->formatearEntrada($config['entrada']) : null;
+    }
+
+    public function formatearEntrada($entrada)
+    {
+        $entradas = explode(' ', $entrada);
+
+        $cadena = [];
+        
+        foreach ($entradas as $val) {
+            if (in_array($val, ['de','con', 'y', 'e', 'o', 'u'])) {
+                continue;
+            }
+            $cadena[] = $val;
+        }
+
+        $this->config['cadena'] = count($cadena)>0 ? implode('|', $cadena) : '';
+    }
+
+    public function busqueda()
+    {
+        return isset($this->config['cadena']) ? $this->config['cadena'] : '';
     }
 
     public function offset()

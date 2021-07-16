@@ -53,7 +53,7 @@ var $media = (modulo => {
         
         modulo.me = $(this); 
 
-        var $params = (config[modulo.me.attr('data-media')]);
+        var $params = clone(config[modulo.me.attr('data-media')]);
         $params['paginacion'] = config.paginacion;
 
         if ($params.hasOwnProperty('busqueda')) {
@@ -66,7 +66,7 @@ var $media = (modulo => {
     modulo.clickVerMasMedia = function(e) {
         e.preventDefault();
         
-        var $params = (config[modulo.me.attr('data-media')]);
+        var $params = clone(config[modulo.me.attr('data-media')]);
         $params['paginacion'] = config.paginacion;
 
         if ($params.hasOwnProperty('busqueda')) {
@@ -74,6 +74,28 @@ var $media = (modulo => {
         }
         
         modulo.obtenerMultimedia( Object.assign($params,{media:modulo.me.attr('data-media'), proyectoId:$proyecto.getId()}) );  
+    };
+
+    modulo.clickBuscar = function(e) {
+        e.preventDefault();
+
+        if ($.trim($("input[name='entrada']").val())=='') {
+            return;
+        }
+
+        var $params = clone(config[modulo.me.attr('data-media')].busqueda);
+        $params['paginacion'] = config.paginacion;
+        $params.entrada = $.trim($("input[name='entrada']").val());
+        
+        modulo.obtenerMultimedia( Object.assign($params,{media:modulo.me.attr('data-media'), proyectoId:$proyecto.getId()}) );
+    };
+
+    modulo.capturaBusqueda = function(e) {
+        e.preventDefault();
+
+        if (e.which == 13) {
+			$(".jq_buscar").trigger('click');
+		}
     };
 
     modulo.obtenerMultimedia = ($params) => {        
@@ -85,7 +107,7 @@ var $media = (modulo => {
             funcion: function(data) {   
                 modulo.me.tab('show');             
                 if (data.Solicitud) {                                    
-                    modulo.inicializaContenido(modulo.me.attr('data-media'), data);
+                    modulo.inicializaContenido(modulo.me.attr('data-media'), data, $params.hasOwnProperty('entrada') ? $params.entrada : undefined);
                     modulo.me.attr('data-media')=='foto' ? eventosImagenes() : eventosVideos();
                     $('.tab-content').find('[data-toggle="tooltip"]').tooltip();
                 }                
@@ -96,9 +118,17 @@ var $media = (modulo => {
 
     modulo.inicializaContenido = (media, data, busqueda) => {
         data.info.pagina==1 ? $(modulo.me.attr('href')).html(data.vista) : $(modulo.me.attr('href') + ' .content-media').append(data.vista);
-        config[media].ini = true;
-        config[media].pagina = parseInt(data.info.pagina);
-        config[media].total  = parseInt(data.info.total);
+
+        if (busqueda) {
+            config[media].busqueda.ini = true;
+            config[media].busqueda.pagina = parseInt(data.info.pagina);
+            config[media].busqueda.total  = parseInt(data.info.total);
+        } else {
+            config[media].ini = true;
+            config[media].pagina = parseInt(data.info.pagina);
+            config[media].total  = parseInt(data.info.total);
+        }
+
         $('.jq_mas_media').off('click').on('click', modulo.clickVerMasMedia);
     };
 
@@ -112,8 +142,8 @@ var $media = (modulo => {
 
     var config = {
         paginacion:2,
-        foto:{ini:false, vista:'', pagina:0, total:0, busqueda:{ini:false, vista:'', pagina:0, total:0}},
-        video:{ini:false, vista:'', pagina:0, total:0, busqueda:{ini:false, vista:'', pagina:0, total:0}}
+        foto:{ini:false, vista:'', pagina:0, total:0, busqueda:{ini:false, vista:'', pagina:0, total:0, entrada:''}},
+        video:{ini:false, vista:'', pagina:0, total:0, busqueda:{ini:false, vista:'', pagina:0, total:0, entrada:''}}
     };
 
     return modulo;
@@ -122,6 +152,8 @@ var $media = (modulo => {
 $(function() {
     $('#v-pills-tab-with-icon a').off('click').on('click', $media.clickVerContenido);    
     $('.jq_subir').off('click').on('click', $media.clickSubirMedia);
+    $('.jq_buscar').off('click').on('click', $media.clickBuscar);
+    $("input[name='entrada']").off("keyup").on("keyup", $media.capturaBusqueda);
 
     $('#v-pills-tab-with-icon a:first').trigger('click');
     $('.tab-content').find('[data-toggle="tooltip"]').tooltip();
