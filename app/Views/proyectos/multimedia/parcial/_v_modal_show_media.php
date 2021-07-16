@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header no-bd">
                 <h5 class="modal-title">
-                    <span class="fw-mediumbold">Mostrando imagen</span> 
+                    <span class="fw-mediumbold">Mostrando <?=isset($titulo) ? $titulo : ''?></span> 
                 </h5>
                 <button type="button" class="close" aria-label="Close">
                     <span aria-hidden="true">&times;</span>

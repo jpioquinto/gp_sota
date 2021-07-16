@@ -1,4 +1,4 @@
-<div class="col-6 col-sm-12 col-lg-4">
+<div class="col-6 col-sm-12 col-lg-4 item-video">
     <div class="embed-responsive embed-responsive-16by9">
         <video controls>
             <source src="<?=isset($ruta) ? $ruta : ''?>">

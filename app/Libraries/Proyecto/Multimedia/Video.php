@@ -68,4 +68,32 @@ class Video extends Media
         ? ['Solicitud'=>true, 'Msg'=>'Video cargado correctamente.']
         : ['Solicitud'=>false, 'Msg'=>'Error al intentar registrar la carga del video.'];       
     }
+
+    public function eliminar($id)
+    {
+        $video = $this->obtenerVideo($id);
+
+        if (!isset($video['ruta'])) {
+            return ['Solicitud'=>false, 'Error'=>'No se encontró información del video.'];
+        }
+
+        if (!file_exists($video['ruta'])) {
+            return ['Solicitud'=>false, 'Error'=>'No se encontró el archivo de video a eliminar.'];
+        }
+
+        if (!unlink($video['ruta'])) {
+            return ['Solicitud'=>false, 'Error'=>'Error al intentar eliminar el archivo, verifique permisos.'];
+        }
+
+        $imagenModel = new VideoModel();
+        $imagenModel->update($video['id'], ['estatus'=>0]);
+
+        return ['Solicitud'=>true, 'Msg'=>'Se ha eliminado el archivo correctamente.'];
+    }
+
+    protected function obtenerVideo($id)
+    {
+        $imagenModel = new VideoModel();
+        return $imagenModel->find($id) ?? [];
+    }
 }

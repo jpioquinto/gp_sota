@@ -73,4 +73,32 @@ class Foto extends Media
         $ancho = $imagen->getWidth();#round( ($alto * $imagen->getWidth()) / $imagen->getHeight() );
         return $imagen->resize($ancho, $alto, $maintainRatio, $masterDim);        
     }
+
+    public function eliminar($id)
+    {
+        $imagen = $this->obtenerImagen($id);
+
+        if (!isset($imagen['ruta'])) {
+            return ['Solicitud'=>false, 'Error'=>'No se encontró información de la imagen.'];
+        }
+
+        if (!file_exists($imagen['ruta'])) {
+            return ['Solicitud'=>false, 'Error'=>'No se encontró el archivo de imagen a eliminar.'];
+        }
+
+        if (!unlink($imagen['ruta'])) {
+            return ['Solicitud'=>false, 'Error'=>'Error al intentar eliminar el archivo, verifique permisos.'];
+        }
+
+        $imagenModel = new ImagenModel();
+        $imagenModel->update($imagen['id'], ['estatus'=>0]);
+
+        return ['Solicitud'=>true, 'Msg'=>'Se ha eliminado el archivo correctamente.'];
+    }
+
+    protected function obtenerImagen($id)
+    {
+        $imagenModel = new ImagenModel();
+        return $imagenModel->find($id) ?? [];
+    }
 }

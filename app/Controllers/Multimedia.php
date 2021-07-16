@@ -117,10 +117,28 @@ class Multimedia extends BaseController
             'vista'=>view(
 			    'proyectos/multimedia/parcial/_v_modal_show_media', 
                 [
+                    'titulo'=>$this->request->getPost('media')=='video' ? $this->request->getPost('media') : 'imagen', 
                     'v_media'=>$uiMedia->vistaMedia($this->desencriptar( base64_decode($this->request->getPost('id')) ), $this->usuario->obtenerPermisosModulo('Proyecto'))
                 ]
             )
         ]);	
+    }
+
+    public function eliminarMedia()
+    {
+        if (!isset($_SESSION['GP_SOTA']) || empty($_SESSION['GP_SOTA'])) {			
+			return redirect()->to('/'); 
+		}
+
+        $clase = self::_SPACE_.ucwords($this->request->getPost('media'));
+
+        if (!class_exists($clase)) {
+            echo json_encode(['Solicitud'=>false, 'Error'=>'No se encontró el Gestor para esta acción.']); return; 
+        }  
+        
+        $media = new $clase();
+
+        echo json_encode( $media->eliminar($this->desencriptar( base64_decode($this->request->getPost('id')) )) );
     }
 
     public function guardarImagen()
