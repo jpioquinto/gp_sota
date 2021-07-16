@@ -1,9 +1,8 @@
 <?php 
 namespace App\Libraries\Proyecto\Multimedia;
 
-use App\Libraries\Proyecto\CProyecto;
-use App\Traits\CifradoTrait;
 use App\Models\{VideoModel, VideoQuery};
+use App\Libraries\Proyecto\CProyecto;
 
 class UIVideo extends UIMedia
 {
@@ -15,10 +14,10 @@ class UIVideo extends UIMedia
         parent::__construct($proyecto, $params);       
     }
     
-    public function obtenerListado()
+    public function obtenerListado($offset=null, $limit=null)
     {
         $html = '';
-        $videos = $this->consultarMedia(); 
+        $videos = $this->consultarMedia($offset, $limit); 
         foreach ($videos as $video) {
             $video['id'] = base64_encode( $this->encriptar($video['id']) );
             $html .= view('proyectos/multimedia/parcial/_v_item_video', $video);
