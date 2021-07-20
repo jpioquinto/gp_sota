@@ -46,6 +46,16 @@ class CProyecto
         return isset($this->proyecto['organizacion_id']) ? $this->proyecto['organizacion_id'] : 0;
     }
 
+    public function getResponsableId()
+    {
+        return isset($this->proyecto['responsable_id']) ? $this->proyecto['responsable_id'] : 0;
+    }
+
+    public function getCoordinadorId()
+    {
+        return isset($this->proyecto['coordinador_id']) ? $this->proyecto['coordinador_id'] : 0;
+    }
+
     public function getCarpeta()
     {
         return $this->dependencia->getCarpeta();

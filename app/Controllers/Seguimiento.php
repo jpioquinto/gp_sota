@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Libraries\Proyecto\{UIProyecto, UIAccion, CProyecto, CAccion, CSubAccion};
-use App\Traits\{AccionGenetalTrait, AccionEspecificaTrait, PermisoTrait};
+use App\Traits\{AccionGenetalTrait, AccionEspecificaTrait};
 use App\Models\{AccionGeneralModel, AccionEspecificaModel};
 use App\Libraries\Validacion\ValidaAccion;
 use  App\Libraries\Usuario;
@@ -14,7 +14,7 @@ class Seguimiento extends BaseController
 
     use AccionGenetalTrait;
     use AccionEspecificaTrait;
-    use PermisoTrait;
+    #use PermisoTrait;
 
     public function __construct()
     {
@@ -32,7 +32,7 @@ class Seguimiento extends BaseController
         $infoProyecto = $proyecto->obtenerProyecto();#echo '<pre>';print_r($uiAccion->tablaAcciones());exit;
 
         $btnAcciones = view(
-            'proyectos/parcial/_v_btn_accion_submodulo', ['permisos'=>$this->usuario->obtenerPermisosModulo('Proyecto'), 'acciones'=>$this->obtenerAccionesModulo('Proyecto')]
+            'proyectos/parcial/_v_btn_accion_submodulo', ['permisos'=>$this->usuario->obtenerPermisosModulo('Proyecto'), 'acciones'=>$this->usuario->obtenerAccionesModulo('Proyecto')]
         );#echo '<pre>';print_r($btnAcciones.$uiAccion->headerTitle());exit;
 
         echo json_encode([

@@ -2,7 +2,7 @@
 namespace App\Libraries\Proyecto;
 
 use App\Models\{AccionEspecificaModel, AccionQuery};
-use App\Traits\PermisoTrait;
+#use App\Traits\PermisoTrait;
 use App\Libraries\Usuario;
 
 
@@ -13,7 +13,7 @@ class CSubAccion
     protected $usuario;
     protected $id;
 
-    use PermisoTrait;
+    #use PermisoTrait;
 	
 	public function __construct($id = 0)
 	{		 

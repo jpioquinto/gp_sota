@@ -16,13 +16,15 @@ trait PermisoTrait
             return [];
         }
 
-        $funciondalidad = $funcionalidadModel->whereIn('accion_id', explode(',', $modulo['acciones']))->findAll();
+        $listado = $this->obtenerPermisosModulo($controlador);
 
-        $listado = [];
+        $funciondalidad = $funcionalidadModel->whereIn('accion_id', explode(',', $modulo['acciones']))->findAll() ?? [];
+
+        #$listado = [];
         foreach ($funciondalidad as $value) {
             $listado[$value['accion_id']] = $value;
         }
-
+        
         return $listado;
     }
 

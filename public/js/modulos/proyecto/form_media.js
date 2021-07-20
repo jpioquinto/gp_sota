@@ -69,6 +69,8 @@ var $formMedia = (modulo => {
         if ($("select[name='clave']").val().length>0) {            
             $params.append('clave', $("select[name='clave']").val());
         }
+
+        $params.append('licencia', $("select[name='licencia'] option:selected").val());
         
         $params.append('proyectoId', $proyecto.getId());
         $params.append($media, archivo);

@@ -1,7 +1,7 @@
 <?php 
 namespace App\Libraries\Proyecto;
 use App\Models\AccionGeneralModel;
-use App\Traits\PermisoTrait;
+#use App\Traits\PermisoTrait;
 use App\Libraries\Usuario;
 
 
@@ -12,7 +12,7 @@ class UIAccion
     protected $encrypter; 
     protected $usuario;
 
-    use PermisoTrait;
+    #use PermisoTrait;
 	
 	public function __construct($proyectoId = 0)
 	{		 

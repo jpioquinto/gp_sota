@@ -39,4 +39,6 @@ var $evidencia = (modulo => {
 $(function() {
     $("#listado-doc .jq_evidencia").off('click').on('click', $evidencia.clickSelecEvidencia);
     $("#listado-doc .jq_validar").off('click').on('click', $evidencia.clickValidarAvance);
+
+    $("#listado-doc .jq_evidencia .card:first").addClass('item-seleccionado');
 });

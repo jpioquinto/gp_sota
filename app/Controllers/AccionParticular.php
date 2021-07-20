@@ -3,7 +3,7 @@ namespace App\Controllers;
 
 use App\Libraries\Proyecto\{CProyecto, CCargaArchivo, CAccion, CSubAccion};
 use App\Models\{AccionEspecificaModel, EvidenciaModel, AvanceModel};
-use App\Traits\CifradoTrait;
+use App\Traits\{CifradoTrait};
 use  App\Libraries\Usuario;
 
 class AccionParticular extends BaseController
@@ -13,8 +13,10 @@ class AccionParticular extends BaseController
     protected $evidenciaModel;
     protected $encrypter; 
     protected $usuario;
+    protected $permisosModulo;
 
     use CifradoTrait;
+    #use PermisoTrait;
 
     public function __construct()
     {
@@ -22,7 +24,8 @@ class AccionParticular extends BaseController
         $this->usuario = new Usuario();          
         $this->evidenciaModel = new EvidenciaModel();
         $this->encrypter = \Config\Services::encrypter(); 
-        $this->accionEspecificaModel = new AccionEspecificaModel();         
+        $this->accionEspecificaModel = new AccionEspecificaModel(); 
+        $this->permisosModulo = $this->usuario->obtenerAccionesModulo('Proyecto');        
     }
 
     public function vistaCargarDocs()
@@ -70,23 +73,25 @@ class AccionParticular extends BaseController
     public function agruparEvidencias($idAccion, $docs)
     {   
         $html = '';     
+        $accion = $this->accionEspecificaModel->find($this->desencriptar($idAccion)) ?? [];
         foreach ($this->obtenerAvances($this->desencriptar($idAccion)) as $avance) {
             $avance['id'] = base64_encode($this->encriptar($avance['id']));
             $html .= view('proyectos/seguimiento/parcial/_v_separador_avance', $avance);
-            $html .= $this->iterarEvidencias($docs, $this->desencriptar( base64_decode($avance['id']) ));
+            $html .= $this->iterarEvidencias($docs, $this->desencriptar( base64_decode($avance['id']) ), $accion, $avance);
         }
 
         return $html;
     }
 
-    public function iterarEvidencias($docs, $bloque)
-    {
+    public function iterarEvidencias($docs, $bloque, $accion=[], $avance=[])
+    {   $eliminar = $this->puedeEliminar($accion, $avance);
         $html = "<div class='row'>";
         foreach ($docs as $doc) {
             if ($doc['bloque']!=$bloque) {
                 continue;
             }
-            $html .= view('proyectos/seguimiento/parcial/_v_item_doc', $doc);
+            $doc['bloque'] = base64_encode($this->encriptar($doc['bloque']));
+            $html .= view('proyectos/seguimiento/parcial/_v_item_doc', array_merge($doc, ['eliminarEvidencia'=>$eliminar]));
         }
 
         return $html."</div>";
@@ -250,5 +255,28 @@ class AccionParticular extends BaseController
     {
         $avanceModel = new AvanceModel();
         return $avanceModel->where(['accion_id'=>$idAccion, 'estatus'=>1])->findAll() ?? [];
+    }
+
+    protected function puedeEliminar($accion, $avance)
+    {
+        if (!isset($this->permisosModulo[29])) {
+            return false;
+        }
+        
+        $accionGral = new CAccion($accion['accion_id']);
+        $proyecto = new CProyecto($accionGral->getProyectoId());
+
+        return !$this->estaValidado($accion, $avance) 
+        || $this->tieneFacultad([$accionGral->getCoordinadorId(),$proyecto->getCoordinadorId()]);
+    }
+    
+    protected function estaValidado($accion, $avance)
+    {
+        return ($accion['evidencia']==1 && $avance['validado']==1) || ($accion['evidencia']==0);
+    }
+
+    protected function tieneFacultad($usuarios)
+    {
+        return in_array($this->usuario->getId(), $usuarios);
     }
 }

@@ -3,7 +3,7 @@ namespace App\Libraries\Proyecto;
 
 use App\Libraries\Proyecto\Seguimiento\Semaforo\{Semaforo, Vigencia, Avance, Estatus};
 use App\Models\{AccionEspecificaModel, AccionEspecificaQuery, CriticidadModel};
-use App\Traits\{PermisoTrait, CifradoTrait};
+use App\Traits\{CifradoTrait};
 use App\Libraries\Usuario;
 
 
@@ -17,7 +17,7 @@ class UIAccionParticular
 
     use CifradoTrait;
 
-    use PermisoTrait;
+    #use PermisoTrait;
 	
 	public function __construct($accion_id = 0)
 	{		 

@@ -7,13 +7,13 @@ trait AccesoRapidoTrait
     public function vistaAcciones($controlador, $accion=24)
     {
         $this->permisos = $this->usuario->permisos;
-        if (!$this->tienePermiso($controlador, $accion)) {
+        if (!$this->usuario->tienePermiso($controlador, $accion)) {
             return '';
         }
         $this->accionModel = new FuncionalidadAccionModel();
         $metodo = [24=>'vistaAccesosRapido'];
 
-        return $this->{$metodo[$accion]}($this->obtenerPermisosModulo($controlador));
+        return $this->{$metodo[$accion]}($this->usuario->obtenerPermisosModulo($controlador));
     }
 
     public function vistaAccesosRapido($acciones)

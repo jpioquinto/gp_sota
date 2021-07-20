@@ -1,5 +1,9 @@
 <div class="col-6 col-sm-4 col-lg-6 jq_evidencia">
-    <div class="card" extension="<?=obtenExtension($ruta)?>" url="<?=$ruta?>">
+    <div class="card <?=(isset($ini) && $ini) ? 'item-seleccionado' : ''?>" 
+        extension="<?=obtenExtension($ruta)?>" 
+        url="<?=$ruta?>"
+        bloque="<?=$bloque?>"
+    >
         <div class="corner"></div>
         <div class="check"></div>
         <div class="card-body text-center">
@@ -11,16 +15,13 @@
                 data-original-title="<?=$descripcion?>"
             ><?=mostrarDescripcionDocumento($ruta,0)?></span>
 
-            <div class="text-muted d-none">
-                <?php if (isset($EliminarDoc) && $EliminarDoc): ?>
-                    <a
-                        href="javascript:;" doc="<?=$id?>" class="jq_quitar_doc"
-                        title="Eliminar documento"
-                    >
-                        <span class="label label-warning">Eliminar</span>
+            <?php if (isset($eliminarEvidencia) && $eliminarEvidencia): ?>
+                <div class="card-text mt-2">
+                    <a href="" onclick="return false;" class="btn btn-warning btn-rounded btn-xs jq_eliminar_evidencia">
+                        <i class="fas fa-trash-alt"></i> Eliminar
                     </a>
-                <?php endif; ?>
-            </div>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>

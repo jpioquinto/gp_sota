@@ -5,23 +5,22 @@
 <div class="container">
     <div class="table-responsive">
         <table id="jq_listado_acciones" class="display table table-striped table-hover tabla-listado-usuarios"
-            data-toggle="table"
+                      
             data-search="true"            
-            data-show-columns="true"
-            data-show-columns-search="true"
+            data-show-columns="true"            
         >
             <thead>
                 <tr>
-                    <th class="text-center" data-field="general">Acción General</th>
-                    <th class="text-center" data-field="estatus">Estatus</th>
-                    <th class="text-center" data-field="especifica">Acción Específica</th>
+                    <th class="text-center" data-field="general" data-switchable="false">Acción General</th>
+                    <th class="text-center" data-field="estatus" data-switchable="false">Estatus</th>
+                    <th class="text-center" data-field="especifica" data-switchable="false">Acción Específica</th>
                     <th class="text-center" data-field="programa">Programa Ramo</th>
                     <th class="text-center" data-field="responsable">Responsable</th>
                     <th class="text-center" data-field="inicio">Inicio</th>
                     <th class="text-center" data-field="fin">Fin</th>
                     <th class="text-center" data-field="meta">Meta</th>
                     <th class="text-center" data-field="avance">Avance</th>
-                    <th style="width: 10%" class="text-center" data-field="btn-accion" >Acciones</th>
+                    <th style="width: 10%" class="text-center" data-field="btn-accion"  data-switchable="false">Acciones</th>
                 </tr>
             </thead>
             <tbody>

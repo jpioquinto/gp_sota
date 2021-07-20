@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\{ContactoModel, CorreoModel, PerfilModel, ModuloModel};
-use App\Traits\{PermisoTrait, AccesoRapidoTrait};
+use App\Traits\{AccesoRapidoTrait};
 use App\Libraries\Usuario\Perfil;
 use  App\Libraries\Usuario;
 
@@ -12,7 +12,7 @@ class Home extends BaseController
 
 	protected $elementos;
 
-	use PermisoTrait;
+	#use PermisoTrait;
 	use AccesoRapidoTrait;
 
 	public function __construct()

@@ -15,7 +15,7 @@ class VideoModel extends Model
 
     protected $allowedFields = [
         'proyecto_id', 'estatus', 'nombre', 'ruta', 'descripcion', 'autor', 'formato', 'palabra_clave', 
-        'fecha_publicacion', 'resolucion', 'duracion', 'tamanio', 'p_serie', 'licencia', 'creado_por', 'actualizado_el', 
+        'fecha_publicacion', 'resolucion', 'duracion', 'tamanio', 'p_serie', 'restriccion_id', 'creado_por', 'actualizado_el', 
         'actualizado_por', 'eliminado_el', 'eliminado_por'
     ];
     

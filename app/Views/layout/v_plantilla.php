@@ -29,7 +29,7 @@
 	<script src="js/library/jquery-3.6.0.min.js"></script>
 	<script src="js/app/jquery.noty.packaged.min.js"></script>	
 
-	<link rel="stylesheet" href="css/plugins/bootstrap-table.min.css" /><!-- quitar este estilo -->
+	<link rel="stylesheet" href="css/plugins/bootstrap-table.min.css" />
 	
 	<script src="js/helpers.js"></script>
 	<script src="js/util.js"></script>

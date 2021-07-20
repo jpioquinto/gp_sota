@@ -6,9 +6,8 @@ var $modSeguimiento = (modulo=>{
         var $tabla = $('#jq_listado_acciones');
         //var $tbody = $tabla.find('tbody').html();
         $tabla.bootstrapTable('destroy').bootstrapTable({
-            pagination: true,
-            locale:'es-MX',
-            search: true,            
+            pagination: true,            
+            locale:'es-MX',                                   
         });
         
         $('#jq_listado_acciones').find('[data-toggle="tooltip"]').tooltip();        

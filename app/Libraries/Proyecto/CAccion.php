@@ -2,7 +2,6 @@
 namespace App\Libraries\Proyecto;
 
 use App\Models\{AccionGeneralModel, AccionEspecificaModel};
-use App\Traits\PermisoTrait;
 use App\Libraries\Usuario;
 
 
@@ -12,15 +11,17 @@ class CAccion
 	protected $accionModel;	
     protected $encrypter; 
     protected $usuario;
+    protected $accion;
     protected $id;
 
-    use PermisoTrait;
+    #use PermisoTrait;
 	
 	public function __construct($id = 0)
 	{		 
         $this->encrypter = \Config\Services::encrypter();
         $this->accionModel = new AccionGeneralModel();
         $this->subAccionModel = new AccionEspecificaModel();
+        $this->accion = $this->accionModel->find($id) ?? [];
         $this->usuario = new Usuario();        
         $this->id = $id;
 	}
@@ -30,15 +31,25 @@ class CAccion
         return $this->id;
     }
 
+    public function getCoordinadorId()
+    {
+        return isset($this->accion['coordinador_id']) ? $this->accion['coordinador_id'] : 0;
+    }
+
+    public function getProyectoId()
+    {
+        return isset($this->accion['proyecto_id']) ? $this->accion['proyecto_id'] : 0;
+    }
+
     public function obtenerAccion()
     {
-        return $this->accionModel->find($this->getId()) ?? [];
+        return $this->accion;#$this->accionModel->find($this->getId()) ?? [];
     }
 
     public function obtenerPonderacion()
     {
-        $accion = $this->accionModel->find($this->getId());
-        return isset($accion['ponderacion']) ? $accion['ponderacion'] : 0;
+        #$accion = $this->accionModel->find($this->getId());
+        return isset($this->accion['ponderacion']) ? $this->accion['ponderacion'] : 0;
     }
 
     public function eliminarAccion()

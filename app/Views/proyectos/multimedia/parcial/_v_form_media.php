@@ -38,10 +38,9 @@
         <div class="col-sm-12 col-md-12">
             <div class="form-group">
                 <label for="data-licencia">Licencia o restricción de acceso</label>
-                <input 
-                    type="text" id="data-licencia" name="licencia" 
-                    class="form-control" value="<?=isset($media['licencia']) ? $media['licencia']:''?>"
-                >                
+                <select id="data-licencia" name="licencia"  class="form-control">
+                    <?=isset($restricciones) ? $restricciones : ''?>
+                </select>              
             </div>
         </div>
         <div class="col-sm-12 col-md-12">

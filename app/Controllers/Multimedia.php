@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Libraries\Proyecto\Multimedia\{Multimedia AS CMultimedia, Foto, Video, UIFoto, UIVideo};
 use App\Libraries\Proyecto\{CProyecto};
+use App\Models\CatalogoModel;
 use App\Traits\CifradoTrait;
 use App\Libraries\Usuario;
 
@@ -82,6 +83,7 @@ class Multimedia extends BaseController
         #var_dump( $this->request->getPost());exit;
         $form = [
             'media'=>$this->request->getPost('media'), 
+            'restricciones'=>$this->listadoRestricciones(),
             'accept'=>$this->request->getPost('media')=='foto' ? '.jpg, .jpeg, .png, .gif, .bmp, .webp, .tif, .tiff' : '.mpeg, .ogv, .webm, .3gp, .3g2, .avi, .flv, .mp4, .ts, .mov, .wmv, .mkv'
         ];
 		echo json_encode([
@@ -170,5 +172,23 @@ class Multimedia extends BaseController
 
         $media = new CMultimedia(new Video);
         echo json_encode($media->guardar($this->request, new CProyecto($this->desencriptar(base64_decode($this->request->getPost('proyectoId')))), $this->request->getFile('video')) );
+    }
+
+    public function listadoRestricciones($restriccionId=null)
+    {
+        $listado = "";#"<option value=''></option>";
+
+        foreach ($this->obtenerRestricciones() as $value) {
+            $selected = $restriccionId==$value['id'] ? 'selected' : '';
+            $listado .= sprintf("<option value='%d' %s>%s</option>", $value['id'], $selected, $value['descripcion']);
+        }
+        return $listado;
+    }
+
+    protected function obtenerRestricciones()
+    {
+        $catalogo = new CatalogoModel();
+
+        return $catalogo->getCatalogo('cat_restricciones', '*', 1);
     }
 }

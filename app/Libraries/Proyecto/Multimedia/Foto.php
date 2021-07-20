@@ -57,8 +57,8 @@ class Foto extends Media
             $campos['palabra_clave'] = str_replace(',', ' ', $request->getPost('clave'));
         }
 
-        if (!empty($request->getPost('licencia'))) {
-            $campos['licencia'] = trim( $request->getPost('licencia') );
+        if (is_numeric($request->getPost('licencia'))) {
+            $campos['restriccion_id'] =  $request->getPost('licencia');
         }
 
         $imagenModel = new ImagenModel();
