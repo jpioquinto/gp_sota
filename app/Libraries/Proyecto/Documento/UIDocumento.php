@@ -2,8 +2,8 @@
 namespace App\Libraries\Proyecto\Documento;
 
 use App\Libraries\Proyecto\CProyecto;
-use App\Traits\CifradoTrait;
 use App\Models\CatalogoModel;
+use App\Traits\CifradoTrait;
 
 class UIDocumento
 {    

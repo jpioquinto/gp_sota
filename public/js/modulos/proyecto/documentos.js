@@ -18,6 +18,7 @@ var $docs = (modulo => {
                     $('.content-modal').html(data.vista);
                     $('#jq_modal_form').modal('show');
                     $('#data-tipo_doc').off('change').on('change', modulo.selectTipoDoc);
+                    $('#data-tipo_doc').trigger('change');
                 }            
             }
         });
@@ -39,9 +40,8 @@ var $docs = (modulo => {
             funcion: function(data) {
                 $util.load.hide();
                 if (data.Solicitud) {
+                    $('.content-form').html(data.vista);
                     modulo.me.prop('disable', true);
-                    $('.content-modal').html(data.vista);
-                    $('#jq_modal_form').modal('show');
                 }            
             }
         });
