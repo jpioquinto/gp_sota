@@ -1,18 +1,6 @@
 <form class="ficha-planeacion">
     <div class="row"> 
-        <?=isset($_v_nombre_doc) ? $_v_nombre_doc : ''?>
-        <div class="col-sm-12 col-md-6">
-            <div class="form-group">
-                <label for="data-tipo">Tipo de Documento</label>   
-                <select id="data-tipo" class="form-control" name="tipo"></select>           
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-6">
-            <div class="form-group">
-                <label for="data-detalle">Detalles de la Publicación</label>   
-                <select id="data-detalle" class="form-control" name="detalle"></select>           
-            </div>
-        </div>
+        <?=isset($_v_nombre_doc) ? $_v_nombre_doc : ''?>        
         <div class="col-sm-12 col-md-12">
             <div class="form-group">
                 <label for="data-tema1">Tema 1</label>
@@ -49,6 +37,19 @@
                 >                
             </div>
         </div> 
+        <?=isset($_v_pais_idioma) ? $_v_pais_idioma : ''?> 
+        <div class="col-sm-12 col-md-6">
+            <div class="form-group">
+                <label for="data-tipo">Clasificación</label>   
+                <select id="data-tipo" class="form-control" name="tipo"></select>           
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="form-group">
+                <label for="data-detalle">Detalles de la Publicación</label>   
+                <select id="data-detalle" class="form-control" name="detalle"></select>           
+            </div>
+        </div>
         <?=isset($_v_conjunto_datos) ? $_v_conjunto_datos : ''?>   
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
@@ -67,14 +68,7 @@
                     class="form-control" value="<?=isset($doc['num_paginas']) ? $doc['num_paginas']:''?>"
                 >                
             </div>
-        </div>
-        <?=isset($_v_pais_idioma) ? $_v_pais_idioma : ''?> 
-        <div class="col-sm-12 col-md-12">
-            <div class="form-group">
-                <label for="data-clave">Palabras Claves</label>   
-                <select class="form-control jq_p_clave" multiple="multiple" name="clave"></select>           
-            </div>
-        </div>
+        </div> 
         <div class="col-sm-12 col-md-12">
             <div class="form-group">
                 <label for="data-editorial">Editorial</label>
@@ -101,14 +95,20 @@
                     class="form-control" value="<?=isset($doc['isbn']) ? $doc['isbn']:''?>"
                 >                
             </div>
-        </div> 
+        </div>       
+        <div class="col-sm-12 col-md-12">
+            <div class="form-group">
+                <label for="data-clave">Palabras Claves</label>   
+                <select class="form-control jq_p_clave" multiple="multiple" name="clave"></select>           
+            </div>
+        </div>         
         <div class="col-sm-12 col-md-12">
             <div class="form-group">
                 <label for="data-url">Obtenido de</label>   
                 <input 
                     type="text" id="data-url" name="url" 
                     class="form-control" value="<?=isset($doc['url']) ? $doc['url']:''?>"
-                    placeholder="Ejemplo: https//www.x-dominio.com/nombre-del-recurso.pdf"
+                    placeholder="Ejemplo: https://www.x-dominio.com/nombre-del-recurso.pdf"
                 >             
             </div>
         </div>

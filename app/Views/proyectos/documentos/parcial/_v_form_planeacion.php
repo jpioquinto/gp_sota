@@ -1,41 +1,6 @@
 <form class="ficha-planeacion">
     <div class="row"> 
-        <div class="col-sm-12 col-md-12">
-            <div class="form-group">
-                <label for="data-nombre">Nombre</label>
-                <input 
-                    type="text" id="data-nombre" name="nombre" 
-                    class="form-control" value="<?=isset($doc['nombre']) ? $doc['nombre']:''?>"
-                >                
-            </div>
-        </div>             
-        <div class="col-sm-12 col-md-12">
-            <div class="form-group">
-                <label for="data-descripcion">Descripción</label>
-                <input 
-                    type="text" id="data-descripcion" name="descripcion" 
-                    class="form-control" value="<?=isset($doc['descripcion']) ? $doc['descripcion']:''?>"
-                >                
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-6">
-            <div class="form-group">
-                <label for="data-alias">Alias</label>
-                <input 
-                    type="text" id="data-alias" name="alias" 
-                    class="form-control" value="<?=isset($doc['alias']) ? $doc['alias']:''?>"
-                >                
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-6">
-            <div class="form-group">
-                <label for="data-cobertura">Nivel de cobertura</label>
-                <input 
-                    type="text" id="data-cobertura" name="cobertura" 
-                    class="form-control" value="<?=isset($doc['cobertura']) ? $doc['cobertura']:''?>"
-                >                
-            </div>
-        </div>        
+        <?=isset($_v_nombre_doc) ? $_v_nombre_doc : ''?>      
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-publicado">Fecha de publicación</label>
@@ -54,19 +19,34 @@
                 >                
             </div>
         </div>
-        <div class="col-sm-12 col-md-12">
+        <div class="col-sm-12 col-md-6">
             <div class="form-group">
-                <label for="data-url">Obtenido de</label>   
-                <input 
-                    type="text" id="data-url" name="url" 
-                    class="form-control" value="<?=isset($doc['url']) ? $doc['url']:''?>"
-                >             
+                <label for="data-pais">País</label>   
+                <select class="form-control" name="pais"></select>           
             </div>
         </div>
-        <div class="col-sm-12 col-md-12">
+        <div class="col-sm-12 col-md-6">
             <div class="form-group">
-                <label for="data-clave">Palabras claves</label>   
-                <select class="form-control jq_p_clave" multiple="multiple" name="clave"></select>           
+                <label for="data-grafico">ID Geográfico</label>   
+                <input 
+                    type="text" id="data-grafico" name="grafico" 
+                    class="form-control" value="<?=isset($doc['grafico_id']) ? $doc['grafico_id']:''?>"
+                >              
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="form-group">
+                <label for="data-dependencia">Institución / Dependencia</label>   
+                <select id="data-dependencia" class="form-control" name="dependencia"></select>           
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="form-group">
+                <label for="data-inegi">ID Geográfico INEGI</label>   
+                <input 
+                    type="text" id="data-inegi" name="inegi" 
+                    class="form-control" value="<?=isset($doc['grafico_inegi_id']) ? $doc['grafico_inegi_id']:''?>"
+                >             
             </div>
         </div>
         <div class="col-sm-12 col-md-6">
@@ -98,6 +78,22 @@
             <div class="form-group">
                 <label for="data-tipo">Tipo</label>   
                 <select class="form-control jq_p_clave" name="tipo"></select>           
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12">
+            <div class="form-group">
+                <label for="data-url">Obtenido de</label>   
+                <input 
+                    type="text" id="data-url" name="url" 
+                    class="form-control" value="<?=isset($doc['url']) ? $doc['url']:''?>"
+                    placeholder="Ejemplo: https://www.x-dominio.com/nombre-del-recurso.pdf"
+                >             
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12">
+            <div class="form-group">
+                <label for="data-clave">Palabras claves</label>   
+                <select class="form-control jq_p_clave" multiple="multiple" name="clave"></select>           
             </div>
         </div>
         <div class="col-sm-12 col-md-12">

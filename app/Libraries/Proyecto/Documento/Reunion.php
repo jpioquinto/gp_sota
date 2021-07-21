@@ -11,7 +11,12 @@ class Reunion extends Documento
 
     public function vistaForm()
     {
-        return view('proyectos/documentos/parcial/_v_form_planeacion', []);
+        return view(
+            'proyectos/documentos/parcial/_v_form_reunion', 
+            [
+                '_v_conjunto_datos'=>$this->vistaConjuntoDatos(),
+            ]
+        );
 
     }
 }
