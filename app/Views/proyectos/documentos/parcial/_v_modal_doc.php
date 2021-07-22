@@ -17,8 +17,13 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="data-doc" name="doc" lang="es">
+                            <input type="file" class="custom-file-input" id="data-doc" name="archivo" lang="es">
                             <label class="custom-file-label" for="data-doc">Seleccionar Archivo</label>
+                        </div>
+                        <div class="progress invisible mt-2">
+                            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                0%
+                            </div>
                         </div>
                     </div> 
                     <div class="col-sm-12 col-md-12">
@@ -35,7 +40,7 @@
                 </div>
             </div>
             <div class="modal-footer no-bd">
-                <button type="button" id="jq_aceptar_form" class="btn btn-default" disabled>
+                <button type="button" id="jq_aceptar_carga" class="btn btn-default" disabled>
                     <span class="btn-label"><i class="fa fa-save"></i></span> Aceptar																					
                 </button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">
@@ -45,4 +50,5 @@
         </div>
     </div>
 </div>
+<script src="js/modulos/proyecto/valida_form.js"></script>
 <script src="js/modulos/proyecto/form_documento.js"></script>

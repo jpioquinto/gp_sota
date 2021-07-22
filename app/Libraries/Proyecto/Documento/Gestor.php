@@ -12,9 +12,9 @@ class Gestor
         $this->doc = $doc;
     }
 
-    public function guardar($request,  CProyecto $proyecto, $archivo)
+    public function guardar($datos, $archivo)
     {
-        return $this->doc->guardar($request, $proyecto, $archivo);
+        return $this->doc->guardar($datos, $archivo);
     }
 
     public function vista()

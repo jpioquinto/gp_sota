@@ -35,6 +35,12 @@ var notificacion = function(texto, tipo, tiempo, colocacion, animacionEntrada, a
         $.noty.closeAll();
     }, 6300);
 };
+var quitarExtension = function($nombre) {
+    $ext = $nombre.toString().split('.');
+    $ext.pop();
+
+    return $ext.join(' ');
+}
 var clone = function(obj) {
     return JSON.parse(JSON.stringify(obj));
 };

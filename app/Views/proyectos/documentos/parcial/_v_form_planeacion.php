@@ -14,15 +14,16 @@
             <div class="form-group">
                 <label for="data-num_paginas">Número de páginas</label>
                 <input 
-                    type="number" id="data-num_paginas" name="num_paginas" 
+                    type="number" id="data-num_paginas" name="paginas" 
                     class="form-control" value="<?=isset($doc['num_paginas']) ? $doc['num_paginas']:''?>"
+                    required
                 >                
             </div>
         </div>
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-pais">País</label>   
-                <select class="form-control jq_select" name="pais">
+                <select class="form-control jq_select" name="pais" required>
                     <?=isset($paises) ? $paises : ''?>
                 </select>           
             </div>
@@ -39,7 +40,7 @@
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-dependencia">Institución / Dependencia</label>   
-                <select id="data-dependencia" class="form-control jq_select" name="dependencia">
+                <select id="data-dependencia" class="form-control jq_select" name="institucion" required>
                 <?=isset($instituciones) ? $instituciones : ''?>
                 </select>           
             </div>
@@ -56,7 +57,7 @@
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-entidad_apf">Entidad APF</label>   
-                <select class="form-control jq_select" name="entidad_apf">
+                <select class="form-control jq_select" name="entidad_apf" required>
                     <?=isset($entidadesAPF) ? $entidadesAPF : ''?>
                 </select>           
             </div>
@@ -67,6 +68,7 @@
                 <input 
                     type="text" id="data-entidad_r" name="entidad_r" 
                     class="form-control" value="<?=isset($doc['entidad_r']) ? $doc['entidad_r']:''?>"
+                    required
                 >            
             </div>
         </div>
@@ -86,7 +88,7 @@
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-tipo">Tipo</label>   
-                <select class="form-control jq_select" name="tipo">
+                <select class="form-control jq_select" name="tipo" required>
                     <?=isset($tipos) ? $tipos : ''?>
                 </select>           
             </div>
@@ -104,7 +106,7 @@
         <div class="col-sm-12 col-md-12">
             <div class="form-group">
                 <label for="data-clave">Palabras claves</label>   
-                <select class="form-control jq_select" multiple="multiple" name="clave"></select>           
+                <select class="form-control jq_select" multiple="multiple" name="clave" required></select>           
             </div>
         </div>
         <div class="col-sm-12 col-md-12">

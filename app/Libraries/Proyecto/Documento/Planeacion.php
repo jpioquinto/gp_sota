@@ -1,6 +1,7 @@
 <?php 
 namespace App\Libraries\Proyecto\Documento;
 use App\Libraries\Proyecto\CProyecto;
+use App\Models\PlaneacionModel;
 
 class Planeacion extends Documento
 {
@@ -9,8 +10,64 @@ class Planeacion extends Documento
         parent::__construct($proyecto);        
     }
 
-    public function guardar($request, $proyecto, $archivo)
-    {
+    public function guardar($datos, $archivo)
+    {   
+        $validacion = $this->validacion->esSolicitudPlaneacionValida($datos);
+
+        if ($validacion['Solicitud']===FALSE) {
+            return $validacion;
+        }var_dump($archivo);exit;
+
+        $carga = self::getInstanciaCarga($this->proyecto, 'planeacion');
+
+        if (!$carga->existeDirectorio()) {
+            return ['Solicitud'=>false, 'Error'=>'No se encontró el directorio: '.$carga->getDirectorio()];
+        }
+
+        $campos = [
+            'descripcion'=>trim($datos['descripcion']),
+            'alias'=>trim($datos['alias']),
+            'cobertura_id'=>$datos['cobertura'],
+            'proyecto_id'=>$this->proyecto->getId(),
+            'formato'=>strtolower( obtenExtension($archivo->getName()) ),
+            'fecha_publicado'=>$datos['publicado'],
+            'num_paginas'=>trim($datos['paginas']),
+            'pais_id'=>$datos['pais'],
+            'institucion_id'=>$datos['institucion'],
+            'entidad_apf_id'=>$datos['entidad_apf'],
+            'i_concurrente'=>$datos['instrumento'],
+            'tipo_id'=>$datos['tipo'],
+            'palabra_clave'=>str_replace(',', ' ', $datos['clave']),
+            'creado_por'=>$this->usuario->getId()
+        ];
+
+        $campos['nombre']  =$carga->verificaDuplicados( limpiarCadena($datos['nombre']) . '.' . $campos['formato']);
+
+        if (isset($datos['grafico']) && trim($datos['grafico'])!='') {
+            $campos['grafico_id'] = trim($datos['grafico']);
+        }
+
+        if (isset($datos['inegi']) && trim($datos['inegi'])!='') {
+            $campos['inegi_grafico_id'] = trim($datos['inegi']);
+        }
+
+        if (isset($datos['entidad_r']) && trim($datos['entidad_r'])!='') {
+            $campos['entidad_r'] = trim($datos['entidad_r']);
+        }
+
+        if (isset($datos['url']) && trim($datos['url'])!='') {
+            $campos['url'] = trim($datos['url']);
+        }
+               
+        if (!$archivo->save($carga->getDirectorio().$campos['nombre'])) {
+            return ['Solicitud'=>false, 'Error'=>'Error al intentar cargar el documento '.$datos['nombre'] ];
+        }
+
+        $planeacionModel = new PlaneacionModel();
+        
+        return $planeacionModel->insert($campos)
+        ? ['Solicitud'=>true, 'Msg'=>'Documento cargado correctamente.']
+        : ['Solicitud'=>false, 'Msg'=>'Error al intentar registrar la carga del documento.'];  
 
     }
 

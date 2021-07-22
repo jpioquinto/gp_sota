@@ -85,7 +85,6 @@
 
 	<!-- Datatables -->
 	<script src="js/plugins/datatables/datatables.min.js"></script>
-	<script src="js/plugins/datatables/dataTables.rowGroup.min.js"></script>
 
 	<!-- Bootstrap Notify -->
 	<script src="js/plugins/bootstrap-notify/bootstrap-notify.min.js"></script>

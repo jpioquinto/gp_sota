@@ -87,4 +87,49 @@ class Documento extends BaseController
             'vista'=>$gestor->vista()
         ]);	
     }
+
+    public function cargarArchivo()
+    {
+        if (!$this->request->getPost('id')) {
+            echo json_encode([
+                'Solicitud' =>false,
+                'Error'=>'No se recibió el Identificador del Proyecto.',
+            ]);	
+            return; 
+        }
+        
+        helper('util');
+                
+        $clase = self::_SPACE_.str_replace(' ', '', ucwords(limpiarCadena($this->request->getPost('tipo_doc'))));
+
+        if (!class_exists($clase)) {
+            echo json_encode(['Solicitud'=>false, 'Error'=>'No se encontró el Gestor para esta acción.']); return; 
+        }  
+
+        $gestor = new Gestor(new $clase(new CProyecto($this->desencriptar( base64_decode($this->request->getPost('id')) ))));
+
+        /*
+        $cargaArchivo = new CCargaArchivo(new CProyecto( $this->encrypter->decrypt( base64_decode($this->request->getPost('id'))) ));
+        $carga = $cargaArchivo->mover(
+            $this->request->getFile('archivo'), 
+            $this->generarNombre( $this->encrypter->decrypt( base64_decode($this->request->getPost('id'))) )
+        );
+        
+        if (!$carga['Solicitud']) {
+            echo json_encode($carga);return;
+        }
+                
+        $this->guardarEvidencia([            
+            'proyecto_id'=> $this->encrypter->decrypt( base64_decode($this->request->getPost('id'))),
+            'registro_id'=> $this->encrypter->decrypt( base64_decode($this->request->getPost('id'))),            
+            'bloque'=>$this->request->getPost('bloque') ? $this->request->getPost('bloque') : '',
+            'descripcion'=>$this->request->getPost('descripcion'),
+            'creado_por'=>$this->usuario->getId(),
+            'seccion'=> self::SECCION,
+            'ruta'=>$carga['url'],
+        ]);
+        */
+        echo json_encode($gestor->guardar($this->request->getPost(), $this->request->getFile('archivo')));
+
+    }
 }

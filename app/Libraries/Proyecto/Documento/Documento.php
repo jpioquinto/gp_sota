@@ -1,26 +1,42 @@
 <?php 
 namespace App\Libraries\Proyecto\Documento;
 
-use App\Libraries\Proyecto\CProyecto;
+use App\Libraries\Validacion\ValidaDocumento;
+use App\Libraries\Proyecto\{CProyecto, CCargaArchivo};
 use App\Traits\CifradoTrait;
+use App\Libraries\Usuario;
 
 abstract class Documento
 {
     protected $uiDocumento;
+    protected $validacion;
+    protected $cargarDoc;
     protected $encrypter; 
     protected $proyecto;
     protected $usuario;
 
+    const _DIRDOCS_ = 'documentos/';
+
     use CifradoTrait;
 
-    abstract public function guardar($request, CProyecto $proyecto, $archivo);
+    abstract public function guardar($datos, $archivo);
 
     abstract public function vistaForm();
 
     public function __construct(CProyecto $proyecto)
     {
+        helper('util');
+
         $this->uiDocumento = new UIDocumento($proyecto);
+        #$this->cargarDoc   = new CCargaArchivo($proyecto);
+        $this->validacion  = new ValidaDocumento();
         $this->proyecto    = $proyecto;
+        $this->usuario = new Usuario();  
+    }
+
+    public static function getInstanciaCarga($proyecto, $dir = '')
+    {
+        return new CCargaArchivo($proyecto, self::_DIRDOCS_.$dir);
     }
 
     protected function opcionesPaises($id=151)
