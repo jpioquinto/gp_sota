@@ -22,7 +22,9 @@
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-pais">País</label>   
-                <select class="form-control" name="pais"></select>           
+                <select class="form-control jq_select" name="pais">
+                    <?=isset($paises) ? $paises : ''?>
+                </select>           
             </div>
         </div>
         <div class="col-sm-12 col-md-6">
@@ -37,7 +39,9 @@
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-dependencia">Institución / Dependencia</label>   
-                <select id="data-dependencia" class="form-control" name="dependencia"></select>           
+                <select id="data-dependencia" class="form-control jq_select" name="dependencia">
+                <?=isset($instituciones) ? $instituciones : ''?>
+                </select>           
             </div>
         </div>
         <div class="col-sm-12 col-md-6">
@@ -52,13 +56,18 @@
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-entidad_apf">Entidad APF</label>   
-                <select class="form-control jq_p_clave" name="entidad_apf"></select>           
+                <select class="form-control jq_select" name="entidad_apf">
+                    <?=isset($entidadesAPF) ? $entidadesAPF : ''?>
+                </select>           
             </div>
         </div>
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-entidad_r">Entidad Responsable</label>   
-                <select class="form-control jq_p_clave" name="entidad_r"></select>           
+                <input 
+                    type="text" id="data-entidad_r" name="entidad_r" 
+                    class="form-control" value="<?=isset($doc['entidad_r']) ? $doc['entidad_r']:''?>"
+                >            
             </div>
         </div>
         <div class="col-sm-12 col-md-6">
@@ -77,7 +86,9 @@
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-tipo">Tipo</label>   
-                <select class="form-control jq_p_clave" name="tipo"></select>           
+                <select class="form-control jq_select" name="tipo">
+                    <?=isset($tipos) ? $tipos : ''?>
+                </select>           
             </div>
         </div>
         <div class="col-sm-12 col-md-12">
@@ -93,7 +104,7 @@
         <div class="col-sm-12 col-md-12">
             <div class="form-group">
                 <label for="data-clave">Palabras claves</label>   
-                <select class="form-control jq_p_clave" multiple="multiple" name="clave"></select>           
+                <select class="form-control jq_select" multiple="multiple" name="clave"></select>           
             </div>
         </div>
         <div class="col-sm-12 col-md-12">

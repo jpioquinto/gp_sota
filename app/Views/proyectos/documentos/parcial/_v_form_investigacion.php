@@ -41,13 +41,17 @@
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-tipo">Clasificación</label>   
-                <select id="data-tipo" class="form-control" name="tipo"></select>           
+                <select id="data-tipo" class="form-control jq_select" name="tipo">
+                    <?=isset($clasificaciones) ? $clasificaciones : ''?>
+                </select>           
             </div>
         </div>
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-detalle">Detalles de la Publicación</label>   
-                <select id="data-detalle" class="form-control" name="detalle"></select>           
+                <select id="data-detalle" class="form-control jq_select" name="detalle">
+                    <?=isset($detalles) ? $detalles : ''?>
+                </select>           
             </div>
         </div>
         <?=isset($_v_conjunto_datos) ? $_v_conjunto_datos : ''?>   
@@ -99,7 +103,7 @@
         <div class="col-sm-12 col-md-12">
             <div class="form-group">
                 <label for="data-clave">Palabras Claves</label>   
-                <select class="form-control jq_p_clave" multiple="multiple" name="clave"></select>           
+                <select class="form-control jq_select" multiple="multiple" name="clave"></select>           
             </div>
         </div>         
         <div class="col-sm-12 col-md-12">

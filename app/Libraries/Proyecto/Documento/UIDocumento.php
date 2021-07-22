@@ -25,13 +25,13 @@ class UIDocumento
         isset($config['entrada']) ? $this->formatearEntrada($config['entrada']) : null;
     }
 
-    public function listado($datos, $id=null)
+    public function listado($datos, $id=null, $campo='descripcion')
     {
         $listado = "";
 
         foreach ($datos as $value) {
             $selected = $id==$value['id'] ? 'selected' : '';
-            $listado .= sprintf("<option value='%d' %s>%s</option>", $value['id'], $selected, $value['descripcion']);
+            $listado .= sprintf("<option value='%d' %s>%s</option>", $value['id'], $selected, $value[$campo]);
         }
         return $listado;
     }

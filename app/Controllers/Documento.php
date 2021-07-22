@@ -80,7 +80,7 @@ class Documento extends BaseController
             echo json_encode(['Solicitud'=>false, 'Error'=>'No se encontró el Gestor para esta acción.']); return; 
         }  
 
-        $gestor = new Gestor(new $clase());
+        $gestor = new Gestor(new $clase(new CProyecto($this->desencriptar( base64_decode($this->request->getPost('proyectoId')) ))));
         
 		echo json_encode([
             'Solicitud'=>true,

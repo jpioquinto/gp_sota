@@ -58,7 +58,7 @@ class UIProyecto
 	public function listadoCoberturas($idCobertura=null)
 	{
 		$strHtml = '<option value=0></option>';
-		foreach ($this->getCatalogo('cat_cobertura', '*', 1) as $registro) {
+		foreach ($this->getCatalogo('cat_coberturas', '*', 1) as $registro) {
 			$seleccionar = $idCobertura==$registro['id'] ? 'selected' : '';
 			$strHtml .= sprintf("<option value='%d' %s>%s</option>", $registro['id'], $seleccionar, $registro['descripcion']);
 		}

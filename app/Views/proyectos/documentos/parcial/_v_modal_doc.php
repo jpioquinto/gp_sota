@@ -45,4 +45,4 @@
         </div>
     </div>
 </div>
-<script src="js/modulos/proyecto/form_media.js"></script>
+<script src="js/modulos/proyecto/form_documento.js"></script>

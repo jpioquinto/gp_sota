@@ -28,9 +28,8 @@
 <div class="col-sm-12 col-md-6">
     <div class="form-group">
         <label for="data-cobertura">Nivel de Cobertura</label>
-        <input 
-            type="text" id="data-cobertura" name="cobertura" 
-            class="form-control" value="<?=isset($doc['cobertura']) ? $doc['cobertura']:''?>"
-        >                
+        <select class="form-control jq_select" name="cobertura">
+            <?=isset($coberturas) ? $coberturas : ''?>
+        </select>             
     </div>
 </div> 

@@ -36,12 +36,13 @@ var $docs = (modulo => {
         $util.post({
             url: "Documento",
             metodo:"vistaFormulario",
-            datos:{form:$('#data-tipo_doc option:selected').text()},
+            datos:{form:$('#data-tipo_doc option:selected').text(), proyectoId:$proyecto.getId()},
             funcion: function(data) {
                 $util.load.hide();
                 if (data.Solicitud) {
                     $('.content-form').html(data.vista);
                     modulo.me.prop('disable', true);
+                    $formDoc.ini();
                 }            
             }
         });
