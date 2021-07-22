@@ -49,9 +49,10 @@
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-detalle">Detalles de la Publicación</label>   
-                <select id="data-detalle" class="form-control jq_select" name="detalle">
-                    <?=isset($detalles) ? $detalles : ''?>
-                </select>           
+                <input 
+                    type="text" id="data-detalle" name="detalle" 
+                    class="form-control" value="<?=isset($doc['detalle']) ? $doc['detalle']:''?>"
+                >            
             </div>
         </div>
         <?=isset($_v_conjunto_datos) ? $_v_conjunto_datos : ''?>   
