@@ -89,7 +89,7 @@ abstract class Documento
 
     protected function opcionesRedesSociales($id=null)
     {
-        return $this->uiDocumento->listado($this->uiDocumento->getCatalogo('cat_redes_sociales'), $id);  
+        return $this->uiDocumento->listado($this->uiDocumento->getCatalogo('cat_redes_sociales', 'descripcion AS id, descripcion, estatus'), $id);  
     }
 
     protected function vistaNombreDoc($datos = [])

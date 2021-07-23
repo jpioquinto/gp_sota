@@ -75,7 +75,7 @@
             <div class="form-group">
                 <label for="data-num_paginas">Número de páginas</label>
                 <input 
-                    type="number" id="data-num_paginas" name="num_paginas" 
+                    type="number" id="data-num_paginas" name="paginas" 
                     class="form-control" value="<?=isset($doc['num_paginas']) ? $doc['num_paginas']:''?>"
                 >                
             </div>

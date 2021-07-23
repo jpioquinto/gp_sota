@@ -148,6 +148,7 @@ var $formDoc = ((modulo, valida) => {
             success:function(data) {
                 if (data.Solicitud) {
                     cargado = true;
+                    $('#jq_modal_form').modal('hide'); 
                     notificacion(data.Msg, "success", 4000, "bottomRight", "fadeInUp", "fadeOutDown");
                 } else {
                     error = data.Error;

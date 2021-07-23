@@ -20,7 +20,7 @@ class Planeacion extends Documento
             return $validacion;
         }#var_dump($archivo);exit;
 
-        $carga = self::getInstanciaCarga($this->proyecto, 'planeacion');
+        $carga = self::getInstanciaCarga($this->proyecto, self::SECCION);
 
         if (!$carga->existeDirectorio()) {
             return ['Solicitud'=>false, 'Error'=>'No se encontró el directorio: '.$carga->getDirectorio()];

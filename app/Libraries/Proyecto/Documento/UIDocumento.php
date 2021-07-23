@@ -31,7 +31,7 @@ class UIDocumento
 
         foreach ($datos as $value) {
             $selected = $id==$value['id'] ? 'selected' : '';
-            $listado .= sprintf("<option value='%d' %s>%s</option>", $value['id'], $selected, $value[$campo]);
+            $listado .= sprintf("<option value='%s' %s>%s</option>", $value['id'], $selected, $value[$campo]);
         }
         return $listado;
     }

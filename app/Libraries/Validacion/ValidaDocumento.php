@@ -68,6 +68,14 @@ class ValidaDocumento
                 'numeric' => 'El Identificador de la Institución / Dependencia debe ser numérico.'				
             ]
         ],
+        'conjunto_datos'    => [
+			'label'=>'Conjunto de Datos',
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required' => 'Seleccione el Conjunto de Datos.',	
+                'numeric' => 'El Identificador del Conjunto de Datos debe ser numérico.'				
+            ]
+        ],
         'entidad_apf'    => [
 			'label'=>'Entidad APF',
             'rules'  => 'required',
@@ -192,6 +200,32 @@ class ValidaDocumento
     {
         $reglas = $this->obtenerReglas(
             ['nombre', 'descripcion', 'alias', 'cobertura','pais', 'tema1', 'institucion', 'entidad_apf', 'instrumento', 'tipo', 'publicado', 'vigencia', 'conjunto_datos', 'unidad','clave', 'lugar', 'id']
+        );
+
+        if (count($reglas)==0) {
+            return  ['Solicitud'=>false, 'Error'=>'Validacíón no realizada.'];
+        }
+
+        return $this->validar($datos, $reglas);
+    }
+
+    public function esSolicitudReunionValida($datos)
+    {
+        $reglas = $this->obtenerReglas(
+            ['nombre', 'descripcion', 'alias','pais', 'autor', 'institucion', 'entidad_apf', 'instrumento', 'tipo', 'publicado', 'paginas', 'conjunto_datos','clave', 'lugar', 'id']
+        );
+
+        if (count($reglas)==0) {
+            return  ['Solicitud'=>false, 'Error'=>'Validacíón no realizada.'];
+        }
+
+        return $this->validar($datos, $reglas);
+    }
+
+    public function esSolicitudNotaPrensaValida($datos)
+    {
+        $reglas = $this->obtenerReglas(
+            ['nombre', 'descripcion', 'alias', 'cobertura', 'pais', 'idioma', 'tema1', 'autor', 'institucion', 'conjunto_datos',  'publicado', 'paginas', 'entidad_apf', 'tipo', 'clave', 'lugar', 'id']
         );
 
         if (count($reglas)==0) {
