@@ -14,8 +14,10 @@ class PlaneacionModel extends Model
     protected $returnType     = 'array';
 
     protected $allowedFields = [
-        'nombre', 'alias', 'descripcion', 'tipo_id', 'palabra_clave', 'objetivo', 'cobertura_id', 'fecha_incorporacion', 'nota', 'organizacion_id',
-        'coordinador_id', 'responsable_id', 'colaboradores','imagen', 'estatus', 'creado_por', 'actualizado_el', 'actualizado_por'
+        'proyecto_id', 'estatus', 'nombre', 'formato', 'alias', 'descripcion', 'cobertura_id', 
+        'fecha_publicado', 'num_paginas', 'pais_id', 'grafico_id', 'inegi_grafico_id', 'institucion_id',
+        'entidad_apf_id', 'entidad_r', 'i_concurrente', 'tipo_id', 'url', 'palabra_clave', 'lugar_aplica',
+        'creado_por', 'actualizado_el', 'actualizado_por', 'eliminado_el', 'eliminado_por'
      ];
     
 }

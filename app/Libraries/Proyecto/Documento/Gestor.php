@@ -1,8 +1,6 @@
 <?php 
 namespace App\Libraries\Proyecto\Documento;
 
-use App\Libraries\Proyecto\CProyecto;
-
 class Gestor
 {    
     protected $doc;

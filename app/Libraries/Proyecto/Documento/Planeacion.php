@@ -5,6 +5,8 @@ use App\Models\PlaneacionModel;
 
 class Planeacion extends Documento
 {
+    const SECCION = "planeacion";
+
     public function __construct(CProyecto $proyecto)
     {  
         parent::__construct($proyecto);        
@@ -16,7 +18,7 @@ class Planeacion extends Documento
 
         if ($validacion['Solicitud']===FALSE) {
             return $validacion;
-        }var_dump($archivo);exit;
+        }#var_dump($archivo);exit;
 
         $carga = self::getInstanciaCarga($this->proyecto, 'planeacion');
 
@@ -58,17 +60,29 @@ class Planeacion extends Documento
         if (isset($datos['url']) && trim($datos['url'])!='') {
             $campos['url'] = trim($datos['url']);
         }
-               
-        if (!$archivo->save($carga->getDirectorio().$campos['nombre'])) {
+        
+        $mover = $carga->mover($archivo, quitaExtension($campos['nombre'])); 
+        
+        if (!$mover['Solicitud']) {
             return ['Solicitud'=>false, 'Error'=>'Error al intentar cargar el documento '.$datos['nombre'] ];
         }
 
         $planeacionModel = new PlaneacionModel();
         
-        return $planeacionModel->insert($campos)
-        ? ['Solicitud'=>true, 'Msg'=>'Documento cargado correctamente.']
-        : ['Solicitud'=>false, 'Msg'=>'Error al intentar registrar la carga del documento.'];  
+        if (!($id = $planeacionModel->insert($campos))) {
+            return ['Solicitud'=>false, 'Msg'=>'Error al intentar registrar la carga del documento.'];
+        }                 
 
+        $this->guardarEvidencia([            
+            'ruta'=>$carga->getDirectorio().$campos['nombre'],
+            'proyecto_id'=> $campos['proyecto_id'],
+            'creado_por'=>$this->usuario->getId(),
+            'descripcion'=>$campos['descripcion'],
+            'seccion'=> self::SECCION,
+            'bloque'=>self::SECCION,
+            'registro_id'=> $id,            
+        ]);
+        return ['Solicitud'=>true, 'Msg'=>'Documento cargado correctamente.'];
     }
 
     public function vistaForm()

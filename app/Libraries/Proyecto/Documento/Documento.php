@@ -1,13 +1,15 @@
 <?php 
 namespace App\Libraries\Proyecto\Documento;
 
-use App\Libraries\Validacion\ValidaDocumento;
 use App\Libraries\Proyecto\{CProyecto, CCargaArchivo};
+use App\Libraries\Validacion\ValidaDocumento;
+use App\Models\EvidenciaModel;
 use App\Traits\CifradoTrait;
 use App\Libraries\Usuario;
 
 abstract class Documento
 {
+    protected $evidenciaModel;
     protected $uiDocumento;
     protected $validacion;
     protected $cargarDoc;
@@ -28,7 +30,7 @@ abstract class Documento
         helper('util');
 
         $this->uiDocumento = new UIDocumento($proyecto);
-        #$this->cargarDoc   = new CCargaArchivo($proyecto);
+        $this->evidenciaModel = new EvidenciaModel();        
         $this->validacion  = new ValidaDocumento();
         $this->proyecto    = $proyecto;
         $this->usuario = new Usuario();  
@@ -103,5 +105,10 @@ abstract class Documento
     protected function vistaPaisIdioma($datos = [])
     {
         return view('proyectos/documentos/parcial/_v_pais_idioma', $datos);
+    }
+
+    protected function guardarEvidencia($campos)
+    {
+        return $this->evidenciaModel->insert($campos);
     }
 }
