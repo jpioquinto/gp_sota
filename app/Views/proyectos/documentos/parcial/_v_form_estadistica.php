@@ -7,6 +7,7 @@
                 <input 
                     type="text" id="data-tema1" name="tema1" 
                     class="form-control" value="<?=isset($doc['tema1']) ? $doc['tema1']:''?>"
+                    required
                 >                
             </div>
         </div>    
@@ -25,6 +26,7 @@
                 <input 
                     type="number" id="data-publicado" name="publicado" 
                     class="form-control" value="<?=isset($doc['publicado']) ? $doc['publicado']:''?>"
+                    required
                 >                
             </div>
         </div>        
@@ -34,13 +36,14 @@
                 <input 
                     type="number" id="data-vigencia" name="vigencia" 
                     class="form-control" value="<?=isset($doc['vigencia']) ? $doc['vigencia']:''?>"
+                    required
                 >                
             </div>
         </div>
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-pais">País</label>   
-                <select class="form-control jq_select" name="pais">
+                <select class="form-control jq_select" name="pais" required>
                     <?=isset($paises) ? $paises : ''?>
                 </select>           
             </div>
@@ -54,26 +57,11 @@
                 >                
             </div>
         </div>
-        <div class="col-sm-12 col-md-6">
-            <div class="form-group">
-                <label for="data-dependencia">Institución / Dependencia</label>   
-                <select id="data-dependencia" class="form-control jq_select" name="dependencia">
-                    <?=isset($instituciones) ? $instituciones : ''?>
-                </select>           
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-6">
-            <div class="form-group">
-                <label for="data-conjunto_datos">Conjunto de Datos</label>   
-                <select id="data-conjunto_datos" class="form-control jq_select" name="conjunto_datos">
-                    <?=isset($conjuntoDatos) ? $conjuntoDatos : ''?>
-                </select>           
-            </div>
-        </div>
+        <?=isset($_v_conjunto_datos) ? $_v_conjunto_datos : ''?>
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-entidad_apf">Entidad APF</label>   
-                <select class="form-control jq_select" name="entidad_apf">
+                <select class="form-control jq_select" name="entidad_apf" required>
                     <?=isset($entidadesAPF) ? $entidadesAPF : ''?>
                 </select>           
             </div>
@@ -94,7 +82,7 @@
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-tipo">Tipo</label>   
-                <select class="form-control jq_select" name="tipo">
+                <select class="form-control jq_select" name="tipo" required>
                     <?=isset($tipos) ? $tipos : ''?>
                 </select>           
             </div>
@@ -102,7 +90,7 @@
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-unidad">Unidad de Medida</label>   
-                <select class="form-control jq_select" name="unidad">
+                <select class="form-control jq_select" name="unidad" required>
                     <?=isset($unidades) ? $unidades : ''?>
                 </select>           
             </div>
@@ -110,7 +98,7 @@
         <div class="col-sm-12 col-md-12">
             <div class="form-group">
                 <label for="data-clave">Palabras Claves</label>   
-                <select class="form-control jq_select" multiple="multiple" name="clave"></select>           
+                <select class="form-control jq_select" multiple="multiple" name="clave" required></select>           
             </div>
         </div>
         <div class="col-sm-12 col-md-12">
@@ -128,14 +116,14 @@
                 <label for="data-lugar">Lugar de Aplicación</label>
                 <input 
                     type="text" id="data-lugar" name="lugar" 
-                    class="form-control" value="<?=isset($doc['lugar_a']) ? $doc['lugar_a']:''?>"
+                    class="form-control" value="<?=isset($doc['lugar_aplica']) ? $doc['lugar_aplica']:''?>"
                 >                
             </div>
         </div>  
         <div class="col-sm-12 col-md-12">
             <div class="form-group">
                 <label for="data-notas">Notas</label>
-                <textarea id="data-notas" class="form-control" name="notas"><?=isset($doc['lugar_a']) ? $doc['notas']:''?></textarea>            
+                <textarea id="data-notas" class="form-control" name="notas"><?=isset($doc['notas']) ? $doc['notas']:''?></textarea>            
             </div>
         </div>                 
     </div>

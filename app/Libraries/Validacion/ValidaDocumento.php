@@ -114,18 +114,85 @@ class ValidaDocumento
                 'min_length'=> 'El campo Lugar de Aplicación debe contener mínimo 5 caracteres'					
             ]
         ],
+        'url'    => [
+			'label'=>'Ubicación del archivo',
+            'rules'  => 'valid_url',
+            'errors' => [
+                'valid_url' => 'La ubicación no es una URL válida.',                				
+            ]
+        ],
 		'id'    => [
 			'label'=>'ID Proyecto',
             'rules'  => 'required',
             'errors' => [
                 'required' => 'No se recibió el Identificador del Proyecto.',				
             ]
+        ],
+        'tema1'    => [
+			'label'=>'Tema 1',
+            'rules'  => 'required|min_length[5]',
+            'errors' => [
+                'required' => 'Ingrese el Tema.',
+                'min_length'=> 'El Tema debe contener mínimo 5 caracteres'				
+            ]
+        ],
+        'vigencia'    => [
+			'label'=>'Vigencia',
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required' => 'Ingrese la vigencia.',
+                'numeric' => 'El campo Vigencia debe ser una cantidad numérica.'				
+            ]
+        ],
+        'vigencia_final'    => [
+			'label'=>'Instrumento Concurrente',
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required' => 'Ingrese la Vigencia Final.',
+                'numeric' => 'El campo Vigencia Final debe ser una cantidad numérica.'			
+            ]
+        ],
+        'armonizado'    => [
+			'label'=>'Armonizado a la LGAHOTDU',
+            'rules'  => 'required|numeric',
+            'errors' => [
+                'required' => 'Indique si está Armonizado a la LGAHOTDU.',
+                'numeric' => 'Elija una opción válida para indicar si está Armonizado a la LGAHOTDU.'				
+            ]
         ]
 	];
 
     public function esSolicitudPlaneacionValida($datos)
     {
-        $reglas = $this->obtenerReglas(['publicado','paginas', 'pais', 'institucion', 'entidad_apf', 'entidad_r', 'instrumento','tipo', 'clave', 'lugar', 'id']);
+        $reglas = $this->obtenerReglas(
+            ['nombre', 'descripcion', 'alias', 'cobertura','publicado','paginas', 'pais', 'institucion', 'entidad_apf', 'entidad_r', 'instrumento','tipo', 'clave', 'lugar', 'id']
+        );
+
+        if (count($reglas)==0) {
+            return  ['Solicitud'=>false, 'Error'=>'Validacíón no realizada.'];
+        }
+
+        return $this->validar($datos, $reglas);
+    }
+
+    public function esSolicitudNormatividadValida($datos)
+    {
+        $reglas = $this->obtenerReglas(
+            ['nombre', 'descripcion', 'alias', 'cobertura','pais', 'idioma', 'institucion', 'entidad_apf', 'instrumento','armonizado', 'tipo', 'clasificacion', 'vigencia', 'vigencia_final','clave', 'lugar', 'id']
+        );
+
+        if (count($reglas)==0) {
+            return  ['Solicitud'=>false, 'Error'=>'Validacíón no realizada.'];
+        }
+
+        return $this->validar($datos, $reglas);
+    }
+
+    public function esSolicitudEstadisticaValida($datos)
+    {
+        $reglas = $this->obtenerReglas(
+            ['nombre', 'descripcion', 'alias', 'cobertura','pais', 'tema1', 'institucion', 'entidad_apf', 'instrumento', 'tipo', 'publicado', 'vigencia', 'conjunto_datos', 'unidad','clave', 'lugar', 'id']
+        );
 
         if (count($reglas)==0) {
             return  ['Solicitud'=>false, 'Error'=>'Validacíón no realizada.'];
@@ -149,22 +216,21 @@ class ValidaDocumento
             }
         }
 
-    
         return count($validacion)>0 ? $validacion : ['Solicitud'=>true];
     }
 
     public function obtenerReglas($reglas)
     {
         $aplicarReglas = [];
+        $datos = array_merge($this->default, $this->datos);
         foreach ($reglas as $campo) {
 
-            if (!isset($this->datos[$campo])) {
+            if (!isset($datos[$campo])) {
                 continue;
             }
-            $aplicarReglas[$campo] = $this->datos[$campo];
+            $aplicarReglas[$campo] = $datos[$campo];
         }
 
         return $aplicarReglas;
     }
-
 }

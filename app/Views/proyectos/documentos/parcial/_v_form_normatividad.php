@@ -7,6 +7,7 @@
                 <input 
                     type="text" id="data-tema1" name="tema1" 
                     class="form-control" value="<?=isset($doc['tema1']) ? $doc['tema1']:''?>"
+                    required
                 >                
             </div>
         </div> 
@@ -14,8 +15,9 @@
             <div class="form-group">
                 <label for="data-vigencia">Vigencia</label>
                 <input 
-                    type="text" id="data-vigencia" name="vigencia" 
+                    type="number" id="data-vigencia" name="vigencia" 
                     class="form-control" value="<?=isset($doc['vigencia']) ? $doc['vigencia']:''?>"
+                    required
                 >                
             </div>
         </div>        
@@ -25,6 +27,7 @@
                 <input 
                     type="number" id="data-vigencia_final" name="vigencia_final" 
                     class="form-control" value="<?=isset($doc['vigencia_final']) ? $doc['vigencia_final']:''?>"
+                    required
                 >                
             </div>
         </div>
@@ -32,7 +35,7 @@
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-dependencia">Institución / Dependencia</label>   
-                <select id="data-dependencia" class="form-control jq_select" name="dependencia">
+                <select id="data-dependencia" class="form-control jq_select" name="institucion" required>
                     <?=isset($instituciones) ? $instituciones : ''?>
                 </select>           
             </div>
@@ -53,7 +56,7 @@
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-entidad_apf">Entidad APF</label>   
-                <select class="form-control jq_select" name="entidad_apf">
+                <select class="form-control jq_select" name="entidad_apf" required>
                     <?=isset($entidadesAPF) ? $entidadesAPF : ''?>
                 </select>           
             </div>
@@ -70,7 +73,7 @@
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-clasificacion">Clasificación</label>   
-                <select id="data-clasificacion" class="form-control jq_select" name="clasificacion">
+                <select id="data-clasificacion" class="form-control jq_select" name="clasificacion" required>
                     <?=isset($clasificaciones) ? $clasificaciones : ''?>
                 </select>           
             </div>
@@ -87,7 +90,7 @@
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-tipo">Tipo</label>   
-                <select class="form-control jq_select" name="tipo">
+                <select class="form-control jq_select" name="tipo" required>
                     <?=isset($tipos) ? $tipos : ''?>
                 </select>           
             </div>
@@ -108,7 +111,7 @@
         <div class="col-sm-12 col-md-12">
             <div class="form-group">
                 <label for="data-clave">Palabras Claves</label>   
-                <select class="form-control jq_select" multiple="multiple" name="clave"></select>           
+                <select class="form-control jq_select" multiple="multiple" name="clave" required></select>           
             </div>
         </div>
         <div class="col-sm-12 col-md-12">
@@ -126,7 +129,7 @@
                 <label for="data-lugar">Lugar de aplicación</label>
                 <input 
                     type="text" id="data-lugar" name="lugar" 
-                    class="form-control" value="<?=isset($doc['lugar_a']) ? $doc['lugar_a']:''?>"
+                    class="form-control" value="<?=isset($doc['lugar_aplica']) ? $doc['lugar_aplica']:''?>"
                 >                
             </div>
         </div>    

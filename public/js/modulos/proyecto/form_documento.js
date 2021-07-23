@@ -127,6 +127,10 @@ var $formDoc = ((modulo, valida) => {
             formData.append(clave, valor);
         });
 
+        if ($("select[name='clave']").length>0 && $("select[name='clave']").val().length>0) {            
+            formData.append('clave', $("select[name='clave']").val());
+        }
+
         formData.append(tkn,v);
         $util.load.show(true);
 

@@ -1,12 +1,94 @@
 <?php 
 namespace App\Libraries\Proyecto\Documento;
+use App\Libraries\Proyecto\CProyecto;
+use App\Models\EstadisticaModel;
 
 class Estadistica extends Documento
 {
+    const SECCION = "estadistica";
 
-    public function guardar($request, $proyecto, $archivo)
+    public function __construct(CProyecto $proyecto)
+    {  
+        parent::__construct($proyecto);        
+    }
+
+    public function guardar($datos, $archivo)
     {
+        $validacion = $this->validacion->esSolicitudEstadisticaValida($datos);
 
+        if ($validacion['Solicitud']===FALSE) {
+            return $validacion;
+        }#var_dump($archivo);exit;
+
+        $carga = self::getInstanciaCarga($this->proyecto, self::SECCION);
+
+        if (!$carga->existeDirectorio()) {
+            return ['Solicitud'=>false, 'Error'=>'No se encontró el directorio: '.$carga->getDirectorio()];
+        }
+
+        $campos = [
+            'descripcion'=>trim($datos['descripcion']),
+            'alias'=>trim($datos['alias']),
+            'cobertura_id'=>$datos['cobertura'],
+            'proyecto_id'=>$this->proyecto->getId(),
+            'formato'=>strtolower( obtenExtension($archivo->getName()) ),
+            'pais_id'=>$datos['pais'],
+            'unidad_id'=>$datos['unidad'],
+            'institucion_id'=>$datos['institucion'],
+            'entidad_apf_id'=>$datos['entidad_apf'],
+            'i_concurrente'=>$datos['instrumento'],
+            'anio_publicado'=>$datos['publicado'],
+            'vigencia'=>$datos['vigencia'],
+            'conjunto_dato_id'=>$datos['conjunto_datos'],            
+            'tipo_id'=>$datos['tipo'],
+            'palabra_clave'=>str_replace(',', ' ', $datos['clave']),
+            'creado_por'=>$this->usuario->getId()
+        ];
+
+        $campos['nombre']  =$carga->verificaDuplicados( limpiarCadena($datos['nombre']) . '.' . $campos['formato']);
+
+        if (isset($datos['grafico']) && trim($datos['grafico'])!='') {
+            $campos['grafico_id'] = trim($datos['grafico']);
+        }
+
+        if (isset($datos['tema2']) && trim($datos['tema2'])!='') {
+            $campos['tema2'] = trim($datos['tema2']);
+        }
+
+        if (isset($datos['url']) && trim($datos['url'])!='') {
+            $campos['url'] = trim($datos['url']);
+        }
+
+        if (isset($datos['notas']) && trim($datos['notas'])!='') {
+            $campos['notas'] = trim($datos['notas']);
+        }
+
+        if (isset($datos['lugar']) && trim($datos['lugar'])!='') {
+            $campos['lugar_aplica'] = trim($datos['lugar']);
+        }
+        
+        $mover = $carga->mover($archivo, quitaExtension($campos['nombre'])); 
+        
+        if (!$mover['Solicitud']) {
+            return ['Solicitud'=>false, 'Error'=>'Error al intentar cargar el documento '.$datos['nombre'] ];
+        }
+
+        $estadisticaModel = new EstadisticaModel();
+        
+        if (!($id = $estadisticaModel->insert($campos))) {
+            return ['Solicitud'=>false, 'Msg'=>'Error al intentar registrar la carga del documento.'];
+        }                 
+
+        $this->guardarEvidencia([            
+            'ruta'=>$carga->getDirectorio().$campos['nombre'],
+            'proyecto_id'=> $campos['proyecto_id'],
+            'creado_por'=>$this->usuario->getId(),
+            'descripcion'=>$campos['descripcion'],
+            'seccion'=> self::SECCION,
+            'bloque'=>self::SECCION,
+            'registro_id'=> $id,            
+        ]);
+        return ['Solicitud'=>true, 'Msg'=>'Documento cargado correctamente.'];
     }
 
     public function vistaForm()
@@ -14,9 +96,8 @@ class Estadistica extends Documento
         return view(
             'proyectos/documentos/parcial/_v_form_estadistica', 
             [
+                '_v_conjunto_datos'=>$this->vistaConjuntoDatos(['instituciones'=>$this->opcionesInstituciones(), 'conjuntoDatos'=>$this->opcionesConjuntoDatos()]),
                 '_v_nombre_doc'=>$this->vistaNombreDoc(['coberturas'=>$this->opcionesCoberturas()]),
-                'instituciones'=>$this->opcionesInstituciones(),
-                'conjuntoDatos'=>$this->opcionesConjuntoDatos(),
                 'entidadesAPF'=>$this->opcionesEntidadesAPF(),
                 'tipos'=>$this->opcionesCategoriaProyecto(), 
                 'unidades'=>$this->opcionesUnidades(),
