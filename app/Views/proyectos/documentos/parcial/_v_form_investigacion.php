@@ -5,8 +5,9 @@
             <div class="form-group">
                 <label for="data-tema1">Tema 1</label>
                 <input 
-                    type="text" id="data-tema1" name="tema1" 
-                    class="form-control" value="<?=isset($doc['tema1']) ? $doc['tema1']:''?>"
+                    type="text" id="data-tema1" name="tema" 
+                    class="form-control" value="<?=isset($doc['tema']) ? $doc['tema']:''?>"
+                    required
                 >                
             </div>
         </div>    
@@ -15,7 +16,8 @@
                 <label for="data-autor">Autor</label>
                 <input 
                     type="text" id="data-autor" name="autor" 
-                    class="form-control" value="<?=isset($doc['autor']) ? $doc['autor']:''?>"
+                    class="form-control" value="<?=isset($doc['autor1']) ? $doc['autor1']:''?>"
+                    required
                 >                
             </div>
         </div>
@@ -23,8 +25,8 @@
             <div class="form-group">
                 <label for="data-autor_2">Segundo Autor</label>
                 <input 
-                    type="text" id="data-autor_2" name="autor_2" 
-                    class="form-control" value="<?=isset($doc['autor_2']) ? $doc['autor_2']:''?>"
+                    type="text" id="data-autor_2" name="autor2" 
+                    class="form-control" value="<?=isset($doc['autor2']) ? $doc['autor2']:''?>"
                 >                
             </div>
         </div> 
@@ -32,8 +34,8 @@
             <div class="form-group">
                 <label for="data-autor_3">Tercer Autor</label>
                 <input 
-                    type="text" id="data-autor_3" name="autor_3" 
-                    class="form-control" value="<?=isset($doc['autor_3']) ? $doc['autor_3']:''?>"
+                    type="text" id="data-autor_3" name="autor3" 
+                    class="form-control" value="<?=isset($doc['autor3']) ? $doc['autor3']:''?>"
                 >                
             </div>
         </div> 
@@ -41,7 +43,7 @@
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-tipo">Clasificación</label>   
-                <select id="data-tipo" class="form-control jq_select" name="tipo">
+                <select id="data-tipo" class="form-control jq_select" name="clasificacion" required>
                     <?=isset($clasificaciones) ? $clasificaciones : ''?>
                 </select>           
             </div>
@@ -62,6 +64,7 @@
                 <input 
                     type="number" id="data-publicado" name="publicado" 
                     class="form-control" value="<?=isset($doc['publicado']) ? $doc['publicado']:''?>"
+                    required
                 >                
             </div>
         </div>        
@@ -69,8 +72,9 @@
             <div class="form-group">
                 <label for="data-num_paginas">Número de Páginas</label>
                 <input 
-                    type="number" id="data-num_paginas" name="num_paginas" 
+                    type="number" id="data-num_paginas" name="paginas" 
                     class="form-control" value="<?=isset($doc['num_paginas']) ? $doc['num_paginas']:''?>"
+                    required
                 >                
             </div>
         </div> 
@@ -104,7 +108,7 @@
         <div class="col-sm-12 col-md-12">
             <div class="form-group">
                 <label for="data-clave">Palabras Claves</label>   
-                <select class="form-control jq_select" multiple="multiple" name="clave"></select>           
+                <select class="form-control jq_select" multiple="multiple" name="clave" required></select>           
             </div>
         </div>         
         <div class="col-sm-12 col-md-12">

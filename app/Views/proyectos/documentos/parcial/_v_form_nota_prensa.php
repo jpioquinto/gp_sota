@@ -5,8 +5,9 @@
             <div class="form-group">
                 <label for="data-tema1">Tema 1</label>
                 <input 
-                    type="text" id="data-tema1" name="tema1" 
-                    class="form-control" value="<?=isset($doc['tema1']) ? $doc['tema1']:''?>"
+                    type="text" id="data-tema1" name="tema" 
+                    class="form-control" value="<?=isset($doc['tema']) ? $doc['tema']:''?>"
+                    required
                 >                
             </div>
         </div> 
@@ -16,6 +17,7 @@
                 <input 
                     type="text" id="data-autor" name="autor" 
                     class="form-control" value="<?=isset($doc['autor']) ? $doc['autor']:''?>"
+                    required
                 >                
             </div>
         </div>
@@ -23,8 +25,8 @@
             <div class="form-group">
                 <label for="data-autor_2">Segundo Autor</label>
                 <input 
-                    type="text" id="data-autor_2" name="autor_2" 
-                    class="form-control" value="<?=isset($doc['autor_2']) ? $doc['autor_2']:''?>"
+                    type="text" id="data-autor_2" name="autor2" 
+                    class="form-control" value="<?=isset($doc['autor2']) ? $doc['autor2']:''?>"
                 >                
             </div>
         </div>   
@@ -36,6 +38,7 @@
                 <input 
                     type="date" id="data-publicado" name="publicado" 
                     class="form-control" value="<?=isset($doc['publicado']) ? $doc['publicado']:''?>"
+                    required
                 >                
             </div>
         </div>        
@@ -43,15 +46,16 @@
             <div class="form-group">
                 <label for="data-num_paginas">Número de páginas</label>
                 <input 
-                    type="number" id="data-num_paginas" name="num_paginas" 
+                    type="number" id="data-num_paginas" name="paginas" 
                     class="form-control" value="<?=isset($doc['num_paginas']) ? $doc['num_paginas']:''?>"
+                    required
                 >                
             </div>
         </div>
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-entidad_apf">Entidad APF</label>   
-                <select class="form-control jq_select" name="entidad_apf">
+                <select class="form-control jq_select" name="entidad_apf" required>
                     <?=isset($entidadesAPF) ? $entidadesAPF : ''?>
                 </select>           
             </div>
@@ -59,7 +63,7 @@
         <div class="col-sm-12 col-md-6">
             <div class="form-group">
                 <label for="data-tipo">Tipo</label>   
-                <select class="form-control jq_select" name="tipo">
+                <select class="form-control jq_select" name="tipo" required>
                     <?=isset($tipos) ? $tipos : ''?>
                 </select>           
             </div>
@@ -67,7 +71,7 @@
         <div class="col-sm-12 col-md-12">
             <div class="form-group">
                 <label for="data-clave">Palabras claves</label>   
-                <select class="form-control jq_select" multiple="multiple" name="clave"></select>           
+                <select class="form-control jq_select" multiple="multiple" name="clave" required></select>           
             </div>
         </div>
         <div class="col-sm-12 col-md-12">

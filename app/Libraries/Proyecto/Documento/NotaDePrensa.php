@@ -52,6 +52,10 @@ class NotaDePrensa extends Documento
             $campos['grafico_id'] = trim($datos['grafico']);
         }
 
+        if (isset($datos['autor2']) && trim($datos['autor2'])!='') {
+            $campos['autor2'] = trim($datos['autor2']);
+        }
+
         if (isset($datos['url']) && trim($datos['url'])!='') {
             $campos['url'] = trim($datos['url']);
         }

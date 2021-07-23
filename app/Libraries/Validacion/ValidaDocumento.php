@@ -136,6 +136,22 @@ class ValidaDocumento
                 'required' => 'No se recibió el Identificador del Proyecto.',				
             ]
         ],
+        'autor'    => [
+			'label'=>'Autor',
+            'rules'  => 'required|min_length[5]',
+            'errors' => [
+                'required' => 'Ingrese el Autor.',
+                'min_length'=> 'El Autor debe contener mínimo 5 caracteres'				
+            ]
+        ],
+        'tema'    => [
+			'label'=>'Tema 1',
+            'rules'  => 'required|min_length[5]',
+            'errors' => [
+                'required' => 'Ingrese el Tema 1.',
+                'min_length'=> 'El Tema 1 debe contener mínimo 5 caracteres'				
+            ]
+        ],
         'tema1'    => [
 			'label'=>'Tema 1',
             'rules'  => 'required|min_length[5]',
@@ -225,7 +241,20 @@ class ValidaDocumento
     public function esSolicitudNotaPrensaValida($datos)
     {
         $reglas = $this->obtenerReglas(
-            ['nombre', 'descripcion', 'alias', 'cobertura', 'pais', 'idioma', 'tema1', 'autor', 'institucion', 'conjunto_datos',  'publicado', 'paginas', 'entidad_apf', 'tipo', 'clave', 'lugar', 'id']
+            ['nombre', 'descripcion', 'alias', 'cobertura', 'pais', 'idioma', 'tema', 'autor', 'institucion', 'conjunto_datos',  'publicado', 'paginas', 'entidad_apf', 'tipo', 'clave', 'lugar', 'id']
+        );
+
+        if (count($reglas)==0) {
+            return  ['Solicitud'=>false, 'Error'=>'Validacíón no realizada.'];
+        }
+
+        return $this->validar($datos, $reglas);
+    }
+
+    public function esSolicitudInvestigacionValida($datos)
+    {
+        $reglas = $this->obtenerReglas(
+            ['nombre', 'descripcion', 'alias', 'cobertura', 'pais', 'idioma', 'tema', 'autor1', 'clasificacion', 'institucion', 'conjunto_datos',  'publicado', 'paginas', 'clave', 'id']
         );
 
         if (count($reglas)==0) {
