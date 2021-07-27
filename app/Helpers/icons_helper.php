@@ -36,3 +36,17 @@ function mostrarDescripcionDocumento($ruta, $longitud=24)
 	$descripcion = $longitud > 0 ? substr(end($descripcion), 0,$longitud) : end($descripcion);
 	return $longitud > 0 ? trim($descripcion).'...' : trim($descripcion);
 }
+
+function claseAvatar($seccion)
+{
+	$clases = [
+		'planeacion'=>'primary',
+		'normatividad'=>'info',
+		'estadistica'=>'warning',
+		'reunion'=>'success',
+		'nota-prensa'=>'danger',
+		'investigacion'=>'secondary',
+	];
+
+	return isset($clases[$seccion]) ? $clases[$seccion] : 'default';
+}

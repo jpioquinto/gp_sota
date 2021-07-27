@@ -24,6 +24,7 @@ class Documento extends BaseController
     public function index()
     {        
         $proyecto = new CProyecto($this->encrypter->decrypt( base64_decode($this->request->getPost('id')) ));
+        $uiDoc = new UIDocumento($proyecto);
         
         $infoProyecto = $proyecto->obtenerProyecto();
         echo json_encode([
@@ -32,6 +33,7 @@ class Documento extends BaseController
                 'proyectos/documentos/v_contenedor', 
                 [
                     'docs'=>'',
+                    'fichas'=>$uiDoc->listado($uiDoc->getCatalogo()),
                     'permisos'=>$this->usuario->obtenerPermisosModulo('Proyecto')
                 ]),
             'header'=>view(
@@ -108,28 +110,35 @@ class Documento extends BaseController
 
         $gestor = new Gestor(new $clase(new CProyecto($this->desencriptar( base64_decode($this->request->getPost('id')) ))));
 
-        /*
-        $cargaArchivo = new CCargaArchivo(new CProyecto( $this->encrypter->decrypt( base64_decode($this->request->getPost('id'))) ));
-        $carga = $cargaArchivo->mover(
-            $this->request->getFile('archivo'), 
-            $this->generarNombre( $this->encrypter->decrypt( base64_decode($this->request->getPost('id'))) )
-        );
-        
-        if (!$carga['Solicitud']) {
-            echo json_encode($carga);return;
-        }
-                
-        $this->guardarEvidencia([            
-            'proyecto_id'=> $this->encrypter->decrypt( base64_decode($this->request->getPost('id'))),
-            'registro_id'=> $this->encrypter->decrypt( base64_decode($this->request->getPost('id'))),            
-            'bloque'=>$this->request->getPost('bloque') ? $this->request->getPost('bloque') : '',
-            'descripcion'=>$this->request->getPost('descripcion'),
-            'creado_por'=>$this->usuario->getId(),
-            'seccion'=> self::SECCION,
-            'ruta'=>$carga['url'],
-        ]);
-        */
         echo json_encode($gestor->guardar($this->request->getPost(), $this->request->getFile('archivo')));
+    }
 
+    public function obtenerDocumentos()
+    {
+        $params = $this->request->getPost();
+
+        $proyecto = new CProyecto($this->desencriptar( base64_decode($params['proyectoId']) ));
+
+        $clase = self::_SPACE_.'UIDocumento';
+        
+        if (!class_exists($clase)) {
+            echo json_encode(['Solicitud'=>false, 'Error'=>'No se encontró el Gestor para esta vista.']); return; 
+        }        
+              
+        $uiDoc = new $clase($proyecto, $params);
+        
+        $listado = $params['ini']==='false'
+                ? '<div class="listado-documentos">'.$uiDoc->obtenerListado($uiDoc->offset(), $uiDoc->limit()).'</div>'
+                : $uiDoc->obtenerListado($uiDoc->offset(), $uiDoc->limit());
+        
+        ++$params['pagina'];
+        
+        if ($params['ini']==='false') {            
+            $params['ini'] = true;
+            $params['total'] = count($uiDoc->consultarDocs());
+            $listado .= ($params['pagina']*$params['paginacion'])<$params['total'] ? view('proyectos/documentos/parcial/_v_mas_docs') : '';
+        }
+        
+        echo json_encode(['Solicitud'=>true, 'vista'=>$listado, 'info'=>$params]);
     }
 }

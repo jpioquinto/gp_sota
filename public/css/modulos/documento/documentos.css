@@ -1,0 +1,7 @@
+.content-documentos .nombre-doc {
+    cursor: pointer !important;
+}
+
+.content-documentos .nombre-doc:not(span):hover {
+    text-decoration: underline !important;
+}
