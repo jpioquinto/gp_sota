@@ -11,11 +11,12 @@
     </div>
 </div>
 <!-------- ficha del documento --------->
-<div class="d-flex pt-3">
-    <div class="alert alert-success">
+<div class="row pt-3">
+    <div class="col-12 col-md-12 alert alert-success">
         <h3><?=isset($nombre) ? $nombre : ''?> </h3>
         <h4><?=isset($alias) ? $alias : ''?> </h4>
         <p><?=isset($descripcion) ? $descripcion : ''?></p>
+        <?=isset($v_seccion) ? $v_seccion : ''?>
     </div>
 </div>
 <!-- fin de la vista de la ficha del documento -->

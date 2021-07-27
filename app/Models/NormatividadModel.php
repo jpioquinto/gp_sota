@@ -27,10 +27,10 @@ class NormatividadModel extends Model
         $this->db = db_connect();
 
         $builder = $this->db->table($this->table.' dn')->distinct();
-        $builder->select('dn.*, d.ruta, p.pais, i.idioma');
+        $builder->select("dn.*, d.ruta, p.pais, i.idioma, d.seccion, cob.descripcion as cobertura, inst.descripcion as institucion, apf.descripcion as entidad_apf, t.descripcion as tipo, cla.descripcion as clasificacion");
         $builder->join(
             'gp_documentos d',
-            "d.registro_id=dn.id AND d.estatus=1 AND d.seccion='planeacion'",
+            "d.registro_id=dn.id AND d.estatus=1 AND d.seccion='normatividad'",
             'left'
         );
         $builder->join('cat_paises p','dn.pais_id=p.id', 'left');

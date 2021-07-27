@@ -27,10 +27,10 @@ class InvestigacionModel extends Model
         $this->db = db_connect();
 
         $builder = $this->db->table($this->table.' di')->distinct();
-        $builder->select('di.*, d.ruta, p.pais, i.idioma');
+        $builder->select("di.*, d.ruta, p.pais, i.idioma, d.seccion, cob.descripcion as cobertura, inst.descripcion as institucion, cla.descripcion as clasificacion, conj.descripcion as conjunto");
         $builder->join(
             'gp_documentos d',
-            "d.registro_id=di.id AND d.estatus=1 AND d.seccion='planeacion'",
+            "d.registro_id=di.id AND d.estatus=1 AND d.seccion='investigacion'",
             'left'
         );
         $builder->join('cat_paises p','di.pais_id=p.id', 'left');

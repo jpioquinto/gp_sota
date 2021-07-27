@@ -27,10 +27,10 @@ class ReunionModel extends Model
         $this->db = db_connect();
 
         $builder = $this->db->table($this->table.' dr')->distinct();
-        $builder->select('dr.*, d.ruta, p.pais');
+        $builder->select("dr.*, d.ruta, p.pais, d.seccion, inst.descripcion as institucion, apf.descripcion as entidad_apf, t.descripcion as tipo, conj.descripcion as conjunto");
         $builder->join(
             'gp_documentos d',
-            "d.registro_id=dr.id AND d.estatus=1 AND d.seccion='planeacion'",
+            "d.registro_id=dr.id AND d.estatus=1 AND d.seccion='reunion'",
             'left'
         );
         $builder->join('cat_paises p','dr.pais_id=p.id', 'left');

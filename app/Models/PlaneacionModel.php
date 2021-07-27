@@ -27,7 +27,7 @@ class PlaneacionModel extends Model
         $this->db = db_connect();
 
         $builder = $this->db->table($this->table.' dp')->distinct();
-        $builder->select('dp.*, d.ruta, p.pais');
+        $builder->select("dp.*, d.ruta, p.pais, d.seccion, cob.descripcion as cobertura, inst.descripcion as institucion, apf.descripcion as entidad_apf, t.descripcion as tipo");
         $builder->join(
             'gp_documentos d',
             "d.registro_id=dp.id AND d.estatus=1 AND d.seccion='planeacion'",

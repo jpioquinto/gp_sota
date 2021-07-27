@@ -27,10 +27,10 @@ class NotaPrensaModel extends Model
         $this->db = db_connect();
 
         $builder = $this->db->table($this->table.' dp')->distinct();
-        $builder->select('dp.*, d.ruta, p.pais, i.idioma');
+        $builder->select("dp.*, d.ruta, p.pais, i.idioma, d.seccion, cob.descripcion as cobertura, inst.descripcion as institucion, apf.descripcion as entidad_apf, t.descripcion as tipo, conj.descripcion as conjunto");
         $builder->join(
             'gp_documentos d',
-            "d.registro_id=dp.id AND d.estatus=1 AND d.seccion='planeacion'",
+            "d.registro_id=dp.id AND d.estatus=1 AND d.seccion='nota-prensa'",
             'left'
         );
         $builder->join('cat_paises p','dp.pais_id=p.id', 'left');

@@ -42,6 +42,7 @@ class UIDocumento
         foreach ($docs as $doc) {
             $doc['id'] = base64_encode( $this->encriptar($doc['id']) );
             $doc['creado_el'] = $this->formatoFecha($doc['creado_el']); 
+            $doc['v_seccion'] = view("proyectos/documentos/parcial/_v_seccion_{$doc['seccion']}.php", $doc);
             $html .= view('proyectos/documentos/parcial/_v_item_doc.php', $doc);
         }
         $this->setCount(count($docs));

@@ -27,14 +27,14 @@ class EstadisticaModel extends Model
         $this->db = db_connect();
 
         $builder = $this->db->table($this->table.' de')->distinct();
-        $builder->select('de.*, d.ruta, p.pais, i.idioma');
+        $builder->select("de.*, d.ruta, p.pais, null as idioma, d.seccion, cob.descripcion as cobertura, inst.descripcion as institucion, apf.descripcion as entidad_apf, t.descripcion as tipo, conj.descripcion as conjunto, u.descripcion as unidad");
         $builder->join(
             'gp_documentos d',
-            "d.registro_id=de.id AND d.estatus=1 AND d.seccion='planeacion'",
+            "d.registro_id=de.id AND d.estatus=1 AND d.seccion='estadistica'",
             'left'
         );
         $builder->join('cat_paises p','de.pais_id=p.id', 'left');
-        $builder->join('cat_idiomas i','de.idioma_id=i.id', 'left');
+        
         $builder->join('cat_coberturas cob','de.cobertura_id=cob.id', 'left'); 
         $builder->join('cat_instituciones inst','de.institucion_id=inst.id', 'left');
         $builder->join('cat_conjunto_datos conj','de.conjunto_dato_id=conj.id', 'left');  
