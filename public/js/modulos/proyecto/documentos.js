@@ -2,6 +2,9 @@ var $docs = (modulo => {
     
     modulo.me = {};
 
+    modulo.claseSalida = 'animate__fadeOut animate__delay-5s';
+    modulo.claseEntrada = 'animate__fadeInUp animate__delay-5s';
+
     modulo.clickSubirArchivo = function(e) {
         e.preventDefault();
 
@@ -123,7 +126,7 @@ var $docs = (modulo => {
                              
                 if (data.Solicitud) {                                             
                     modulo.inicializaContenido(data, $params.hasOwnProperty('entrada') ? $params.entrada : undefined);
-                    //iniEventos();
+                    iniEventos();
                 }                
                 $util.load.hide();          
             }
@@ -151,6 +154,22 @@ var $docs = (modulo => {
         }
 
         $('.jq_mas_docs').off('click').on('click', modulo.clickVerMasDocumentos);
+    };
+
+    modulo.clickVerFicha = function(e) {
+        e.preventDefault();        
+        $(".ficha[data-id='" + $(this).parents('.item-doc').attr('data-id') + "']").removeClass(modulo.claseSalida).addClass(modulo.claseEntrada).show('slow');  
+    };
+
+    modulo.clickOcultarFicha = function(e) {
+        e.preventDefault();
+
+        $(this).parents('.ficha').removeClass(modulo.claseEntrada).addClass(modulo.claseSalida).hide('slow');
+    };
+
+    var iniEventos = () => {
+        $('.avatar, .descripcion-doc').off('click').on('click', modulo.clickVerFicha);        
+        $('.jq_ocultar').off('click').on('click', modulo.clickOcultarFicha);
     };
 
     var ocultarMasContent = (total, items) => {
