@@ -1,7 +1,11 @@
-.content-documentos .nombre-doc {
+.item-doc {
+    cursor: pointer !important;    
+}
+
+.content-documentos3333 .nombre-doc33 {
     cursor: pointer !important;
 }
 
-.content-documentos .nombre-doc:not(span):hover {
+.content-documentos .nombre-doc:hover {
     text-decoration: underline !important;
 }

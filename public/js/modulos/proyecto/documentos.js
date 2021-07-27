@@ -48,6 +48,28 @@ var $docs = (modulo => {
         });
     };
 
+    modulo.selectFicha = function(e) {
+        e.preventDefault();
+
+        var $params = $.trim($("input[name='entrada']").val())!='' ? clone(config.busqueda) : clone(config);
+        
+        $params.ini = false;
+        $params.total = 0;
+        $params.pagina = 0;
+        
+        if (!$params.hasOwnProperty('paginacion')) {
+            $params['paginacion'] = config.paginacion;
+        }
+
+        if ($.trim($("input[name='entrada']").val())!='') {            
+            $params['entrada'] = $.trim($("input[name='entrada']").val());
+        }
+
+        
+        modulo.obtenerDocumentos( Object.assign($params,{proyectoId:$proyecto.getId(), tipo:$("select[name='ficha'] option:selected").text()}) );
+        
+    };
+
     modulo.capturaBusqueda = function(e) {
         e.preventDefault();
 
@@ -59,11 +81,6 @@ var $docs = (modulo => {
     modulo.clickBuscar = function(e) {
         e.preventDefault();
 
-        if ($.trim($("input[name='entrada']").val())=='') { 
-            //restaurarContent();                       
-           // return;
-        }
-
         var $params = clone(config.busqueda);
 
         if ($.trim($("input[name='entrada']").val())!=$params.entrada) {
@@ -74,6 +91,24 @@ var $docs = (modulo => {
 
         $params['paginacion'] = config.paginacion;
         $params.entrada = $.trim($("input[name='entrada']").val());
+        
+        modulo.obtenerDocumentos( Object.assign($params,{proyectoId:$proyecto.getId(), tipo:$("select[name='ficha'] option:selected").text()}) );
+    };
+
+    modulo.clickVerMasDocumentos = function(e) {
+        e.preventDefault();
+
+        if ($.trim($("input[name='entrada']").val()) != '') {
+            $('.jq_buscar').trigger('click');
+            return;
+        }
+
+        var $params = clone(config);
+        $params['paginacion'] = config.paginacion;
+
+        if ($params.hasOwnProperty('busqueda')) {
+            delete $params.busqueda;
+        }
         
         modulo.obtenerDocumentos( Object.assign($params,{proyectoId:$proyecto.getId(), tipo:$("select[name='ficha'] option:selected").text()}) );
     };
@@ -98,7 +133,7 @@ var $docs = (modulo => {
     modulo.inicializaContenido = (data, busqueda) => {
         var contenido = (busqueda && !config.busqueda.ini)  ? $(".content-documentos").html() : undefined;
 
-        data.info.pagina==1 ? $('.content-documentos').html(data.vista) : $('.content-documentos').append(data.vista);
+        data.info.pagina==1 ? $('.content-documentos').html(data.vista) : $('.content-documentos .listado-documentos').append(data.vista);
 
         if (busqueda) {
             config.busqueda.ini = true;
@@ -106,20 +141,30 @@ var $docs = (modulo => {
             config.busqueda.total  = parseInt(data.info.total);
             config.busqueda.entrada  = data.info.entrada;
             contenido ? config.vista = contenido : undefined;   
-            //ocultarMasContent(config.busqueda.total, (config.busqueda.pagina*config.paginacion));         
+            ocultarMasContent(config.busqueda.total, (config.busqueda.pagina*config.paginacion));         
         } else {
             config.ini = true;
             config.pagina = parseInt(data.info.pagina);
             config.total  = parseInt(data.info.total);
             config.vista  = '';
-            //ocultarMasContent(config.total, (config.pagina*config.paginacion)); 
+            ocultarMasContent(config.total, (config.pagina*config.paginacion)); 
         }
 
-        //$('.jq_mas_media').off('click').on('click', modulo.clickVerMasMedia);
+        $('.jq_mas_docs').off('click').on('click', modulo.clickVerMasDocumentos);
+    };
+
+    var ocultarMasContent = (total, items) => {
+        if ($('.mas-content').length==0) {
+            return;
+        }
+
+        if (items>=total) {
+            $('.mas-content').addClass('d-none');
+        }
     };
     
     var config = {
-        paginacion:100,
+        paginacion:2,
         ini:false, vista:'', pagina:0, total:0, 
         busqueda:{ini:false, vista:'', pagina:0, total:0, entrada:''}        
     };
@@ -130,5 +175,7 @@ var $docs = (modulo => {
 $(function() {
     $('.jq_subir').off('click').on('click', $docs.clickSubirArchivo);    
     $('.jq_buscar').off('click').on('click', $docs.clickBuscar);
+    $("select[name='ficha']").off('change').on('change', $docs.selectFicha);
     $("input[name='entrada']").off("keyup").on("keyup", $docs.capturaBusqueda);
+    $("select[name='ficha']").trigger('change');
 });

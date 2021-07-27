@@ -5,6 +5,10 @@ use App\Libraries\Proyecto\CProyecto;
 use App\Models\{CatalogoModel};
 use App\Traits\CifradoTrait;
 
+use Carbon\{Carbon, CarbonInterval};
+use DateTime;
+use DateTimeZone;
+
 class UIDocumento
 {    
     protected $encrypter; 
@@ -28,6 +32,7 @@ class UIDocumento
         $this->config['tipo'] = isset($config['tipo']) ? str_replace(' de ', ' ', $config['tipo']) : '';
 
         isset($config['entrada']) ? $this->formatearEntrada($config['entrada']) : null;
+        Carbon::setLocale('es');
     }
 
     public function obtenerListado($offset=null, $limit=null)
@@ -36,6 +41,7 @@ class UIDocumento
         $docs = $this->consultarDocs($offset, $limit);
         foreach ($docs as $doc) {
             $doc['id'] = base64_encode( $this->encriptar($doc['id']) );
+            $doc['creado_el'] = $this->formatoFecha($doc['creado_el']); 
             $html .= view('proyectos/documentos/parcial/_v_item_doc.php', $doc);
         }
         $this->setCount(count($docs));
@@ -87,6 +93,14 @@ class UIDocumento
         }
 
         $this->config['cadena'] = count($cadena)>0 ? implode('|', $cadena) : '';
+    }
+
+    public function formatoFecha($fecha)
+    {
+        $actual =  new Carbon(new DateTime(date('Y-m-d H:i:s')), new DateTimeZone('America/Mexico_City'));
+        $carbonFecha = new Carbon(new DateTime($fecha), new DateTimeZone('America/Mexico_City'));
+
+        return $carbonFecha->diffForHumans($actual);
     }
 
     public function busqueda()
