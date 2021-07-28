@@ -176,8 +176,6 @@ var $docs = (modulo => {
             return;
         }
 
-        // ver modal con el documento en formato pdf
-
         $util.load.show(true);
         $util.post({
             url: "Documento",
@@ -194,10 +192,34 @@ var $docs = (modulo => {
 
     };
 
+    modulo.clickEditarFicha = function(e) {
+        e.preventDefault();
+
+        modulo.me = $(this);
+        $util.load.show(true);
+        $util.post({
+            url: "Documento",
+            metodo:"vistaModalEditar",
+            datos:{proyectoId:$proyecto.getId(), id:modulo.me.parents('.content-acciones').attr('data-id'), form:modulo.me.parents('.content-acciones').attr('data-seccion')},
+            funcion: function(data) {
+                $util.load.hide();
+                if (data.Solicitud) {
+                    modulo.me.prop('disable', true);
+                    $('.content-modal').html(data.vista);
+                    $('#jq_modal_form').modal('show');
+                }            
+            }
+        });
+    };
+
     var iniEventos = () => {
         $('.avatar, .descripcion-doc').off('click').on('click', modulo.clickVerFicha);        
         $('.jq_ocultar').off('click').on('click', modulo.clickOcultarFicha);
         $('.jq_ver_doc').off('click').on('click', modulo.clickVerDoc);
+
+        $('.jq_editar_ficha').off('click').on('click', modulo.clickEditarFicha);
+
+        $('.content-documentos').find('[data-toggle="tooltip"]').tooltip(); 
     };
 
     var ocultarMasContent = (total, items) => {

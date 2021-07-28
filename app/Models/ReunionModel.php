@@ -40,7 +40,11 @@ class ReunionModel extends Model
         $builder->join('cat_entidades_apf apf','dr.entidad_apf_id=apf.id', 'left');   
         $builder->join('cat_categorias t','dr.tipo_id=t.id', 'left'); 
         
-        $builder->where(['dr.estatus'=>$params['estatus'], 'dr.proyecto_id'=>$params['proyectoId']]);        
+        $builder->where(['dr.estatus'=>$params['estatus'], 'dr.proyecto_id'=>$params['proyectoId']]); 
+        
+        if (isset($params['id'])) {
+            $builder->where('dr.id', $params['id']);
+        }
         
         if ($busqueda) {
             $builder->where(

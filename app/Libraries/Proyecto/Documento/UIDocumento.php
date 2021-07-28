@@ -4,8 +4,9 @@ namespace App\Libraries\Proyecto\Documento;
 use App\Libraries\Proyecto\CProyecto;
 use App\Models\{CatalogoModel};
 use App\Traits\CifradoTrait;
+use App\Libraries\Usuario;
 
-use Carbon\{Carbon, CarbonInterval};
+use Carbon\{Carbon};
 use DateTime;
 use DateTimeZone;
 
@@ -13,6 +14,7 @@ class UIDocumento
 {    
     protected $encrypter; 
     protected $proyecto;
+    protected $usuario;
     protected $config;
     protected $count;
     protected $total;
@@ -27,6 +29,7 @@ class UIDocumento
 
         $this->encrypter = \Config\Services::encrypter();  
         $this->catalogoModel = new CatalogoModel(); 
+        $this->usuario = new Usuario();  
         $this->proyecto = $proyecto;      
         $this->config = $config;
         $this->config['tipo'] = isset($config['tipo']) ? str_replace(' de ', ' ', $config['tipo']) : '';
@@ -39,11 +42,14 @@ class UIDocumento
     {
         $html = '';
         $docs = $this->consultarDocs($offset, $limit);
+        $permisos = $this->usuario->obtenerPermisosModulo('Proyecto');
         foreach ($docs as $doc) {
-            $doc['id'] = base64_encode( $this->encriptar($doc['id']) );
-            $doc['creado_el'] = $this->formatoFecha($doc['creado_el']); 
-            $doc['v_seccion'] = view("proyectos/documentos/parcial/_v_seccion_{$doc['seccion']}.php", $doc);
-            $html .= view('proyectos/documentos/parcial/_v_item_doc.php', $doc);
+            $doc['permisos']  =  $permisos;            
+            $doc['id']        =  base64_encode( $this->encriptar($doc['id']) );
+            $doc['creado_el'] =  $this->formatoFecha($doc['creado_el']); 
+            $doc['autores']   =  $this->listadarAutores($doc);
+            $doc['v_seccion'] =  view("proyectos/documentos/parcial/_v_seccion_{$doc['seccion']}.php", $doc);
+            $html            .=  view('proyectos/documentos/parcial/_v_item_doc.php', $doc);
         }
         $this->setCount(count($docs));
 
@@ -102,6 +108,19 @@ class UIDocumento
         $carbonFecha = new Carbon(new DateTime($fecha), new DateTimeZone('America/Mexico_City'));
 
         return $carbonFecha->diffForHumans($actual);
+    }
+
+    public function listadarAutores($doc)
+    {
+        $lista = []; ksort($doc);
+        foreach ($doc as $campo => $valor) {
+            if (strpos($campo, 'autor')===FALSE || trim($valor)=='') {
+                continue;
+            }
+            $lista[] = $valor;
+        }
+
+        return implode(', ',$lista);
     }
 
     public function busqueda()

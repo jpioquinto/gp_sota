@@ -16,7 +16,7 @@ class DocumentoQuery extends Model
     public function listado($params, $busqueda=null, $offset=null, $limit=null)
     {
         $builder = $this->db->table('v_fichas_documentos vd')->distinct();
-        $builder->select('vd.*, d.ruta, p.pais, i.idioma');
+        $builder->select("vd.*, d.ruta, p.pais, i.idioma, cob.descripcion as cobertura, inst.descripcion as institucion, apf.descripcion as entidad_apf, t.descripcion as tipo, conj.descripcion as conjunto, u.descripcion as unidad, cla.descripcion as clasificacion");
         $builder->join(
             'gp_documentos d',
             "d.registro_id=vd.id AND d.estatus=1 AND vd.seccion=d.seccion",
@@ -24,6 +24,15 @@ class DocumentoQuery extends Model
         );
         $builder->join('cat_paises p','vd.pais_id=p.id', 'left');
         $builder->join('cat_idiomas i','vd.idioma_id=i.id', 'left');
+
+        $builder->join('cat_coberturas cob','vd.cobertura_id=cob.id', 'left'); 
+        $builder->join('cat_instituciones inst','vd.institucion_id=inst.id', 'left');
+        $builder->join('cat_conjunto_datos conj','vd.conjunto_dato_id=conj.id', 'left');  
+        $builder->join('cat_entidades_apf apf','vd.entidad_apf_id=apf.id', 'left');   
+        $builder->join('cat_categorias t','vd.tipo_id=t.id', 'left'); 
+        $builder->join('cat_clasificacion_docs cla','vd.clasificacion_id=cla.id', 'left');  
+        $builder->join('cat_unidades u','vd.unidad_id=u.id', 'left');
+
         $builder->where(['vd.estatus'=>$params['estatus'], 'vd.proyecto_id'=>$params['proyectoId']]);
         $builder->whereIn('d.seccion',['planeacion', 'normatividad', 'estadistica', 'nota-prensa', 'reunion', 'investigacion']);
         

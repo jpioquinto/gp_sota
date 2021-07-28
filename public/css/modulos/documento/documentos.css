@@ -6,6 +6,15 @@
     cursor: pointer !important;
 }
 
-.content-documentos .nombre-doc:hover {
+.content-documentos .nombre-doc:hover, .content-documentos .descripcion-doc:hover {
     text-decoration: underline !important;
+}
+
+.autor {
+    font-size: 0.75rem;
+}
+
+.listado-documentos .ficha p {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
 }

@@ -1,4 +1,4 @@
-<form class="ficha-planeacion">
+<form class="ficha-form">
     <div class="row"> 
         <?=isset($_v_nombre_doc) ? $_v_nombre_doc : ''?>
         <div class="col-sm-12 col-md-12">
@@ -127,4 +127,7 @@
             </div>
         </div>                 
     </div>
+    <?php if(isset($id)): ?>
+        <input type="hidden" name="id" value="<?=$id?>"/>
+    <?php endif; ?>
 </form>

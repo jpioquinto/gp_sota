@@ -3,7 +3,7 @@
         <label for="data-nombre">Nombre</label>
         <input 
             type="text" id="data-nombre" name="nombre" 
-            class="form-control" value="<?=isset($doc['nombre']) ? $doc['nombre']:''?>"
+            class="form-control" value="<?=isset($nombre) ? $nombre : ''?>"
             required
         >                
     </div>
@@ -13,7 +13,7 @@
         <label for="data-descripcion">Descripción</label>
         <input 
             type="text" id="data-descripcion" name="descripcion" 
-            class="form-control" value="<?=isset($doc['descripcion']) ? $doc['descripcion']:''?>"
+            class="form-control" value="<?=isset($descripcion) ? $descripcion : ''?>"
             required
         >                
     </div>
@@ -23,7 +23,7 @@
         <label for="data-alias">Alias</label>
         <input 
             type="text" id="data-alias" name="alias" 
-            class="form-control" value="<?=isset($doc['alias']) ? $doc['alias']:''?>"
+            class="form-control" value="<?=isset($alias) ? $alias : ''?>"
             required
         >                
     </div>

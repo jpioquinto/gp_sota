@@ -38,7 +38,11 @@ class PlaneacionModel extends Model
         $builder->join('cat_instituciones inst','dp.institucion_id=inst.id', 'left');  
         $builder->join('cat_entidades_apf apf','dp.entidad_apf_id=apf.id', 'left');   
         $builder->join('cat_categorias t','dp.tipo_id=t.id', 'left');        
-        $builder->where(['dp.estatus'=>$params['estatus'], 'dp.proyecto_id'=>$params['proyectoId']]);        
+        $builder->where(['dp.estatus'=>$params['estatus'], 'dp.proyecto_id'=>$params['proyectoId']]);  
+        
+        if (isset($params['id'])) {
+            $builder->where('dp.id', $params['id']);
+        }
         
         if ($busqueda) {
             $builder->where(

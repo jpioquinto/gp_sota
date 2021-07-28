@@ -1,4 +1,4 @@
-<form class="ficha-planeacion">
+<form class="ficha-form">
     <div class="row"> 
         <?=isset($_v_nombre_doc) ? $_v_nombre_doc : ''?>        
         <div class="col-sm-12 col-md-12">
@@ -63,7 +63,7 @@
                 <label for="data-publicado">Año de Publicación</label>
                 <input 
                     type="number" id="data-publicado" name="publicado" 
-                    class="form-control" value="<?=isset($doc['publicado']) ? $doc['publicado']:''?>"
+                    class="form-control" value="<?=isset($doc['anio_publicado']) ? $doc['anio_publicado']:''?>"
                     required
                 >                
             </div>
@@ -131,4 +131,7 @@
             </div>
         </div>  
     </div>
+    <?php if(isset($id)): ?>
+        <input type="hidden" name="id" value="<?=$id?>"/>
+    <?php endif; ?>
 </form>

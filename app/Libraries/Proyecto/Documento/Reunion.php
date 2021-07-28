@@ -83,16 +83,27 @@ class Reunion extends Documento
         return ['Solicitud'=>true, 'Msg'=>'Documento cargado correctamente.'];
     }
 
-    public function vistaForm()
+    public function vistaForm($id=null)
     {
+        $registro = [];
+        if ($id) {
+            $docModel = new ReunionModel();
+            $registro =  $docModel->listado(['estatus'=>1, 'proyectoId'=>$this->proyecto->getId(), 'id'=>$this->desencriptar(base64_decode($id))]);
+            $registro =  isset($registro[0]['id']) ? $registro[0] : [];         
+        }
+
+        $datos = [
+            '_v_conjunto_datos'=>$this->vistaConjuntoDatos(['instituciones'=>$this->opcionesInstituciones(isset($registro['institucion_id']) ? $registro['institucion_id'] : null), 'conjuntoDatos'=>$this->opcionesConjuntoDatos(isset($registro['conjunto_dato_id']) ? $registro['conjunto_dato_id'] : null)]),
+            'entidadesAPF'=>$this->opcionesEntidadesAPF(isset($registro['entidad_apf_id']) ? $registro['entidad_apf_id'] : null),
+            'tipos'=>$this->opcionesCategoriaProyecto(isset($registro['tipo_id']) ? $registro['tipo_id'] : null), 
+            'paises'=>$this->opcionesPaises(isset($registro['pais_id']) ? $registro['pais_id'] : null),
+            'doc'=>$registro,
+            'id'=>$id
+        ];
+
         return view(
             'proyectos/documentos/parcial/_v_form_reunion', 
-            [
-                '_v_conjunto_datos'=>$this->vistaConjuntoDatos(['instituciones'=>$this->opcionesInstituciones(), 'conjuntoDatos'=>$this->opcionesConjuntoDatos()]),
-                'entidadesAPF'=>$this->opcionesEntidadesAPF(),
-                'tipos'=>$this->opcionesCategoriaProyecto(), 
-                'paises'=>$this->opcionesPaises(),
-            ]
+            $datos
         );
 
     }

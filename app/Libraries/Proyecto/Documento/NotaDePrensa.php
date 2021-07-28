@@ -92,19 +92,31 @@ class NotaDePrensa extends Documento
         return ['Solicitud'=>true, 'Msg'=>'Documento cargado correctamente.'];
     }
 
-    public function vistaForm()
+    public function vistaForm($id=null)
     {
+        $registro = [];
+        if ($id) {
+            $docModel = new NotaPrensaModel();
+            $registro =  $docModel->listado(['estatus'=>1, 'proyectoId'=>$this->proyecto->getId(), 'id'=>$this->desencriptar(base64_decode($id))]);
+            $registro =  isset($registro[0]['id']) ? $registro[0] : [];         
+        }
+        
+        $datos = [
+            '_v_conjunto_datos'=>$this->vistaConjuntoDatos(['instituciones'=>$this->opcionesInstituciones(), 'conjuntoDatos'=>$this->opcionesConjuntoDatos()]),
+            '_v_pais_idioma'=>$this->vistaPaisIdioma(['paises'=>$this->opcionesPaises(isset($registro['pais_id']) ? $registro['pais_id'] : null), 'idiomas'=>$this->opcionesIdiomas(isset($registro['idioma_id']) ? $registro['idioma_id'] : null)]),
+            '_v_nombre_doc'=>$this->vistaNombreDoc(['coberturas'=>$this->opcionesCoberturas(isset($registro['cobertura_id']) ? $registro['cobertura_id'] : null), 'nombre'=>isset($registro['nombre']) ? $registro['nombre'] : null, 'descripcion'=>isset($registro['descripcion']) ? $registro['descripcion'] : null,'alias'=>isset($registro['alias']) ? $registro['alias'] : null]),
+            'entidadesAPF'=>$this->opcionesEntidadesAPF(isset($registro['entidad_apf_id']) ? $registro['entidad_apf_id'] : null),
+            'tipos'=>$this->opcionesCategoriaProyecto(isset($registro['tipo_id']) ? $registro['tipo_id'] : null), 
+            'redes'=>$this->opcionesRedesSociales(),
+            'paises'=>$this->opcionesPaises(isset($registro['pais_id']) ? $registro['pais_id'] : null),
+            'doc'=>$registro,
+            'id'=>$id
+        ];
+
         return view(
             'proyectos/documentos/parcial/_v_form_nota_prensa', 
-            [
-                '_v_conjunto_datos'=>$this->vistaConjuntoDatos(['instituciones'=>$this->opcionesInstituciones(), 'conjuntoDatos'=>$this->opcionesConjuntoDatos()]),
-                '_v_pais_idioma'=>$this->vistaPaisIdioma(['paises'=>$this->opcionesPaises(), 'idiomas'=>$this->opcionesIdiomas()]),
-                '_v_nombre_doc'=>$this->vistaNombreDoc(['coberturas'=>$this->opcionesCoberturas()]),
-                'entidadesAPF'=>$this->opcionesEntidadesAPF(),
-                'tipos'=>$this->opcionesCategoriaProyecto(), 
-                'redes'=>$this->opcionesRedesSociales(),
-                'paises'=>$this->opcionesPaises(),
-            ]
+            $datos
+            
         );
 
     }

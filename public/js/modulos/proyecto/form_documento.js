@@ -5,11 +5,19 @@ var $formDoc = ((modulo, valida) => {
     modulo.progress = undefined;
 
     modulo.ini = () => {
-        var tempo = 0, itera = 0;
+        var tempo = 0, itera = 0;        
 
         tempo = setInterval(() => {
             if (itera>99) {
                 clearInterval(tempo);
+            }
+            if ($("input[name='id']").length>0) {
+                $('.jq_select').select2({
+                    tags: true,
+                    tokenSeparators: [',', ' ']
+                });
+                clearInterval(tempo);
+                return;
             }
             if ($('.jq_select').length==0) {
                 itera++; return;

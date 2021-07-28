@@ -39,7 +39,11 @@ class InvestigacionModel extends Model
         $builder->join('cat_instituciones inst','di.institucion_id=inst.id', 'left');
         $builder->join('cat_conjunto_datos conj','di.conjunto_dato_id=conj.id', 'left');  
         $builder->join('cat_clasificacion_docs cla','di.clasificacion_id=cla.id', 'left');   
-        $builder->where(['di.estatus'=>$params['estatus'], 'di.proyecto_id'=>$params['proyectoId']]);        
+        $builder->where(['di.estatus'=>$params['estatus'], 'di.proyecto_id'=>$params['proyectoId']]);
+        
+        if (isset($params['id'])) {
+            $builder->where('di.id', $params['id']);
+        }
         
         if ($busqueda) {
             $builder->where(

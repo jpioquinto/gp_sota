@@ -29,11 +29,12 @@ abstract class Documento
     {
         helper('util');
 
-        $this->uiDocumento = new UIDocumento($proyecto);
-        $this->evidenciaModel = new EvidenciaModel();        
-        $this->validacion  = new ValidaDocumento();
-        $this->proyecto    = $proyecto;
-        $this->usuario = new Usuario();  
+        $this->encrypter      =   \Config\Services::encrypter();
+        $this->uiDocumento    =   new UIDocumento($proyecto);
+        $this->validacion     =   new ValidaDocumento();
+        $this->evidenciaModel =   new EvidenciaModel();        
+        $this->usuario        =   new Usuario();  
+        $this->proyecto       =   $proyecto;
     }
 
     public static function getInstanciaCarga($proyecto, $dir = '')

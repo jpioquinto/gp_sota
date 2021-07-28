@@ -41,7 +41,11 @@ class EstadisticaModel extends Model
         $builder->join('cat_entidades_apf apf','de.entidad_apf_id=apf.id', 'left');   
         $builder->join('cat_categorias t','de.tipo_id=t.id', 'left'); 
         $builder->join('cat_unidades u','de.unidad_id=u.id', 'left');
-        $builder->where(['de.estatus'=>$params['estatus'], 'de.proyecto_id'=>$params['proyectoId']]);        
+        $builder->where(['de.estatus'=>$params['estatus'], 'de.proyecto_id'=>$params['proyectoId']]);
+        
+        if (isset($params['id'])) {
+            $builder->where('de.id', $params['id']);
+        }
         
         if ($busqueda) {
             $builder->where(

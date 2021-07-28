@@ -45,6 +45,34 @@ class Documento extends BaseController
         ]);
     }
 
+    public function vistaModalEditar()
+    {
+        if (!isset($_SESSION['GP_SOTA']) || empty($_SESSION['GP_SOTA'])) {			
+			return redirect()->to('/'); 
+		}
+
+        helper('util');
+                
+        $clase = self::_SPACE_.str_replace([' ','-'], '', ucwords(limpiarCadena(str_replace('-', ' de ', $this->request->getPost('form')))));#var_dump($clase);exit;
+
+        if (!class_exists($clase)) {
+            echo json_encode(['Solicitud'=>false, 'Error'=>'No se encontró el Gestor para esta acción.']); return; 
+        }  
+
+        $gestor = new Gestor(new $clase(new CProyecto($this->desencriptar( base64_decode($this->request->getPost('proyectoId')) ))));
+
+		echo json_encode([
+            'Solicitud'=>true,
+            'vista'=>view(
+			    'proyectos/documentos/parcial/_v_modal_doc',
+                [
+                    'vistaContenedor'=>$gestor->vista($this->request->getPost('id')),                      
+                    'id'=> $this->request->getPost('id')                
+                ]
+            )
+        ]);
+    }
+
     public function vistaModalCarga()
     {
         if (!isset($_SESSION['GP_SOTA']) || empty($_SESSION['GP_SOTA'])) {			

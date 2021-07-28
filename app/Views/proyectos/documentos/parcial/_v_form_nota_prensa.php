@@ -1,4 +1,4 @@
-<form class="ficha-planeacion">
+<form class="ficha-form">
     <div class="row"> 
         <?=isset($_v_nombre_doc) ? $_v_nombre_doc : ''?>  
         <div class="col-sm-12 col-md-12">
@@ -37,7 +37,7 @@
                 <label for="data-publicado">Fecha de publicación</label>
                 <input 
                     type="date" id="data-publicado" name="publicado" 
-                    class="form-control" value="<?=isset($doc['publicado']) ? $doc['publicado']:''?>"
+                    class="form-control" value="<?=isset($doc['fecha_publicado']) ? $doc['fecha_publicado']:''?>"
                     required
                 >                
             </div>
@@ -89,7 +89,7 @@
                 <label for="data-lugar">Lugar de aplicación</label>
                 <input 
                     type="text" id="data-lugar" name="lugar" 
-                    class="form-control" value="<?=isset($doc['lugar_a']) ? $doc['lugar_a']:''?>"
+                    class="form-control" value="<?=isset($doc['lugar_aplica']) ? $doc['lugar_aplica']:''?>"
                 >                
             </div>
         </div>  
@@ -111,4 +111,7 @@
             </div>
         </div>
     </div>
+    <?php if(isset($id)): ?>
+        <input type="hidden" name="id" value="<?=$id?>"/>
+    <?php endif; ?>
 </form>

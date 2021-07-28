@@ -1,4 +1,4 @@
-<form class="ficha-planeacion">
+<form class="ficha-form">
     <div class="row"> 
         <?=isset($_v_nombre_doc) ? $_v_nombre_doc : ''?>
         <div class="col-sm-12 col-md-12">
@@ -44,11 +44,11 @@
             <div class="form-group">
                 <label for="data-armonizado">Armonizado a la LGAHOTDU</label>
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="a_si" name="armonizado" class="custom-control-input" value="1">
+                    <input type="radio" id="a_si" name="armonizado" class="custom-control-input" value="1" <?=(isset($doc['armonizado']) && $doc['armonizado']==1) ? 'checked' : ''?>>
                     <label class="custom-control-label" for="a_si">Si</label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="a_no" name="armonizado" class="custom-control-input" value="0" checked>
+                    <input type="radio" id="a_no" name="armonizado" class="custom-control-input" value="0" <?=(isset($doc['armonizado']) && $doc['armonizado']!=0) ? '' : 'checked'?>>
                     <label class="custom-control-label" for="a_no">No</label>
                 </div>              
             </div>
@@ -83,7 +83,7 @@
                 <label for="data-id_grafico_inegi">ID Geográfico INEGI</label>
                 <input 
                     type="text" id="data-id_grafico_inegi" name="inegi" 
-                    class="form-control" value="<?=isset($doc['inegi_id']) ? $doc['inegi_id']:''?>"
+                    class="form-control" value="<?=isset($doc['inegi_grafico_id']) ? $doc['inegi_grafico_id']:''?>"
                 >                
             </div>
         </div> 
@@ -99,11 +99,11 @@
             <div class="form-group">
                 <label for="data-instrumento">Instrumento concurrente </label>
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="i_si" name="instrumento" class="custom-control-input" value="1">
+                    <input type="radio" id="i_si" name="instrumento" class="custom-control-input" value="1" <?=(isset($doc['i_concurrente']) && $doc['i_concurrente']==1) ? 'checked' : ''?>>
                     <label class="custom-control-label" for="i_si">Si</label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="i_no" name="instrumento" class="custom-control-input" value="0" checked>
+                    <input type="radio" id="i_no" name="instrumento" class="custom-control-input" value="0" <?=(isset($doc['i_concurrente']) && $doc['i_concurrente']!=0) ? '' : 'checked'?>>
                     <label class="custom-control-label" for="i_no">No</label>
                 </div>              
             </div>
@@ -134,4 +134,7 @@
             </div>
         </div>    
     </div>
+    <?php if(isset($id)): ?>
+        <input type="hidden" name="id" value="<?=$id?>"/>
+    <?php endif; ?>
 </form>

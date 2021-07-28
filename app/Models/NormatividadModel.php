@@ -40,7 +40,11 @@ class NormatividadModel extends Model
         $builder->join('cat_entidades_apf apf','dn.entidad_apf_id=apf.id', 'left');   
         $builder->join('cat_categorias t','dn.tipo_id=t.id', 'left'); 
         $builder->join('cat_clasificacion_docs cla','dn.clasificacion_id=cla.id', 'left'); 
-        $builder->where(['dn.estatus'=>$params['estatus'], 'dn.proyecto_id'=>$params['proyectoId']]);        
+        $builder->where(['dn.estatus'=>$params['estatus'], 'dn.proyecto_id'=>$params['proyectoId']]);  
+        
+        if (isset($params['id'])) {
+            $builder->where('dn.id', $params['id']);
+        }
         
         if ($busqueda) {
             $builder->where(
