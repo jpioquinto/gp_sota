@@ -90,6 +90,21 @@ class Documento extends BaseController
         ]);	
     }
 
+    public function vistaVerDoc()
+    {
+        #echo '<pre>';print_r($this->request->getPost());exit;
+        $visorDoc = view('proyectos/parcial/_v_visor_doc', [
+            'url'=>$this->request->getPost('uri'),
+            'mime'=>$this->request->getPost('mime'),
+            'titulo'=>$this->request->getPost('nombre'),
+        ]);
+
+        echo json_encode([
+            'Solicitud'=>true, 
+            'vista'=>view('proyectos/parcial/_v_modal_ver_docs', ['vistaContenedor'=>$visorDoc])
+        ]);
+    }
+
     public function cargarArchivo()
     {
         if (!$this->request->getPost('id')) {

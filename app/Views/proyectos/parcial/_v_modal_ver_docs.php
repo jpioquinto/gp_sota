@@ -15,7 +15,7 @@
                 </button>
             </div>
             <div class="modal-body">                
-                <?php if(count($docs)==0): ?>
+                <?php if(isset($docs) && count($docs)==0): ?>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="alert alert-danger" role="alert">

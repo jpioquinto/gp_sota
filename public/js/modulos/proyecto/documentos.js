@@ -167,9 +167,37 @@ var $docs = (modulo => {
         $(this).parents('.ficha').removeClass(modulo.claseEntrada).addClass(modulo.claseSalida).hide('slow');
     };
 
+    modulo.clickVerDoc = function(e) {
+        e.preventDefault();
+
+        if ($.inArray($(this).attr('extension'),['pdf'])==-1) {
+            $('.ver-doc').attr('href', $(this).attr('uri'));
+            $('.ver-doc').trigger('click');
+            return;
+        }
+
+        // ver modal con el documento en formato pdf
+
+        $util.load.show(true);
+        $util.post({
+            url: "Documento",
+            metodo:"vistaVerDoc",
+            datos:{uri:$(this).attr('uri'), mime:$util.obtenerTipoMIME($(this).attr('extension')), nombre:$(this).attr('nombre')},
+            funcion: function(data) {   
+                $util.load.hide();                              
+                if (data.Solicitud) { 
+                    $('.content-modal').html(data.vista); 
+                    $('#jq_modal_docs').modal('show');                                                             
+                }                                         
+            }
+        });
+
+    };
+
     var iniEventos = () => {
         $('.avatar, .descripcion-doc').off('click').on('click', modulo.clickVerFicha);        
         $('.jq_ocultar').off('click').on('click', modulo.clickOcultarFicha);
+        $('.jq_ver_doc').off('click').on('click', modulo.clickVerDoc);
     };
 
     var ocultarMasContent = (total, items) => {
@@ -183,7 +211,7 @@ var $docs = (modulo => {
     };
     
     var config = {
-        paginacion:2,
+        paginacion:100,
         ini:false, vista:'', pagina:0, total:0, 
         busqueda:{ini:false, vista:'', pagina:0, total:0, entrada:''}        
     };

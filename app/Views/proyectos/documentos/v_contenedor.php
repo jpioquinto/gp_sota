@@ -50,6 +50,7 @@
             <div class="card-body content-documentos">                
             </div>
         </div>
+        <a class="d-none ver-doc" href="" target="_blank"></a>
     </div>
 </div>
 <div class="content-modal"></div>

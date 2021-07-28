@@ -4,7 +4,7 @@
 
 		<embed
 			src="<?=$url?>"
-			type="application/pdf"
+			type=<?=isset($mime) ? $mime : "application/pdf"?>
 			width="100%" style="min-height: 400px !important;"
 			id="jq_contenedor_archivo"
 		></embed>
