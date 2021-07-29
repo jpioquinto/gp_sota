@@ -16,6 +16,7 @@ class Documento extends BaseController
 
     public function __construct()
     {
+        helper('util');
         @session_start();   
         $this->usuario = new Usuario();  
         $this->encrypter = \Config\Services::encrypter();                   
@@ -135,7 +136,7 @@ class Documento extends BaseController
 
     public function cargarArchivo()
     {
-        if (!$this->request->getPost('id')) {
+        if (!$this->request->getPost('proyectoId')) {
             echo json_encode([
                 'Solicitud' =>false,
                 'Error'=>'No se recibió el Identificador del Proyecto.',
@@ -151,9 +152,31 @@ class Documento extends BaseController
             echo json_encode(['Solicitud'=>false, 'Error'=>'No se encontró el Gestor para esta acción.']); return; 
         }  
 
-        $gestor = new Gestor(new $clase(new CProyecto($this->desencriptar( base64_decode($this->request->getPost('id')) ))));
+        $gestor = new Gestor(new $clase(new CProyecto($this->desencriptar( base64_decode($this->request->getPost('proyectoId')) ))));
 
         echo json_encode($gestor->guardar($this->request->getPost(), $this->request->getFile('archivo')));
+    }
+
+    public function actualizarFicha()
+    {
+        #echo '<pre>';print_r($this->request->getPost());exit;
+        if (!$this->request->getPost('id')) {
+            echo json_encode([
+                'Solicitud' =>false,
+                'Error'=>'No se recibió el Identificador de la Ficha Documental.',
+            ]);	
+            return; 
+        }
+                                
+        $clase = self::_SPACE_.str_replace(' ', '', ucwords(limpiarCadena(str_replace('-', ' de ', $this->request->getPost('form')))));
+
+        if (!class_exists($clase)) {
+            echo json_encode(['Solicitud'=>false, 'Error'=>'No se encontró el Gestor para esta acción.']); return; 
+        }  
+
+        $gestor = new Gestor(new $clase(new CProyecto($this->desencriptar( base64_decode($this->request->getPost('proyectoId')) ))));
+
+        echo json_encode($gestor->actualizar($this->request->getPost()));
     }
 
     public function obtenerDocumentos()

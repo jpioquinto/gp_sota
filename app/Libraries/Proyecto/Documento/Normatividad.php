@@ -88,6 +88,58 @@ class Normatividad extends Documento
         return ['Solicitud'=>true, 'Msg'=>'Documento cargado correctamente.'];
     }
 
+    public function actualizar($datos)
+    {
+        $validacion = $this->validacion->esSolicitudNormatividadValida($datos);
+
+        if ($validacion['Solicitud']===FALSE) {
+            return $validacion;
+        }#var_dump($archivo);exit;
+
+        $campos = [
+            'descripcion'=>trim($datos['descripcion']),
+            'alias'=>trim($datos['alias']),
+            'cobertura_id'=>$datos['cobertura'],
+            'pais_id'=>$datos['pais'],
+            'idioma_id'=>$datos['idioma'],
+            'institucion_id'=>$datos['institucion'],
+            'entidad_apf_id'=>$datos['entidad_apf'],
+            'i_concurrente'=>$datos['instrumento'],
+            'armonizado'=>$datos['armonizado'],
+            'vigencia_final'=>$datos['vigencia_final'],
+            'clasificacion_id'=>$datos['clasificacion'],
+            'vigencia'=>$datos['vigencia'],
+            'tipo_id'=>$datos['tipo'],
+            'palabra_clave'=>implode(' ', $datos['clave']),
+            'actualizado_el'=>'now()',
+            'actualizado_por'=>$this->usuario->getId()
+        ];
+        
+        if (isset($datos['grafico']) && trim($datos['grafico'])!='') {
+            $campos['grafico_id'] = trim($datos['grafico']);
+        }
+
+        if (isset($datos['inegi']) && trim($datos['inegi'])!='') {
+            $campos['inegi_grafico_id'] = trim($datos['inegi']);
+        }
+
+        if (isset($datos['url']) && trim($datos['url'])!='') {
+            $campos['url'] = trim($datos['url']);
+        }
+
+        if (isset($datos['lugar']) && trim($datos['lugar'])!='') {
+            $campos['lugar_aplica'] = trim($datos['lugar']);
+        }
+        
+        $normatividadModel = new NormatividadModel();
+        
+        if (!($normatividadModel->update($this->desencriptar(base64_decode($datos['id'])), $campos))) {
+            return ['Solicitud'=>false, 'Msg'=>'Error al intentar actualizar la Ficha del Documento.'];
+        }                 
+
+        return ['Solicitud'=>true, 'Msg'=>'Ficha actualizada correctamente.'];
+    }
+
     public function vistaForm($id=null)
     {
         $registro = [];

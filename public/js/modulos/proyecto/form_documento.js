@@ -127,7 +127,7 @@ var $formDoc = ((modulo, valida) => {
 
         var formData = new FormData();
 
-        formData.append("id", $proyecto.getId());
+        formData.append("proyectoId", $proyecto.getId());
         formData.append("archivo", objArchivos[0]);
         formData.append("tipo_doc", $("select[name='tipo_doc'] option:selected").text());
         
@@ -137,6 +137,10 @@ var $formDoc = ((modulo, valida) => {
 
         if ($("select[name='clave']").length>0 && $("select[name='clave']").val().length>0) {            
             formData.append('clave', $("select[name='clave']").val());
+        }
+
+        if ($("select[name='redes']").length>0 && $("select[name='redes']").val().length>0) {            
+            formData.append('redes', $("select[name='redes']").val());
         }
 
         formData.append(tkn,v);
@@ -171,6 +175,47 @@ var $formDoc = ((modulo, valida) => {
         });
     };
 
+    modulo.actualizarFicha = function(e) {
+        e.preventDefault();
+        if ($("input[name='id']").length==0) {
+            notificacion('No se recibió el Identificador de la Ficha Documental.', "error", 200, "bottomRight", "fadeInUp", "fadeOutDown");            
+			return;
+        }
+
+        if ($.trim($proyecto.getId())=='') {
+            return;
+        }
+
+        if (!valida.validar()) {
+            return;
+        }
+
+        valida.params["proyectoId"] = $proyecto.getId();        
+
+        if ($("select[name='clave']").length>0 && $("select[name='clave']").val().length>0) {            
+            valida.params["clave"] = $("select[name='clave']").val();
+        }
+
+        if ($("select[name='redes']").length>0 && $("select[name='redes']").val().length>0) {            
+            valida.params["redes"] = $("select[name='redes']").val();
+        }
+
+        valida.params['form'] = $('.ficha-form').attr('data-ficha');
+
+        $util.load.show(true);
+        $util.post({
+            url: "Documento",
+            metodo:"actualizarFicha",
+            datos:valida.params,
+            funcion: function(data){
+              if (data.Solicitud) {
+                $('#jq_modal_form').modal('hide'); 
+              }
+              $util.load.hide();
+            }
+        });   
+    };
+
     var setearNombre = () => {
         if ($("input[name='nombre']").length>0 && $.trim($("input[name='nombre']").val())=='') {
             objArchivos.length>0 ? $("input[name='nombre']").val(quitarExtension(objArchivos[0].name)) : null;
@@ -183,5 +228,6 @@ var $formDoc = ((modulo, valida) => {
 $(function() {
     $formDoc.ini();
     $("input[name='archivo']").off("change").on("change", $formDoc.precargaArchivo);
-    $("#jq_aceptar_carga").off("click").on("click",$formDoc.guardarDocumento);
+    $("#jq_aceptar_carga").off("click").on("click", $formDoc.guardarDocumento);
+    $("#jq_actualiza_ficha").off("click").on("click", $formDoc.actualizarFicha);
 });

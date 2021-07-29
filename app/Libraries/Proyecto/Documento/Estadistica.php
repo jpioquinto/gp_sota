@@ -91,6 +91,61 @@ class Estadistica extends Documento
         return ['Solicitud'=>true, 'Msg'=>'Documento cargado correctamente.'];
     }
 
+    public function actualizar($datos)
+    {
+        $validacion = $this->validacion->esSolicitudEstadisticaValida($datos);
+
+        if ($validacion['Solicitud']===FALSE) {
+            return $validacion;
+        }#var_dump($archivo);exit;
+
+        $campos = [
+            'descripcion'=>trim($datos['descripcion']),
+            'alias'=>trim($datos['alias']),
+            'cobertura_id'=>$datos['cobertura'],
+            'pais_id'=>$datos['pais'],
+            'unidad_id'=>$datos['unidad'],
+            'institucion_id'=>$datos['institucion'],
+            'entidad_apf_id'=>$datos['entidad_apf'],
+            'i_concurrente'=>$datos['instrumento'],
+            'anio_publicado'=>$datos['publicado'],
+            'vigencia'=>$datos['vigencia'],
+            'conjunto_dato_id'=>$datos['conjunto_datos'],            
+            'tipo_id'=>$datos['tipo'],
+            'palabra_clave'=>implode(' ', $datos['clave']),
+            'actualizado_el'=>'now()',
+            'actualizado_por'=>$this->usuario->getId()
+        ];
+
+        if (isset($datos['grafico']) && trim($datos['grafico'])!='') {
+            $campos['grafico_id'] = trim($datos['grafico']);
+        }
+
+        if (isset($datos['tema2']) && trim($datos['tema2'])!='') {
+            $campos['tema2'] = trim($datos['tema2']);
+        }
+
+        if (isset($datos['url']) && trim($datos['url'])!='') {
+            $campos['url'] = trim($datos['url']);
+        }
+
+        if (isset($datos['notas']) && trim($datos['notas'])!='') {
+            $campos['notas'] = trim($datos['notas']);
+        }
+
+        if (isset($datos['lugar']) && trim($datos['lugar'])!='') {
+            $campos['lugar_aplica'] = trim($datos['lugar']);
+        }
+
+        $estadisticaModel = new EstadisticaModel();
+        
+        if (!($estadisticaModel->update($this->desencriptar(base64_decode($datos['id'])), $campos))) {
+            return ['Solicitud'=>false, 'Msg'=>'Error al intentar actualizar la Ficha del Documento.'];
+        }                 
+
+        return ['Solicitud'=>true, 'Msg'=>'Ficha actualizada correctamente.'];
+    }
+
     public function vistaForm($id=null)
     {
         $registro = [];

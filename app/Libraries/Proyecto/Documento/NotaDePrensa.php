@@ -92,6 +92,62 @@ class NotaDePrensa extends Documento
         return ['Solicitud'=>true, 'Msg'=>'Documento cargado correctamente.'];
     }
 
+    public function actualizar($datos)
+    {
+        $validacion = $this->validacion->esSolicitudNotaPrensaValida($datos);
+
+        if ($validacion['Solicitud']===FALSE) {
+            return $validacion;
+        }#var_dump($archivo);exit;
+
+        $campos = [
+            'descripcion'=>trim($datos['descripcion']),
+            'alias'=>trim($datos['alias']),            
+            'pais_id'=>$datos['pais'],
+            'idioma_id'=>$datos['idioma'],
+            'autor'=>$datos['autor'],
+            'tema'=>$datos['tema'],
+            'institucion_id'=>$datos['institucion'],
+            'entidad_apf_id'=>$datos['entidad_apf'],
+            'cobertura_id'=>$datos['cobertura'],
+            'fecha_publicado'=>$datos['publicado'],
+            'num_paginas'=>$datos['paginas'],
+            'conjunto_dato_id'=>$datos['conjunto_datos'],            
+            'tipo_id'=>$datos['tipo'],
+            'palabra_clave'=>implode(' ', $datos['clave']),
+            'actualizado_el'=>'now()',
+            'actualizado_por'=>$this->usuario->getId()
+        ];
+
+        if (isset($datos['grafico']) && trim($datos['grafico'])!='') {
+            $campos['grafico_id'] = trim($datos['grafico']);
+        }
+
+        if (isset($datos['autor2']) && trim($datos['autor2'])!='') {
+            $campos['autor2'] = trim($datos['autor2']);
+        }
+
+        if (isset($datos['url']) && trim($datos['url'])!='') {
+            $campos['url'] = trim($datos['url']);
+        }
+
+        if (isset($datos['lugar']) && trim($datos['lugar'])!='') {
+            $campos['lugar_aplica'] = trim($datos['lugar']);
+        }
+
+        if (isset($datos['redes']) && count($datos['redes'])>0) {
+            $campos['redes'] = implode(' ', $datos['redes']);
+        }
+        
+        $notaModel = new NotaPrensaModel();
+        
+        if (!($id = $notaModel->update($this->desencriptar(base64_decode($datos['id'])), $campos))) {
+            return ['Solicitud'=>false, 'Msg'=>'Error al intentar actualizar la Ficha del Documento.'];
+        }                 
+
+        return ['Solicitud'=>true, 'Msg'=>'Ficha actualizada correctamente.'];
+    }
+
     public function vistaForm($id=null)
     {
         $registro = [];

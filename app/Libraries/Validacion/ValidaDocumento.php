@@ -129,7 +129,7 @@ class ValidaDocumento
                 'valid_url' => 'La ubicación no es una URL válida.',                				
             ]
         ],
-		'id'    => [
+		'proyectoId'    => [
 			'label'=>'ID Proyecto',
             'rules'  => 'required',
             'errors' => [
@@ -188,9 +188,13 @@ class ValidaDocumento
 
     public function esSolicitudPlaneacionValida($datos)
     {
-        $reglas = $this->obtenerReglas(
-            ['nombre', 'descripcion', 'alias', 'cobertura','publicado','paginas', 'pais', 'institucion', 'entidad_apf', 'entidad_r', 'instrumento','tipo', 'clave', 'lugar', 'id']
-        );
+        $campos = ['nombre', 'descripcion', 'alias', 'cobertura','publicado','paginas', 'pais', 'institucion', 'entidad_apf', 'entidad_r', 'instrumento','tipo', 'clave', 'lugar', 'proyectoId'];
+
+        if (isset($datos['id'])) {
+            unset($campos[0]);
+        }
+
+        $reglas = $this->obtenerReglas($campos);
 
         if (count($reglas)==0) {
             return  ['Solicitud'=>false, 'Error'=>'Validacíón no realizada.'];
@@ -201,9 +205,13 @@ class ValidaDocumento
 
     public function esSolicitudNormatividadValida($datos)
     {
-        $reglas = $this->obtenerReglas(
-            ['nombre', 'descripcion', 'alias', 'cobertura','pais', 'idioma', 'institucion', 'entidad_apf', 'instrumento','armonizado', 'tipo', 'clasificacion', 'vigencia', 'vigencia_final','clave', 'lugar', 'id']
-        );
+        $campos = ['nombre', 'descripcion', 'alias', 'cobertura','pais', 'idioma', 'institucion', 'entidad_apf', 'instrumento','armonizado', 'tipo', 'clasificacion', 'vigencia', 'vigencia_final','clave', 'lugar', 'proyectoId'];
+        
+        if (isset($datos['id'])) {
+            unset($campos[0]);
+        }
+        
+        $reglas = $this->obtenerReglas($campos);
 
         if (count($reglas)==0) {
             return  ['Solicitud'=>false, 'Error'=>'Validacíón no realizada.'];
@@ -214,9 +222,13 @@ class ValidaDocumento
 
     public function esSolicitudEstadisticaValida($datos)
     {
-        $reglas = $this->obtenerReglas(
-            ['nombre', 'descripcion', 'alias', 'cobertura','pais', 'tema1', 'institucion', 'entidad_apf', 'instrumento', 'tipo', 'publicado', 'vigencia', 'conjunto_datos', 'unidad','clave', 'lugar', 'id']
-        );
+        $campos = ['nombre', 'descripcion', 'alias', 'cobertura','pais', 'tema1', 'institucion', 'entidad_apf', 'instrumento', 'tipo', 'publicado', 'vigencia', 'conjunto_datos', 'unidad','clave', 'lugar', 'proyectoId'];
+
+        if (isset($datos['id'])) {
+            unset($campos[0]);
+        }
+
+        $reglas = $this->obtenerReglas($campos);
 
         if (count($reglas)==0) {
             return  ['Solicitud'=>false, 'Error'=>'Validacíón no realizada.'];
@@ -227,9 +239,13 @@ class ValidaDocumento
 
     public function esSolicitudReunionValida($datos)
     {
-        $reglas = $this->obtenerReglas(
-            ['nombre', 'descripcion', 'alias','pais', 'autor', 'institucion', 'entidad_apf', 'instrumento', 'tipo', 'publicado', 'paginas', 'conjunto_datos','clave', 'lugar', 'id']
-        );
+        $campos = ['nombre', 'descripcion', 'alias','pais', 'autor', 'institucion', 'entidad_apf', 'instrumento', 'tipo', 'publicado', 'paginas', 'conjunto_datos','clave', 'lugar', 'proyectoId'];
+
+        if (isset($datos['id'])) {
+            unset($campos[0]);
+        }
+
+        $reglas = $this->obtenerReglas($campos);
 
         if (count($reglas)==0) {
             return  ['Solicitud'=>false, 'Error'=>'Validacíón no realizada.'];
@@ -240,9 +256,13 @@ class ValidaDocumento
 
     public function esSolicitudNotaPrensaValida($datos)
     {
-        $reglas = $this->obtenerReglas(
-            ['nombre', 'descripcion', 'alias', 'cobertura', 'pais', 'idioma', 'tema', 'autor', 'institucion', 'conjunto_datos',  'publicado', 'paginas', 'entidad_apf', 'tipo', 'clave', 'lugar', 'id']
-        );
+        $campos = ['nombre', 'descripcion', 'alias', 'cobertura', 'pais', 'idioma', 'tema', 'autor', 'institucion', 'conjunto_datos',  'publicado', 'paginas', 'entidad_apf', 'tipo', 'clave', 'lugar', 'proyectoId'];
+        
+        if (isset($datos['id'])) {
+            unset($campos[0]);
+        }
+
+        $reglas = $this->obtenerReglas($campos);
 
         if (count($reglas)==0) {
             return  ['Solicitud'=>false, 'Error'=>'Validacíón no realizada.'];
@@ -253,9 +273,13 @@ class ValidaDocumento
 
     public function esSolicitudInvestigacionValida($datos)
     {
-        $reglas = $this->obtenerReglas(
-            ['nombre', 'descripcion', 'alias', 'cobertura', 'pais', 'idioma', 'tema', 'autor1', 'clasificacion', 'institucion', 'conjunto_datos',  'publicado', 'paginas', 'clave', 'id']
-        );
+        $campos = ['nombre', 'descripcion', 'alias', 'cobertura', 'pais', 'idioma', 'tema', 'autor1', 'clasificacion', 'institucion', 'conjunto_datos',  'publicado', 'paginas', 'clave', 'proyectoId'];
+        
+        if (isset($datos['id'])) {
+            unset($campos[0]);
+        }
+        
+        $reglas = $this->obtenerReglas($campos);
 
         if (count($reglas)==0) {
             return  ['Solicitud'=>false, 'Error'=>'Validacíón no realizada.'];

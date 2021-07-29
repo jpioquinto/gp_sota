@@ -23,6 +23,8 @@ abstract class Documento
 
     abstract public function guardar($datos, $archivo);
 
+    abstract public function actualizar($datos);
+
     abstract public function vistaForm();
 
     public function __construct(CProyecto $proyecto)

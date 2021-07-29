@@ -1,14 +1,16 @@
-<form class="ficha-form">
+<form class="ficha-form" data-ficha="<?=isset($ficha) ? $ficha : ''?>">
     <div class="row"> 
-        <div class="col-sm-12 col-md-12">
-            <div class="form-group">
-                <label for="data-nombre">Nombre</label>
-                <input 
-                    type="text" id="data-nombre" name="nombre" 
-                    class="form-control" value="<?=isset($doc['nombre']) ? $doc['nombre']:''?>"
-                >                
-            </div>
-        </div>             
+        <?php if(!isset($id)): ?>
+            <div class="col-sm-12 col-md-12">
+                <div class="form-group">
+                    <label for="data-nombre">Nombre</label>
+                    <input 
+                        type="text" id="data-nombre" name="nombre" 
+                        class="form-control" value="<?=isset($doc['nombre']) ? $doc['nombre']:''?>"
+                    >                
+                </div>
+            </div>   
+        <?php endif; ?>          
         <div class="col-sm-12 col-md-12">
             <div class="form-group">
                 <label for="data-descripcion">Descripción</label>

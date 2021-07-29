@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="modal-footer no-bd">
-                <button type="button" id="<?=isset($id) ? 'jq_actualiza_ficha' : 'jq_aceptar_carga'?>" class="btn btn-default" disabled>
+                <button type="button" id="<?=isset($id) ? 'jq_actualiza_ficha' : 'jq_aceptar_carga'?>" class="btn btn-default" <?=isset($id) ? '' : 'disabled'?>>
                     <span class="btn-label"><i class="fa fa-save"></i></span> Aceptar																					
                 </button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">

@@ -103,6 +103,73 @@ class Investigacion extends Documento
         return ['Solicitud'=>true, 'Msg'=>'Documento cargado correctamente.'];                        
     }
 
+    public function actualizar($datos)
+    {
+        $validacion = $this->validacion->esSolicitudInvestigacionValida($datos);
+
+        if ($validacion['Solicitud']===FALSE) {
+            return $validacion;
+        }#var_dump($archivo);exit;
+
+        $campos = [
+            'descripcion'=>trim($datos['descripcion']),
+            'alias'=>trim($datos['alias']),            
+            'cobertura_id'=>$datos['cobertura'],
+            'pais_id'=>$datos['pais'], 
+            'idioma_id'=>$datos['idioma'], 
+            'tema'=>$datos['tema'],
+            'autor1'=>$datos['autor'],
+            'clasificacion_id'=>$datos['clasificacion'], 
+            'conjunto_dato_id'=>$datos['conjunto_datos'],       
+            'institucion_id'=>$datos['institucion'],            
+            'anio_publicado'=>$datos['publicado'],
+            'num_paginas'=>$datos['paginas'],                            
+            'palabra_clave'=>implode(' ', $datos['clave']),        
+            'actualizado_el'=>'now()',
+            'actualizado_por'=>$this->usuario->getId()
+        ];
+
+        if (isset($datos['grafico']) && trim($datos['grafico'])!='') {
+            $campos['grafico_id'] = trim($datos['grafico']);
+        }
+
+        if (isset($datos['autor2']) && trim($datos['autor2'])!='') {
+            $campos['autor2'] = trim($datos['autor2']);
+        }
+
+        if (isset($datos['autor3']) && trim($datos['autor3'])!='') {
+            $campos['autor3'] = trim($datos['autor3']);
+        }
+
+        if (isset($datos['detalle']) && trim($datos['detalle'])!='') {
+            $campos['detalle_publicacion'] = trim($datos['detalle']);
+        }
+
+        if (isset($datos['editorial']) && trim($datos['editorial'])!='') {
+            $campos['editorial'] = trim($datos['editorial']);
+        }
+
+        if (isset($datos['edicion']) && trim($datos['edicion'])!='') {
+            $campos['edicion'] = trim($datos['edicion']);
+        }
+
+        if (isset($datos['isbn']) && trim($datos['isbn'])!='') {
+            $campos['isbn'] = trim($datos['isbn']);
+        }
+
+        if (isset($datos['url']) && trim($datos['url'])!='') {
+            $campos['url'] = trim($datos['url']);
+        }        
+
+        $investigacionModel = new InvestigacionModel();
+        
+        if (!($investigacionModel->update($this->desencriptar(base64_decode($datos['id'])), $campos))) {
+            return ['Solicitud'=>false, 'Msg'=>'Error al intentar actualizar la Ficha del Documento.'];
+        }                 
+
+        return ['Solicitud'=>true, 'Msg'=>'Ficha actualizada correctamente.'];                        
+    }
+
     public function vistaForm($id=null)
     {
         $registro = [];

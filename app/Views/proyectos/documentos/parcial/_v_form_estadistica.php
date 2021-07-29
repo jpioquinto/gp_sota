@@ -1,4 +1,4 @@
-<form class="ficha-form">
+<form class="ficha-form" data-ficha="<?=isset($ficha) ? $ficha : ''?>">
     <div class="row"> 
         <?=isset($_v_nombre_doc) ? $_v_nombre_doc : ''?>
         <div class="col-sm-12 col-md-12">

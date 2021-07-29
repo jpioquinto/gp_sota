@@ -15,6 +15,11 @@ class Gestor
         return $this->doc->guardar($datos, $archivo);
     }
 
+    public function actualizar($datos)
+    {
+        return $this->doc->actualizar($datos);
+    }
+
     public function vista($id=null)
     {
         return $this->doc->vistaForm($id);
