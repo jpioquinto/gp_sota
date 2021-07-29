@@ -20,6 +20,11 @@ class Gestor
         return $this->doc->actualizar($datos);
     }
 
+    public function eliminar($id)
+    {
+        return $this->doc->eliminar($id);
+    }
+
     public function vista($id=null)
     {
         return $this->doc->vistaForm($id);

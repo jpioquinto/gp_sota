@@ -106,7 +106,7 @@
         <div class="col-sm-12 col-md-12">
             <div class="form-group">
                 <label for="data-clave">Palabras claves</label>   
-                <select class="form-control jq_select" multiple="multiple" name="clave"></select>           
+                <select class="form-control jq_select" multiple="multiple" name="clave"><?=isset($palabras) ? $palabras : ''?></select>           
             </div>
         </div> 
         <div class="col-sm-12 col-md-12">

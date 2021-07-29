@@ -129,6 +129,27 @@ class Reunion extends Documento
         return ['Solicitud'=>true, 'Msg'=>'Ficha actualizada correctamente.'];
     }
 
+    public function eliminar($id)
+    {
+        $docModel = new ReunionModel();
+        
+        $registro = $docModel->listado(['estatus'=>1, 'proyectoId'=>$this->proyecto->getId(), 'id'=>$id]);
+
+        if (!isset($registro[0]['ruta'])) {
+            return ['Solicitud'=>false, 'Error'=>'Error al intentar recuperar información del documento.'];
+        }
+
+        if (!is_file($registro[0]['ruta'])) {
+            return ['Solicitud'=>false, 'Error'=>'No se encontró el archivo físicamente.'];
+        }
+
+        if (!unlink($registro[0]['ruta'])) {
+            return ['Solicitud'=>false, 'Error'=>'Error al intentar eliminar el documento.'];
+        }
+
+        return $docModel->update($id, ['estatus'=>0]) ? ['Solicitud'=>true, 'Msg'=>'Documento eliminado correctamente.'] : ['Solicitud'=>false, 'Error'=>'Error al intentar cambiar el estatus del documento.'];
+    }
+
     public function vistaForm($id=null)
     {
         $registro = [];
@@ -141,6 +162,7 @@ class Reunion extends Documento
         $datos = [
             '_v_conjunto_datos'=>$this->vistaConjuntoDatos(['instituciones'=>$this->opcionesInstituciones(isset($registro['institucion_id']) ? $registro['institucion_id'] : null), 'conjuntoDatos'=>$this->opcionesConjuntoDatos(isset($registro['conjunto_dato_id']) ? $registro['conjunto_dato_id'] : null)]),
             'entidadesAPF'=>$this->opcionesEntidadesAPF(isset($registro['entidad_apf_id']) ? $registro['entidad_apf_id'] : null),
+            'palabras'=>$this->opcionesPalabrasClave(!empty($registro['palabra_clave']) ? $registro['palabra_clave'] : ''),
             'tipos'=>$this->opcionesCategoriaProyecto(isset($registro['tipo_id']) ? $registro['tipo_id'] : null), 
             'paises'=>$this->opcionesPaises(isset($registro['pais_id']) ? $registro['pais_id'] : null),
             'ficha'=>self::SECCION,

@@ -71,7 +71,7 @@
         <div class="col-sm-12 col-md-12">
             <div class="form-group">
                 <label for="data-clave">Palabras claves</label>   
-                <select class="form-control jq_select" multiple="multiple" name="clave" required></select>           
+                <select class="form-control jq_select" multiple="multiple" name="clave" required><?=isset($palabras) ? $palabras : ''?></select>           
             </div>
         </div>
         <div class="col-sm-12 col-md-12">

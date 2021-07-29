@@ -70,13 +70,25 @@ class UIDocumento
         return $gestor->listado(['estatus'=>1, 'proyectoId'=>$this->proyecto->getId()], $this->busqueda(), $offset, $limit);
     }
 
+    public function listadoPalabras($palabras)
+    {
+        $palabras = explode(' ', $palabras);
+        $listado  = "";
+
+        foreach ($palabras as $palabra) {
+            $listado .= sprintf("<option value='%s' selected>%s</option>", $palabra, $palabra);
+        }
+
+        return $listado;
+    }
+
     public function listado($datos, $id=null, $campo='descripcion')
     {
         $listado = "";
 
         foreach ($datos as $value) {
-            $selected = $id==$value['id'] ? 'selected' : '';
-            $listado .= sprintf("<option value='%s' %s>%s</option>", $value['id'], $selected, $value[$campo]);
+            #$selected = $this->seleccionar($id, $value['id']);#$id==$value['id'] ? 'selected' : '';
+            $listado .= sprintf("<option value='%s' %s>%s</option>", $value['id'], $this->seleccionar($id, $value['id']), $value[$campo]);
         }
         return $listado;
     }
@@ -156,5 +168,14 @@ class UIDocumento
     public function setCount($count)
     {
         $this->count = $count;
-    }        
+    }  
+    
+    protected function seleccionar($id=null, $valor)
+    {
+        if (is_array($id)) {
+            return in_array($valor, $id)===TRUE ? 'selected' : '';
+        }
+        
+        return $id==$valor ? 'selected' : '';
+    }
 }

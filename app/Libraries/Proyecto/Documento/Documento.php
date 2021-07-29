@@ -25,6 +25,8 @@ abstract class Documento
 
     abstract public function actualizar($datos);
 
+    abstract public function eliminar($id);
+
     abstract public function vistaForm();
 
     public function __construct(CProyecto $proyecto)
@@ -93,6 +95,11 @@ abstract class Documento
     protected function opcionesRedesSociales($id=null)
     {
         return $this->uiDocumento->listado($this->uiDocumento->getCatalogo('cat_redes_sociales', 'descripcion AS id, descripcion, estatus'), $id);  
+    }
+
+    protected function opcionesPalabrasClave($palabras)
+    {
+        return $this->uiDocumento->listadoPalabras($palabras);  
     }
 
     protected function vistaNombreDoc($datos = [])

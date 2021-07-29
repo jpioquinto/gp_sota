@@ -170,6 +170,27 @@ class Investigacion extends Documento
         return ['Solicitud'=>true, 'Msg'=>'Ficha actualizada correctamente.'];                        
     }
 
+    public function eliminar($id)
+    {
+        $docModel = new InvestigacionModel();
+        
+        $registro = $docModel->listado(['estatus'=>1, 'proyectoId'=>$this->proyecto->getId(), 'id'=>$id]);
+
+        if (!isset($registro[0]['ruta'])) {
+            return ['Solicitud'=>false, 'Error'=>'Error al intentar recuperar información del documento.'];
+        }
+
+        if (!is_file($registro[0]['ruta'])) {
+            return ['Solicitud'=>false, 'Error'=>'No se encontró el archivo físicamente.'];
+        }
+
+        if (!unlink($registro[0]['ruta'])) {
+            return ['Solicitud'=>false, 'Error'=>'Error al intentar eliminar el documento.'];
+        }
+
+        return $docModel->update($id, ['estatus'=>0]) ? ['Solicitud'=>true, 'Msg'=>'Documento eliminado correctamente.'] : ['Solicitud'=>false, 'Error'=>'Error al intentar cambiar el estatus del documento.'];
+    }
+
     public function vistaForm($id=null)
     {
         $registro = [];
@@ -184,6 +205,7 @@ class Investigacion extends Documento
             '_v_pais_idioma'=>$this->vistaPaisIdioma(['paises'=>$this->opcionesPaises(isset($registro['pais_id']) ? $registro['pais_id'] : null), 'idiomas'=>$this->opcionesIdiomas(isset($registro['idioma_id']) ? $registro['idioma_id'] : null)]),
             '_v_nombre_doc'=>$this->vistaNombreDoc(['coberturas'=>$this->opcionesCoberturas(isset($registro['cobertura_id']) ? $registro['cobertura_id'] : null), 'nombre'=>isset($registro['nombre']) ? $registro['nombre'] : null, 'descripcion'=>isset($registro['descripcion']) ? $registro['descripcion'] : null,'alias'=>isset($registro['alias']) ? $registro['alias'] : null]),
             'clasificaciones'=>$this->opcionesClasificaciones(isset($registro['clasificacion_id']) ? $registro['clasificacion_id'] : null),
+            'palabras'=>$this->opcionesPalabrasClave(!empty($registro['palabra_clave']) ? $registro['palabra_clave'] : ''),
             'ficha'=>self::SECCION, 
             'doc'=>$registro,
             'id'=>$id 

@@ -212,12 +212,63 @@ var $docs = (modulo => {
         });
     };
 
+    modulo.clickEliminarFicha = function(e) {
+        e.preventDefault();
+        
+        if (!$(this).parents('.content-acciones').attr('data-id')) {
+            return;
+        }
+
+        modulo.me = $(this);
+        swal({
+            title: '¿Estás seguro(a)?',
+            text: "Se eliminará el archivo físicamente del servidor.",
+            type: 'warning',
+            buttons:{
+                confirm: {
+                    text : 'Aceptar',
+                    className : 'btn btn-success'
+                },
+                cancel: {
+                    visible: true,
+                    className: 'btn btn-danger'
+                }
+            }
+        }).then((Aceptar) => {
+            if (Aceptar) {
+                eliminar();
+            } else {
+                swal.close();
+            }
+        });
+    };
+
+    var eliminar = () => {
+        var $params = {proyectoId:$proyecto.getId(), id:modulo.me.parents('.content-acciones').attr('data-id'), form:modulo.me.parents('.content-acciones').attr('data-seccion')};
+        $util.load.show(true); 
+        $util.post({
+            url: "Documento",
+            metodo:"eliminarFicha",
+            datos:$params,
+            funcion: function(data) {
+                $util.load.hide();
+                if (data.Solicitud) {
+                    $(".ficha[data-id='" + $params.id + "']").next('.separator-dashed').remove();
+                    $("div[data-id='" + $params.id + "']").remove();                    
+                    $('.close').trigger('click');
+                }            
+            }
+        }); 
+    };
+
+
     var iniEventos = () => {
         $('.avatar, .descripcion-doc').off('click').on('click', modulo.clickVerFicha);        
         $('.jq_ocultar').off('click').on('click', modulo.clickOcultarFicha);
         $('.jq_ver_doc').off('click').on('click', modulo.clickVerDoc);
 
         $('.jq_editar_ficha').off('click').on('click', modulo.clickEditarFicha);
+        $('.jq_eliminar_doc').off('click').on('click', modulo.clickEliminarFicha);
 
         $('.content-documentos').find('[data-toggle="tooltip"]').tooltip(); 
     };

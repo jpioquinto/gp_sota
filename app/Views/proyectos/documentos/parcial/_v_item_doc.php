@@ -18,7 +18,7 @@
     </div>    
 </div>
 <!-------- fila con autores y acciones --------->
-<div class="d-flex">
+<div class="d-flex" data-id="<?=isset($id) ? $id : ''?>">
     <div class="flex-1 ml-5 pt-1 pl-3">
         <span class="font-weight-bold autor">Autor(es): </span><small class="text-muted autor"><?=(isset($autores) && trim($autores)!='') ? $autores : '#N/E'?></small>
     </div>

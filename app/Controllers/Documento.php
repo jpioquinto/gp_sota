@@ -46,13 +46,26 @@ class Documento extends BaseController
         ]);
     }
 
+    public function eliminarFicha()
+    {
+        $clase = self::_SPACE_.str_replace([' ','-'], '', ucwords(limpiarCadena(str_replace('-', ' de ', $this->request->getPost('form')))));#var_dump($clase);exit;
+
+        if (!class_exists($clase)) {
+            echo json_encode(['Solicitud'=>false, 'Error'=>'No se encontró el Gestor para esta acción.']); return; 
+        }  
+
+        $gestor = new Gestor(new $clase(new CProyecto($this->desencriptar( base64_decode($this->request->getPost('proyectoId')) ))));
+
+        echo json_encode($gestor->eliminar($this->desencriptar(base64_decode($this->request->getPost('id')))));
+    }
+
     public function vistaModalEditar()
     {
         if (!isset($_SESSION['GP_SOTA']) || empty($_SESSION['GP_SOTA'])) {			
 			return redirect()->to('/'); 
 		}
 
-        helper('util');
+        #helper('util');
                 
         $clase = self::_SPACE_.str_replace([' ','-'], '', ucwords(limpiarCadena(str_replace('-', ' de ', $this->request->getPost('form')))));#var_dump($clase);exit;
 
@@ -103,7 +116,7 @@ class Documento extends BaseController
 			return redirect()->to('/'); 
 		}
 
-        helper('util');
+        #helper('util');
                 
         $clase = self::_SPACE_.str_replace(' ', '', ucwords(limpiarCadena($this->request->getPost('form'))));
 
@@ -144,7 +157,7 @@ class Documento extends BaseController
             return; 
         }
         
-        helper('util');
+        #helper('util');
                 
         $clase = self::_SPACE_.str_replace(' ', '', ucwords(limpiarCadena($this->request->getPost('tipo_doc'))));
 
