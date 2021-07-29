@@ -5,7 +5,7 @@ var $objValida = (modulo => {
         var valido = true;
         var me = undefined;
 
-        $('.content-form form input').each(function() {
+        $('.content-form form input, .content-form form textarea').each(function() {
             if (!$(this).attr('name')) {
                 return true;
             }

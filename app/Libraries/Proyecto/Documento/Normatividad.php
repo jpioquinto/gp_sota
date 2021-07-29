@@ -102,6 +102,7 @@ class Normatividad extends Documento
             'cobertura_id'=>$datos['cobertura'],
             'pais_id'=>$datos['pais'],
             'idioma_id'=>$datos['idioma'],
+            'tema1'=>$datos['tema1'],
             'institucion_id'=>$datos['institucion'],
             'entidad_apf_id'=>$datos['entidad_apf'],
             'i_concurrente'=>$datos['instrumento'],
@@ -120,7 +121,7 @@ class Normatividad extends Documento
         }
 
         if (isset($datos['inegi']) && trim($datos['inegi'])!='') {
-            $campos['inegi_grafico_id'] = trim($datos['inegi']);
+            $campos['grafico_inegi_id'] = trim($datos['inegi']);
         }
 
         if (isset($datos['url']) && trim($datos['url'])!='') {
@@ -156,6 +157,7 @@ class Normatividad extends Documento
             'instituciones'=>$this->opcionesInstituciones(isset($registro['institucion_id']) ? $registro['institucion_id'] : null),
             'entidadesAPF'=>$this->opcionesEntidadesAPF(isset($registro['entidad_apf_id']) ? $registro['entidad_apf_id'] : null),
             'tipos'=>$this->opcionesCategoriaProyecto(isset($registro['tipo_id']) ? $registro['tipo_id'] : null), 
+            'ficha'=>self::SECCION,
             'doc'=>$registro,
             'id'=>$id
         ];

@@ -118,7 +118,7 @@ class Planeacion extends Documento
         }
 
         if (isset($datos['inegi']) && trim($datos['inegi'])!='') {
-            $campos['inegi_grafico_id'] = trim($datos['inegi']);
+            $campos['grafico_inegi_id'] = trim($datos['inegi']);
         }
 
         if (isset($datos['entidad_r']) && trim($datos['entidad_r'])!='') {

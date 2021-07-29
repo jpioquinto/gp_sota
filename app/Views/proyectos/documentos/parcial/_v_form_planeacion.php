@@ -50,7 +50,7 @@
                 <label for="data-inegi">ID Geográfico INEGI</label>   
                 <input 
                     type="text" id="data-inegi" name="inegi" 
-                    class="form-control" value="<?=isset($doc['inegi_grafico_id']) ? $doc['inegi_grafico_id']:''?>"
+                    class="form-control" value="<?=isset($doc['grafico_inegi_id']) ? $doc['grafico_inegi_id']:''?>"
                 >             
             </div>
         </div>

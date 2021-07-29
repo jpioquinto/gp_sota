@@ -16,8 +16,8 @@ class NormatividadModel extends Model
     protected $db;
 
     protected $allowedFields = [
-        'proyecto_id', 'estatus', 'nombre', 'formato', 'alias', 'descripcion', 'cobertura_id', 'clasificacion_id', 
-        'vigencia', 'vigencia_final', 'pais_id', 'idioma_id', 'grafico_id', 'inegi_grafico_id', 'institucion_id',
+        'proyecto_id', 'estatus', 'nombre', 'formato', 'alias', 'descripcion', 'cobertura_id', 'clasificacion_id', 'tema1',
+        'vigencia', 'vigencia_final', 'pais_id', 'idioma_id', 'grafico_id', 'grafico_inegi_id', 'institucion_id',
         'entidad_apf_id', 'armonizado', 'i_concurrente', 'tipo_id', 'url', 'palabra_clave', 'lugar_aplica',
         'creado_por', 'actualizado_el', 'actualizado_por', 'eliminado_el', 'eliminado_por'
      ];

@@ -53,7 +53,7 @@
                 <label for="data-detalle">Detalles de la Publicación</label>   
                 <input 
                     type="text" id="data-detalle" name="detalle" 
-                    class="form-control" value="<?=isset($doc['detalle']) ? $doc['detalle']:''?>"
+                    class="form-control" value="<?=isset($doc['detalle_publicacion']) ? $doc['detalle_publicacion']:''?>"
                 >            
             </div>
         </div>
@@ -125,8 +125,8 @@
             <div class="form-group">
                 <label for="data-grafico">ID Geográfico</label>
                 <input 
-                    type="text" id="data-grafico" name="geografico" 
-                    class="form-control" value="<?=isset($doc['geografico_id']) ? $doc['geografico_id']:''?>"
+                    type="text" id="data-grafico" name="grafico" 
+                    class="form-control" value="<?=isset($doc['grafico_id']) ? $doc['grafico_id']:''?>"
                 >                
             </div>
         </div>  

@@ -30,6 +30,7 @@ class Estadistica extends Documento
             'descripcion'=>trim($datos['descripcion']),
             'alias'=>trim($datos['alias']),
             'cobertura_id'=>$datos['cobertura'],
+            'tema1'=>$datos['tema1'],
             'proyecto_id'=>$this->proyecto->getId(),
             'formato'=>strtolower( obtenExtension($archivo->getName()) ),
             'pais_id'=>$datos['pais'],
@@ -103,6 +104,7 @@ class Estadistica extends Documento
             'descripcion'=>trim($datos['descripcion']),
             'alias'=>trim($datos['alias']),
             'cobertura_id'=>$datos['cobertura'],
+            'tema1'=>$datos['tema1'],
             'pais_id'=>$datos['pais'],
             'unidad_id'=>$datos['unidad'],
             'institucion_id'=>$datos['institucion'],
@@ -162,6 +164,7 @@ class Estadistica extends Documento
             'tipos'=>$this->opcionesCategoriaProyecto(isset($registro['tipo_id']) ? $registro['tipo_id'] : null), 
             'unidades'=>$this->opcionesUnidades(isset($registro['unidad_id']) ? $registro['unidad_id'] : null),
             'paises'=>$this->opcionesPaises(isset($registro['pais_id']) ? $registro['pais_id'] : null),
+            'ficha'=>self::SECCION,
             'doc'=>$registro,
             'id'=>$id
         ];

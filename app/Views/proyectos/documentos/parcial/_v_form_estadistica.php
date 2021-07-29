@@ -25,7 +25,7 @@
                 <label for="data-publicado">Año de Publicación</label>
                 <input 
                     type="number" id="data-publicado" name="publicado" 
-                    class="form-control" value="<?=isset($doc['publicado']) ? $doc['publicado']:''?>"
+                    class="form-control" value="<?=isset($doc['anio_publicado']) ? $doc['anio_publicado']:''?>"
                     required
                 >                
             </div>
@@ -52,8 +52,8 @@
             <div class="form-group">
                 <label for="data-grafico">ID Geográfico</label>
                 <input 
-                    type="text" id="data-grafico" name="geografico" 
-                    class="form-control" value="<?=isset($doc['geografico_id']) ? $doc['geografico_id']:''?>"
+                    type="text" id="data-grafico" name="grafico" 
+                    class="form-control" value="<?=isset($doc['grafico_id']) ? $doc['grafico_id']:''?>"
                 >                
             </div>
         </div>

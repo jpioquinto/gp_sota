@@ -105,8 +105,8 @@
             <div class="form-group">
                 <label for="data-grafico">ID Geográfico</label>
                 <input 
-                    type="text" id="data-grafico" name="geografico" 
-                    class="form-control" value="<?=isset($doc['geografico_id']) ? $doc['geografico_id']:''?>"
+                    type="text" id="data-grafico" name="grafico" 
+                    class="form-control" value="<?=isset($doc['grafico_id']) ? $doc['grafico_id']:''?>"
                 >                
             </div>
         </div>
