@@ -65,7 +65,10 @@ class Login extends BaseController
 
         $this->actualizarUltimoAcceso($this->usuario['id']);
 
-        echo json_encode(["Solicitud"=>true,"Msg"=>"Bienvenido "]);
+        echo json_encode([
+            "Solicitud"=>true,
+            "Msg"=>"Bienvenido ".(trim($this->usuario['nombre_completo'])!='' ? $this->usuario['nombre_completo'] : $this->usuario['nickname'])
+        ]);
 	}
 
     public function ordernarPermisos($permisoA, $permisoB)
@@ -97,7 +100,9 @@ class Login extends BaseController
     protected function obtenerUsuario($nickname)
     {
         $usuario = new UsuarioModel();
-        return $usuario->where('nickname', $nickname)->first(); 
+
+        $datos = $usuario->obtenerUsuario($nickname);
+        return isset($datos[0]['id']) ? $datos[0] : null;#$usuario->where('nickname', $nickname)->first(); 
     }
 
     protected function actualizarUltimoAcceso($id)

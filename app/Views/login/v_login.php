@@ -10,9 +10,11 @@
 	<meta name="robots" content="none|index|follow">
 	<link href='images/favicon/favicon.png' rel='shortcut icon'>
 	<link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Open+Sans:600'>
-    <link rel="stylesheet" href="css/plugin/bootstrap.min.css">
+    
+	<!-- CSS Files -->
+	<link rel="stylesheet" href="css/plugin/bootstrap.min.css">
+	<link rel="stylesheet" href="css/plugin/atlantis.min.css">
 	<link rel="stylesheet" href="css/plugins/animate.min.css"/>
-
 	<link rel="stylesheet" type="text/css" href="css/login/util.css">
 	<link rel="stylesheet" type="text/css" href="css/login/main.css">
 	<style>
@@ -26,7 +28,7 @@
 		<div class="container-login100">
 			<div class="wrap-login100">
 				<form class="login100-form validate-form">
-					<span class="login100-form-title p-b-43">
+					<span class="login100-form-title p-b-43 leyenda">
 						Inicie sesión para continuar
 					</span>
 					<div class="wrap-input100 validate-input" data-validate = "">
@@ -44,7 +46,7 @@
 						<div class="contact100-form-checkbox">
 						</div>
 						<div>
-							<a href="#" class="txt1">
+							<a href="" onClick="return false;" class="txt1 leyenda">
 								¿Olvidaste tu contraseña?
 							</a>
 						</div>
@@ -71,6 +73,7 @@
 	<script src="js/app/jquery.noty.packaged.min.js"></script>
 	<script src="js/helpers.js"></script>
 	<script src="js/util.js"></script>	
+	<script src="js/modulos/login/main.js"></script>
 	<script src="js/modulos/login/login.js"></script>
 </body>
 </html>

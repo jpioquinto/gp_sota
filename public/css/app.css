@@ -160,6 +160,15 @@
 
 /*=========== fin de estilos para el overlay ============*/
 
+/*=========== Adaptación para el color de fuente de las notificaciones ============*/
+
+.noty_bar.noty_type_error .noty_text, .noty_bar.noty_type_success .noty_text {
+    color:#FFF !important;
+    font-weight: bold;
+}
+
+/*=========== Fin de la adaptación las notificaciones ============*/
+
 /*=========== adaptando la funcionalidad para scroll en modales ============*/
 
 .modal-dialog-scrollable {
@@ -190,7 +199,7 @@
     }
 }
 
-/*=========== adaptando la funcionalidad para scroll en modales ============*/
+/*=========== fin de la adaptación del scroll en modales ============*/
 
 /*=========== utilidades generales ============*/
 .custom-file-input:lang(es)~.custom-file-label::after{content:"Elegir"}
