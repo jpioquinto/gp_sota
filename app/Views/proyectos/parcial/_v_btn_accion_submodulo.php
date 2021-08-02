@@ -6,7 +6,7 @@
         data-metodo="<?=isset($acciones[11]) ? $acciones[11]['metodo'] : ''?>"
     >
         <span class="btn-label">
-            <i class="flaticon-list"></i>
+            <i class="fas fa-wrench"></i>
         </span>
         Acciones...
     </a>

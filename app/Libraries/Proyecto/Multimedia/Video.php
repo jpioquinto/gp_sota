@@ -16,6 +16,16 @@ class Video extends Media
         $this->encrypter = \Config\Services::encrypter();  
     }
 
+    public function vistaItemMedia($id=null)
+    {
+        $video = $this->obtenerVideo($id);
+        if (!isset($video['id'])) {
+            return '';
+        }
+        $video['id'] = base64_encode( $this->encriptar($video['id']) );
+        return view('proyectos/multimedia/parcial/_v_item_video.php', $video);
+    }
+
     public function guardar($request, CProyecto $proyecto, $archivo)
     {        
         $carga = new CCargaArchivo($proyecto, 'multimedia/videos');
@@ -64,8 +74,8 @@ class Video extends Media
 
         $videoModel = new VideoModel();
         
-        return $videoModel->insert($campos)
-        ? ['Solicitud'=>true, 'Msg'=>'Video cargado correctamente.']
+        return ($id=$videoModel->insert($campos))
+        ? ['Solicitud'=>true, 'Msg'=>'Video cargado correctamente.', 'vistaItem'=>$this->vistaItemMedia($id)]
         : ['Solicitud'=>false, 'Msg'=>'Error al intentar registrar la carga del video.'];       
     }
 

@@ -40,7 +40,7 @@ var $formMedia = (modulo => {
         reader.readAsBinaryString(e.target.files[0]);
     };
 
-    var guardarMedia = $media => {
+    var guardarMedia = media => {
         var $params = new FormData();
 
         if (!archivo) {
@@ -73,14 +73,14 @@ var $formMedia = (modulo => {
         $params.append('licencia', $("select[name='licencia'] option:selected").val());
         
         $params.append('proyectoId', $proyecto.getId());
-        $params.append($media, archivo);
+        $params.append(media, archivo);
 
         var cargado = false;
         var error   = "";
 
         $util.load.show(true);
         $.ajax({
-            url:'Multimedia/' + ($media=='video' ? 'guardarVideo' : 'guardarImagen'),
+            url:'Multimedia/' + (media=='video' ? 'guardarVideo' : 'guardarImagen'),
             type:"POST",
             data:$params,
             mimeType:"multipart/form-data",
@@ -90,8 +90,9 @@ var $formMedia = (modulo => {
             dataType: "json",
             success:function(data) {
               if (data.Solicitud) {
-                cargado = true;                     
+                cargado = true;  
                 $('#jq_modal_form').modal('hide');                          
+                $media.agregarItemMedia(data.vistaItem);                   
                 notificacion(data.Msg, "success", 4000, "bottomRight", "fadeInUp", "fadeOutDown"); 
               }
 

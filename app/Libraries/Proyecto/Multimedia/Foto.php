@@ -16,6 +16,16 @@ class Foto extends Media
         $this->encrypter = \Config\Services::encrypter();  
     }
 
+    public function vistaItemMedia($id=null)
+    {
+        $imagen = $this->obtenerImagen($id);
+        if (!isset($imagen['id'])) {
+            return '';
+        }
+        $imagen['id'] = base64_encode( $this->encriptar($imagen['id']) );
+        return view('proyectos/multimedia/parcial/_v_item_media.php', $imagen);
+    }
+
     public function guardar($request, CProyecto $proyecto, $archivo)
     {        
         $carga = new CCargaArchivo($proyecto, 'multimedia/imagenes');
@@ -63,8 +73,8 @@ class Foto extends Media
 
         $imagenModel = new ImagenModel();
         
-        return $imagenModel->insert($campos)
-        ? ['Solicitud'=>true, 'Msg'=>'Imagen cargada correctamente.']
+        return ($id=$imagenModel->insert($campos))
+        ? ['Solicitud'=>true, 'Msg'=>'Imagen cargada correctamente.', 'vistaItem'=>$this->vistaItemMedia($id)]
         : ['Solicitud'=>false, 'Msg'=>'Error al intentar registrar la carga de la imagen.'];       
     }
 

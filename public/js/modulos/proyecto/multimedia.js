@@ -153,6 +153,14 @@ var $media = (modulo => {
         $('.jq_mas_media').off('click').on('click', modulo.clickVerMasMedia);
     };
 
+    modulo.agregarItemMedia = vista => {
+        if (config.paginacion==$(modulo.meTab.attr('href') + ' .content-media').length) {
+            return;
+        }
+        $(modulo.meTab.attr('href') + ' .content-media').append(vista);
+        iniEventos();
+    };
+
     modulo.getConfig = () => config;
 
     var ocultarMasContent = (total, items) => {
@@ -192,7 +200,7 @@ var $media = (modulo => {
     };
 
     var config = {
-        paginacion:2,
+        paginacion:50,
         foto:{ini:false, vista:'', pagina:0, total:0, busqueda:{ini:false, vista:'', pagina:0, total:0, entrada:''}},
         video:{ini:false, vista:'', pagina:0, total:0, busqueda:{ini:false, vista:'', pagina:0, total:0, entrada:''}}
     };
