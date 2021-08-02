@@ -5,7 +5,7 @@ use App\Models\EstadisticaModel;
 
 class Estadistica extends Documento
 {
-    const SECCION = "estadistica";
+    const FICHA = "estadistica";
 
     public function __construct(CProyecto $proyecto)
     {  
@@ -20,7 +20,7 @@ class Estadistica extends Documento
             return $validacion;
         }#var_dump($archivo);exit;
 
-        $carga = self::getInstanciaCarga($this->proyecto, self::SECCION);
+        $carga = self::getInstanciaCarga($this->proyecto, self::FICHA);
 
         if (!$carga->existeDirectorio()) {
             return ['Solicitud'=>false, 'Error'=>'No se encontró el directorio: '.$carga->getDirectorio()];
@@ -85,8 +85,8 @@ class Estadistica extends Documento
             'proyecto_id'=> $campos['proyecto_id'],
             'creado_por'=>$this->usuario->getId(),
             'descripcion'=>$campos['descripcion'],
-            'seccion'=> self::SECCION,
-            'bloque'=>self::SECCION,
+            'ficha'=> self::FICHA,
+            'bloque'=>self::FICHA,
             'registro_id'=> $id,            
         ]);
         return ['Solicitud'=>true, 'Msg'=>'Documento cargado correctamente.'];
@@ -143,9 +143,15 @@ class Estadistica extends Documento
         
         if (!($estadisticaModel->update($this->desencriptar(base64_decode($datos['id'])), $campos))) {
             return ['Solicitud'=>false, 'Msg'=>'Error al intentar actualizar la Ficha del Documento.'];
-        }                 
+        }
+        
+        $registro = $estadisticaModel->listado(['estatus'=>1, 'proyectoId'=>$this->proyecto->getId(), 'id'=>$this->desencriptar(base64_decode($datos['id']))]);
 
-        return ['Solicitud'=>true, 'Msg'=>'Ficha actualizada correctamente.'];
+        return [
+            'Solicitud'=>true, 
+            'Msg'=>'Ficha actualizada correctamente.',
+            'detalle'=> view("proyectos/documentos/parcial/_v_seccion_".self::FICHA.".php", isset($registro[0]['id']) ? $registro[0] : [])
+        ];
     }
 
     public function eliminar($id)
@@ -186,7 +192,7 @@ class Estadistica extends Documento
             'tipos'=>$this->opcionesCategoriaProyecto(isset($registro['tipo_id']) ? $registro['tipo_id'] : null), 
             'unidades'=>$this->opcionesUnidades(isset($registro['unidad_id']) ? $registro['unidad_id'] : null),
             'paises'=>$this->opcionesPaises(isset($registro['pais_id']) ? $registro['pais_id'] : null),
-            'ficha'=>self::SECCION,
+            'ficha'=>self::FICHA,
             'doc'=>$registro,
             'id'=>$id
         ];

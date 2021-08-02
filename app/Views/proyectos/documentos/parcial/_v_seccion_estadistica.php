@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row detalle-ficha">
     <div class="col-md-6">
         <p class="font-weight-bold">País</p>
         <p><?=isset($pais) ? $pais : ''?></p>

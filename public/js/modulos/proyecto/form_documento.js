@@ -209,6 +209,7 @@ var $formDoc = ((modulo, valida) => {
             datos:valida.params,
             funcion: function(data){
               if (data.Solicitud) {
+                  $docs.actualizarContenidoFicha(data, valida.params);
                 $('#jq_modal_form').modal('hide'); 
               }
               $util.load.hide();

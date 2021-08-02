@@ -243,6 +243,19 @@ var $docs = (modulo => {
         });
     };
 
+    modulo.actualizarContenidoFicha = (data, $params) => {
+        var contenedor = modulo.me.parents(".d-flex[data-id='"+ modulo.me.parents('.content-acciones').attr('data-id') +"']").next('.ficha');
+        
+        contenedor.find('.alert .detalle-ficha').remove();
+        contenedor.find('.alert').append(data.detalle);
+
+        contenedor.find('.alias-doc').html($params.alias);
+        contenedor.find('.descripcion-doc').html($params.descripcion);
+
+        $(".item-doc[data-id='"+ modulo.me.parents('.content-acciones').attr('data-id') +"']").find('.alias-doc').html($params.alias);
+        $(".item-doc[data-id='"+ modulo.me.parents('.content-acciones').attr('data-id') +"']").find('.descripcion-doc').html($params.descripcion);
+    };
+
     var eliminar = () => {
         var $params = {proyectoId:$proyecto.getId(), id:modulo.me.parents('.content-acciones').attr('data-id'), form:modulo.me.parents('.content-acciones').attr('data-seccion')};
         $util.load.show(true); 

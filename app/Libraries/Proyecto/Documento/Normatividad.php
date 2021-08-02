@@ -5,7 +5,7 @@ use App\Models\NormatividadModel;
 
 class Normatividad extends Documento
 {
-    const SECCION = "normatividad";
+    const FICHA = "normatividad";
 
     public function __construct(CProyecto $proyecto)
     {  
@@ -20,7 +20,7 @@ class Normatividad extends Documento
             return $validacion;
         }#var_dump($archivo);exit;
 
-        $carga = self::getInstanciaCarga($this->proyecto, self::SECCION);
+        $carga = self::getInstanciaCarga($this->proyecto, self::FICHA);
 
         if (!$carga->existeDirectorio()) {
             return ['Solicitud'=>false, 'Error'=>'No se encontró el directorio: '.$carga->getDirectorio()];
@@ -81,8 +81,8 @@ class Normatividad extends Documento
             'proyecto_id'=> $campos['proyecto_id'],
             'creado_por'=>$this->usuario->getId(),
             'descripcion'=>$campos['descripcion'],
-            'seccion'=> self::SECCION,
-            'bloque'=>self::SECCION,
+            'ficha'=> self::FICHA,
+            'bloque'=>self::FICHA,
             'registro_id'=> $id,            
         ]);
         return ['Solicitud'=>true, 'Msg'=>'Documento cargado correctamente.'];
@@ -136,9 +136,15 @@ class Normatividad extends Documento
         
         if (!($normatividadModel->update($this->desencriptar(base64_decode($datos['id'])), $campos))) {
             return ['Solicitud'=>false, 'Msg'=>'Error al intentar actualizar la Ficha del Documento.'];
-        }                 
+        }
+        
+        $registro = $normatividadModel->listado(['estatus'=>1, 'proyectoId'=>$this->proyecto->getId(), 'id'=>$this->desencriptar(base64_decode($datos['id']))]);
 
-        return ['Solicitud'=>true, 'Msg'=>'Ficha actualizada correctamente.'];
+        return [
+            'Solicitud'=>true, 
+            'Msg'=>'Ficha actualizada correctamente.',
+            'detalle'=> view("proyectos/documentos/parcial/_v_seccion_".self::FICHA.".php", isset($registro[0]['id']) ? $registro[0] : [])
+        ];
     }
 
     public function eliminar($id)
@@ -179,7 +185,7 @@ class Normatividad extends Documento
             'entidadesAPF'=>$this->opcionesEntidadesAPF(isset($registro['entidad_apf_id']) ? $registro['entidad_apf_id'] : null),
             'palabras'=>$this->opcionesPalabrasClave(!empty($registro['palabra_clave']) ? $registro['palabra_clave'] : ''),
             'tipos'=>$this->opcionesCategoriaProyecto(isset($registro['tipo_id']) ? $registro['tipo_id'] : null), 
-            'ficha'=>self::SECCION,
+            'ficha'=>self::FICHA,
             'doc'=>$registro,
             'id'=>$id
         ];

@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row detalle-ficha">
     <div class="col-md-4">
         <p class="font-weight-bold">Tema 1</p>
         <p><?=isset($tema) ? $tema : ''?></p>

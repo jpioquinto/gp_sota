@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row detalle-ficha">
     <div class="col-md-4">
         <p class="font-weight-bold">Entidad Responsable</p>
         <p><?=isset($entidad_r) ? $entidad_r : ''?></p>

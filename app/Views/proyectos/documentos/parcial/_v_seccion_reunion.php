@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row detalle-ficha">
     <div class="col-md-12">
         <p class="font-weight-bold">Autor</p>
         <p><?=isset($autor) ? $autor : ''?></p>

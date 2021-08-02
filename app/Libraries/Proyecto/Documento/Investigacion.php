@@ -5,7 +5,7 @@ use App\Models\InvestigacionModel;
 
 class Investigacion extends Documento
 {
-    const SECCION = "investigacion";
+    const FICHA = "investigacion";
 
     public function __construct(CProyecto $proyecto)
     {  
@@ -20,7 +20,7 @@ class Investigacion extends Documento
             return $validacion;
         }#var_dump($archivo);exit;
 
-        $carga = self::getInstanciaCarga($this->proyecto, self::SECCION);
+        $carga = self::getInstanciaCarga($this->proyecto, self::FICHA);
 
         if (!$carga->existeDirectorio()) {
             return ['Solicitud'=>false, 'Error'=>'No se encontró el directorio: '.$carga->getDirectorio()];
@@ -96,8 +96,8 @@ class Investigacion extends Documento
             'proyecto_id'=> $campos['proyecto_id'],
             'creado_por'=>$this->usuario->getId(),
             'descripcion'=>$campos['descripcion'],
-            'seccion'=> self::SECCION,
-            'bloque'=>self::SECCION,
+            'ficha'=> self::FICHA,
+            'bloque'=>self::FICHA,
             'registro_id'=> $id,            
         ]);
         return ['Solicitud'=>true, 'Msg'=>'Documento cargado correctamente.'];                        
@@ -165,9 +165,15 @@ class Investigacion extends Documento
         
         if (!($investigacionModel->update($this->desencriptar(base64_decode($datos['id'])), $campos))) {
             return ['Solicitud'=>false, 'Msg'=>'Error al intentar actualizar la Ficha del Documento.'];
-        }                 
+        }
+        
+        $registro = $investigacionModel->listado(['estatus'=>1, 'proyectoId'=>$this->proyecto->getId(), 'id'=>$this->desencriptar(base64_decode($datos['id']))]);
 
-        return ['Solicitud'=>true, 'Msg'=>'Ficha actualizada correctamente.'];                        
+        return [
+            'Solicitud'=>true, 
+            'Msg'=>'Ficha actualizada correctamente.',
+            'detalle'=> view("proyectos/documentos/parcial/_v_seccion_".self::FICHA.".php", isset($registro[0]['id']) ? $registro[0] : [])
+        ];                        
     }
 
     public function eliminar($id)
@@ -206,7 +212,7 @@ class Investigacion extends Documento
             '_v_nombre_doc'=>$this->vistaNombreDoc(['coberturas'=>$this->opcionesCoberturas(isset($registro['cobertura_id']) ? $registro['cobertura_id'] : null), 'nombre'=>isset($registro['nombre']) ? $registro['nombre'] : null, 'descripcion'=>isset($registro['descripcion']) ? $registro['descripcion'] : null,'alias'=>isset($registro['alias']) ? $registro['alias'] : null]),
             'clasificaciones'=>$this->opcionesClasificaciones(isset($registro['clasificacion_id']) ? $registro['clasificacion_id'] : null),
             'palabras'=>$this->opcionesPalabrasClave(!empty($registro['palabra_clave']) ? $registro['palabra_clave'] : ''),
-            'ficha'=>self::SECCION, 
+            'ficha'=>self::FICHA, 
             'doc'=>$registro,
             'id'=>$id 
         ];

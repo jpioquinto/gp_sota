@@ -9,7 +9,7 @@
             nombre="<?=isset($nombre) ? $nombre : ''?>"
             extension="<?=isset($formato) ? $formato : ''?>"
         >
-            <?=isset($nombre) ? $nombre : ''?> <span class="text-success pl-3"><?=isset($alias) ? $alias : ''?></span>
+            <?=isset($nombre) ? $nombre : ''?> <span class="text-success pl-3 alias-doc"><?=isset($alias) ? $alias : ''?></span>
         </a>
         <span class="text-muted descripcion-doc"><?=isset($descripcion) ? $descripcion : ''?></span>
     </div>
@@ -59,8 +59,8 @@
                 </a>
             </div>
         </div>
-        <h4><?=isset($alias) ? $alias : ''?> </h4>
-        <p><?=isset($descripcion) ? $descripcion : ''?></p>
+        <h4 class="alias-doc"><?=isset($alias) ? $alias : ''?> </h4>
+        <p class="descripcion-doc"><?=isset($descripcion) ? $descripcion : ''?></p>
         <?=isset($v_seccion) ? $v_seccion : ''?>
     </div>
 </div>
