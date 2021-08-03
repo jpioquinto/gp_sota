@@ -15,7 +15,7 @@ class Security extends BaseConfig
 	 *
 	 * @var string
 	 */
-	public $tokenName = 'csrf_gp_name';
+	public $tokenName = 'csrf_app_pspp';
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -61,7 +61,7 @@ class Security extends BaseConfig
 	 *
 	 * @var boolean
 	 */
-	public $regenerate = true;
+	public $regenerate = false;#true
 
 	/**
 	 * --------------------------------------------------------------------------

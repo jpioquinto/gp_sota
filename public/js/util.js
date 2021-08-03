@@ -50,7 +50,7 @@ var $util = (modulo => {
 
 
     modulo.post = obj=> {
-        var tkn = "csrf_gp_name";
+        var tkn = $('.csrf-name').attr('name');
 	    var v   = $("input[name='" + tkn + "']").val();
         
         if (typeof(obj.load) != "undefined") {

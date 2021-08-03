@@ -46,6 +46,15 @@
     border-color: #13725f!important;
     color: #FFF !important;
 }
+
+#jq_listado_users .btn-success {
+    color: #18a689!important;
+    background: none !important;
+}
+#jq_listado_users .btn-dorado {
+    color:#B38E5D!important;
+}
+
 /*============== fin del reset de clases principales =================*/
 /*=========================== tarjetas de modulos ===========================*/
 .card-success-modulos-1 {
@@ -152,6 +161,9 @@
     -webkit-animation-delay: -.16s;
     animation-delay: -.16s;
     margin-right: 1em;
+}
+.spinner h5{
+    color: #FFF !important;
 }
 #abortRequest {
     margin-top: 1em;

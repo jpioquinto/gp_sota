@@ -68,7 +68,7 @@
 			</div>
 		</div>
 	</div>
-	<?= csrf_field() ?>
+	<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" class="csrf-name"/>
 	<script src="js/library/jquery-3.6.0.min.js"></script>
 	<script src="js/app/jquery.noty.packaged.min.js"></script>
 	<script src="js/helpers.js"></script>

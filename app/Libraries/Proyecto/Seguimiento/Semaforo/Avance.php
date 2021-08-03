@@ -66,7 +66,7 @@ class Avance implements Indicador
     {
         $avanceModel = new AvanceModel();
 
-        return $avanceModel->where('accion_id', $this->accionId)->first() ?? [];
+        return $avanceModel->where('accion_id', $this->accionId)->orderBy('id', 'DESC')->first() ?? [];
     }
 
     protected function avanceActual($avance)

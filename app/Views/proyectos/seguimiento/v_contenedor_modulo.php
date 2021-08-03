@@ -7,7 +7,8 @@
         <table id="jq_listado_acciones" class="display table table-striped table-hover tabla-listado-usuarios"
                       
             data-search="true"            
-            data-show-columns="true"            
+            data-show-columns="true"  
+            data-buttons-class="default"          
         >
             <thead>
                 <tr>

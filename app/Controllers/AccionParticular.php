@@ -76,6 +76,7 @@ class AccionParticular extends BaseController
         $accion = $this->accionEspecificaModel->find($this->desencriptar($idAccion)) ?? [];
         foreach ($this->obtenerAvances($this->desencriptar($idAccion)) as $avance) {
             $avance['id'] = base64_encode($this->encriptar($avance['id']));
+            $avance['accion_id'] = base64_encode($this->encriptar($avance['accion_id']));
             $html .= view('proyectos/seguimiento/parcial/_v_separador_avance', $avance);
             $html .= $this->iterarEvidencias($docs, $this->desencriptar( base64_decode($avance['id']) ), $accion, $avance);
         }
@@ -213,6 +214,7 @@ class AccionParticular extends BaseController
         if (!$avanceModel->update($this->desencriptar(base64_decode($this->request->getPost('id'))), ['validado'=>1, 'validado_el'=>'now()', 'validado_por'=>$this->usuario->getId()])) {
             echo json_encode(['Solicitud' =>false, 'Error'=>'Error al intentar validar el avance.']);return;             
         }
+        #$this->accionEspecificaModel->update($this->desencriptar(base64_decode($this->request->getPost('id'))), ['avance']);
         echo json_encode(['Solicitud' =>true, 'Msg'=>'Avance validado correctamente.']); 
     }
 

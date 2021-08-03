@@ -18,7 +18,7 @@ var $evidencia = (modulo => {
             return;
         }
         var me = $(this);
-        var $params = {id:$(this).attr('data-id')};
+        var $params = {id:$(this).attr('data-id'), accionId:$(this).attr('accion-id')};
         $util.load.show(true);
         $util.post({
             url: "AccionParticular",

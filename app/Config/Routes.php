@@ -35,6 +35,8 @@ $routes->setAutoRoute(true);
 $routes->get('/', 'Login::index');
 $routes->get('/inicio', 'Home::index');
 
+#$routes->post('Proyecto/verModulo', 'Proyecto::verModulo');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

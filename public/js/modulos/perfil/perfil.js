@@ -10,7 +10,7 @@ var $gPerfil = (modulo=> {
         var estatus = parseInt($(this).parents('tr').find("td[data-estatus]").attr('data-estatus'));
         swal({
             title: '¿Estás seguro?',
-            text: estatus==1 ? "Se desactivará el perfil y los usuarios que lo tienen asigando pueden tener problemas de accesibilidad." : "Se activará el perfil.",
+            text: estatus==1 ? "Se desactivará el perfil y los usuarios que lo tienen asignado pueden tener problemas de accesibilidad." : "Se activará el perfil.",
             type: 'warning',
             buttons:{
                 confirm: {

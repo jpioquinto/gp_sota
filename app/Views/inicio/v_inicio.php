@@ -17,8 +17,8 @@
     <div class="row mt--2">
         <div class="col-md-12">
             <div class="card full-height">
-                <div class="card-body">
-                    
+                <div class="card-body text-center">
+                    <img src="images/logos/pspp.svg" class="img-fluid" width="450" height="450"/>
                 </div>
             </div>
         </div>

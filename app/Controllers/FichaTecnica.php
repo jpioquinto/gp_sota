@@ -38,7 +38,7 @@ class FichaTecnica extends BaseController
                     'v_listado_cobertura'=>$this->uiProyecto->listadoCoberturas(isset($registro['cobertura_id']) ? $registro['cobertura_id'] : null),
                     'v_listado_coordinadores'=>$this->uiProyecto->listadoUsuarios($this->usuario->getOrganizacionId(),isset($registro['coordinador_id']) ? $registro['coordinador_id'] : null), 
                     'v_listado_responsables'=>$this->uiProyecto->listadoUsuarios($this->usuario->getOrganizacionId(),isset($registro['responsable_id']) ? $registro['responsable_id'] : null),
-                    'v_listado_colaboradores'=>$this->uiProyecto->listadoUsuarios($this->usuario->getOrganizacionId(),isset($registro['colaboradores']) ? $registro['colaboradores'] : null)                     
+                    'v_listado_colaboradores'=>$this->uiProyecto->listadoUsuarios(null,isset($registro['colaboradores']) ? $registro['colaboradores'] : null)                     
                 ])
             ]);
     }

@@ -12,8 +12,9 @@
                     <div class="d-flex justify-content-between mt-2">
                         <p class="text-muted mb-0">
                                 <span 
-                                class="badge badge-warning btn-valida-avance jq_validar"
+                                class="badge badge-default btn-valida-avance jq_validar"
                                 data-id="<?=isset($id) ? $id : ''?>"
+                                accion-id="<?=isset($accion_id) ? $accion_id : ''?>"
                                 ><strong>Validar</strong></span>
                         </p>
                         <!--p class="text-muted mb-0">..%</p-->

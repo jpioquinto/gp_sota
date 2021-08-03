@@ -31,7 +31,7 @@
                     <div class="d-flex align-items-center">
                         <h4 class="card-title">Listado de Usuarios</h4>
                         <?php if (isset($permisos[1])): ?>
-                        <button class="btn btn-info btn-round ml-auto jq_nuevo_usuario">
+                        <button class="btn btn-default btn-round ml-auto jq_nuevo_usuario">
                             <i class="fa fa-plus"></i>
                             Agregar
                         </button>
@@ -57,16 +57,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!--tr>
-                                    <td>Ciudad de México</td>
-                                    <td>jesus.pioquinto</td>
-                                    <td>Super Adminstrador</td>
-                                    <td>Activo</td>
-                                    <td>2021-05-19 12:36:23</td>
-                                    <td>2021-05-19 12:36:23</td>
-                                    <td>Principal</td>
-                                    <td></td>
-                                </tr-->
                                 <?=isset($listado) ? $listado : ''?>
                             </tbody>
                         </table>

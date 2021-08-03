@@ -44,7 +44,8 @@
 				<?=isset($v_inicio) ? $v_inicio : ''?>            
             </div>
         </div>
-		<?= csrf_field() ?>
+		<?= ''#csrf_field() ?>
+		<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" class="csrf-name"/>
     </div>
 
 	<!-- INICIA PRELOADER -->
