@@ -53,7 +53,7 @@ var $uPerfil = (modulo => {
         var error   = "";
         var datos = new FormData();
         datos.append("foto",this.files[0]);        
-        //datos.append(tkn,v);
+        datos.append(tkn,v);
         if (limit<this.files[0].size) {          
             notificacion("El tamaño del archivo supera lo permitido ( 500 kB )", "error", 5000, "bottomRight");
             return false;          

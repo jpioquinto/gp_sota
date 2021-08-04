@@ -18,6 +18,7 @@ class UIProyecto
 		$this->encrypter = \Config\Services::encrypter();  
 		$this->proyectoModel = new ProyectoModel();
 		$this->uiSubmodulos = new UIModulos;
+		helper('text');
         
 	}
 
@@ -39,6 +40,11 @@ class UIProyecto
 	public function generarItemCard($proyecto)
 	{
 		$proyecto['id'] = base64_encode($this->encrypter->encrypt($proyecto['id']));
+		
+		if (isset($proyecto['imagen']) && trim($proyecto['imagen'])!='') {
+			$proyecto['imagen'] .= "?hash=".random_string('alnum', 16);
+		}
+		
 		return view(
 			'proyectos/parcial/_v_card_proyecto',
 			array_merge($proyecto, ['v_item_criterios'=>''])

@@ -1,3 +1,5 @@
+var tkn = $('.csrf-name').attr('name');
+var v   = $("input[name='" + tkn + "']").val();
 var $main = (modulo=> {
 
     modulo.clickAccionHeader = function(e) {

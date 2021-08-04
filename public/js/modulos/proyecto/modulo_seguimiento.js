@@ -100,9 +100,6 @@ var $modSeguimiento = (modulo=>{
 		var totcargados = 0;
 		var cont = 0;
 
-        var tkn = "csrf_gp_name";
-	    var v   = $("input[name='" + tkn + "']").val();
-
         $util.load.show(true);
 
         $.each(objArchivos, function(index, archivo) {

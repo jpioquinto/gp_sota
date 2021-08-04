@@ -125,7 +125,7 @@ var $formFicha  = (modulo => {
         var datos = new FormData();
         datos.append("foto", $foto);
         datos.append("id", id);
-        //datos.append(tkn,v);
+        datos.append(tkn,v);
         $util.load.show(true); 
         $.ajax({
             url:'FichaTecnica/cargarFoto',

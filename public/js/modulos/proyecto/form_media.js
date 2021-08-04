@@ -74,6 +74,7 @@ var $formMedia = (modulo => {
         
         $params.append('proyectoId', $proyecto.getId());
         $params.append(media, archivo);
+        $params.append(tkn,v);
 
         var cargado = false;
         var error   = "";

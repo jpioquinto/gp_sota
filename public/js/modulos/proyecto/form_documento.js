@@ -122,9 +122,6 @@ var $formDoc = ((modulo, valida) => {
             return;
         }
 
-        var tkn = "csrf_gp_name";
-	    var v   = $("input[name='" + tkn + "']").val();
-
         var formData = new FormData();
 
         formData.append("proyectoId", $proyecto.getId());
