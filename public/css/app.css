@@ -41,10 +41,20 @@
     color: #fff !important;
 }
 
+.btn-dorado {
+    background: #B38E5D!important;
+    border-color: #B38E5D!important;
+    color: #FFF !important;
+}
+
 .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open .dropdown-toggle.btn-success  {
     background: #13725f!important;
     border-color: #13725f!important;
     color: #FFF !important;
+}
+
+.btn-dorado:hover{
+    border-color: #f0c285!important;
 }
 
 #jq_listado_users .btn-success {
@@ -53,6 +63,8 @@
 }
 #jq_listado_users .btn-dorado {
     color:#B38E5D!important;
+    background: none !important;
+    border-color: none !important;
 }
 
 /*============== fin del reset de clases principales =================*/
@@ -162,8 +174,9 @@
     animation-delay: -.16s;
     margin-right: 1em;
 }
-.spinner h5{
+.spinner h5 {
     color: #FFF !important;
+    font-weight:900;
 }
 #abortRequest {
     margin-top: 1em;

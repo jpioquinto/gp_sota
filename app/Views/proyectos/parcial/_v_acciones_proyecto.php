@@ -1,6 +1,6 @@
 <?php if(isset($permisos[9])): ?>
     <a href="javascript:;" 
-        class="btn btn-success btn-round mr-2 jq_accion" 
+        class="btn btn-dorado btn-round mr-2 jq_accion" 
         data-accion="9"
         data-control="<?=isset($acciones[9]) ? $acciones[9]['controlador'] : ''?>"
         data-metodo="<?=isset($acciones[9]) ? $acciones[9]['metodo'] : ''?>"

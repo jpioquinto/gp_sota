@@ -5,7 +5,7 @@
             <div class="modal-header no-bd">
                 <h5 class="modal-title">
                     <span class="fw-mediumbold">
-                    Cambiar de Organización a </span> 
+                    Cambiar de UR a </span> 
                     <span class="fw-light">
                         <?=isset($usuario) ? $usuario : 'usuario'?>
                     </span>
@@ -19,7 +19,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="data-perfil">Dependencia</label>
+                                <label for="data-perfil">Unidad Responsable</label>
                                 <select name="dependencia" id="data-dependencia" class="form-control">
                                     
                                 </select>

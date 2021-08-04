@@ -166,7 +166,7 @@ var $usuario = (modulo=>{
             datos:$params,
             funcion: function(data){
                 $util.load.hide();
-                if (data.Solicitud) {
+                if (data.Solicitud) {console.log(data.estatus);
                     $el.parents('tr').find("td[data-estatus]").attr('data-estatus', data.estatus);
 
                     data.estatus==1 
@@ -179,6 +179,10 @@ var $usuario = (modulo=>{
                     
                     data.estatus==1 
                     ? $el.attr('data-original-title', 'Inhabilitar usuario') : $el.attr('data-original-title', 'Habilitar usuario');
+
+                    data.estatus==1 
+                    ? $el.parents('tr').find('td .badge').html('Activo')
+                    : $el.parents('tr').find('td .badge').html('Inactivo');
                 }            
             }
         });

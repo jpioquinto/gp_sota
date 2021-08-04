@@ -5,7 +5,7 @@
             type="button"
             data-toggle="tooltip"
             title=""  
-            class="btn btn-round btn-primary btn-sm jq_nueva_accion"
+            class="btn btn-round btn-success btn-sm jq_nueva_accion"
             data-original-title="Agregar nueva Acción General."
         >
             <i class="fa fa-plus-circle"></i> Agregar
