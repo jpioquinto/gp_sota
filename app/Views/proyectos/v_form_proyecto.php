@@ -77,10 +77,11 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label for="data-claves">Palabras clave</label>
-                                        <input 
+                                        <!--input 
                                             type="text" id="data-claves" name="claves" 
-                                            class="form-control" value="<?=isset($proyecto['palabra_clave']) ? $proyecto['palabra_clave']:''?>" minlength="8"
-                                        >
+                                            class="form-control" minlength="8"
+                                        -->
+                                        <select  id="data-claves" class="form-control jq_select" multiple="multiple" name="clave" required><?=isset($palabras) ? $palabras : null?></select>   
                                         <small id="mensaje-claves" class="form-text text-danger"></small>
                                     </div>
                                 </div>

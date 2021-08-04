@@ -69,4 +69,21 @@ class CProyecto
         $proyectoModel = new ProyectoModel();
         return $proyectoModel->save($campos);
     }
+
+    public function opcionesPalabrasClave($palabras)
+    {
+        return $this->listadoPalabras($palabras);  
+    }
+
+    public function listadoPalabras($palabras)
+    {
+        $palabras = explode(' ', $palabras);
+        $listado  = "";
+
+        foreach ($palabras as $palabra) {
+            $listado .= sprintf("<option value='%s' selected>%s</option>", $palabra, $palabra);
+        }
+
+        return $listado;
+    }
 }

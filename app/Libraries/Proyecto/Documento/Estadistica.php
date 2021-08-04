@@ -188,10 +188,10 @@ class Estadistica extends Documento
             '_v_conjunto_datos'=>$this->vistaConjuntoDatos(['instituciones'=>$this->opcionesInstituciones(), 'conjuntoDatos'=>$this->opcionesConjuntoDatos()]),
             '_v_nombre_doc'=>$this->vistaNombreDoc(['coberturas'=>$this->opcionesCoberturas(), 'nombre'=>isset($registro['nombre']) ? $registro['nombre'] : null, 'descripcion'=>isset($registro['descripcion']) ? $registro['descripcion'] : null,'alias'=>isset($registro['alias']) ? $registro['alias'] : null]),
             'entidadesAPF'=>$this->opcionesEntidadesAPF(isset($registro['entidad_apf_id']) ? $registro['entidad_apf_id'] : null),
-            'palabras'=>$this->opcionesPalabrasClave(!empty($registro['palabra_clave']) ? $registro['palabra_clave'] : ''),
+            'palabras'=>isset($registro['palabra_clave']) ? $this->opcionesPalabrasClave(!empty($registro['palabra_clave']) ? $registro['palabra_clave'] : '') : '',
             'tipos'=>$this->opcionesCategoriaProyecto(isset($registro['tipo_id']) ? $registro['tipo_id'] : null), 
             'unidades'=>$this->opcionesUnidades(isset($registro['unidad_id']) ? $registro['unidad_id'] : null),
-            'paises'=>$this->opcionesPaises(isset($registro['pais_id']) ? $registro['pais_id'] : null),
+            'paises'=>isset($registro['pais_id']) ? $this->opcionesPaises( $registro['pais_id'] ) : $this->opcionesPaises(),
             'ficha'=>self::FICHA,
             'doc'=>$registro,
             'id'=>$id

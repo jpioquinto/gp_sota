@@ -92,8 +92,8 @@ class Proyecto extends BaseController
             'colaboradores'=>implode(',', $this->request->getPost('colaboradores')),
 		];
 
-        if (trim($this->request->getPost('claves')) !='' ) {
-            $datos['palabra_clave'] = trim($this->request->getPost('claves'));
+        if ($this->request->getPost('clave') && count($this->request->getPost('clave'))>0) {
+            $datos['palabra_clave'] = implode(' ', $this->request->getPost('clave'));
         }
 
         if (trim($this->request->getPost('objetivo')) !='' ) {
@@ -185,7 +185,7 @@ class Proyecto extends BaseController
             return ['Solicitud'=>false, 'Error'=>$validation->getError('colaboradores')];
         }*/
         return ['Solicitud'=>true];
-    }
+    }    
 
     protected function obtenerProyecto($id)
     {

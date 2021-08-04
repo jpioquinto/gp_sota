@@ -61,10 +61,23 @@
     color: #18a689!important;
     background: none !important;
 }
+
 #jq_listado_users .btn-dorado {
     color:#B38E5D!important;
     background: none !important;
     border-color: none !important;
+}
+
+.select2-container .select2-selection--single {
+    height: 41px !important; 
+}
+
+.select2-selection--single .select2-selection__rendered {
+    line-height: 42px !important;
+}
+  
+.select2-selection__arrow {
+    height: 42px !important;
 }
 
 /*============== fin del reset de clases principales =================*/

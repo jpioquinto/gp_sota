@@ -168,9 +168,9 @@ class Reunion extends Documento
         $datos = [
             '_v_conjunto_datos'=>$this->vistaConjuntoDatos(['instituciones'=>$this->opcionesInstituciones(isset($registro['institucion_id']) ? $registro['institucion_id'] : null), 'conjuntoDatos'=>$this->opcionesConjuntoDatos(isset($registro['conjunto_dato_id']) ? $registro['conjunto_dato_id'] : null)]),
             'entidadesAPF'=>$this->opcionesEntidadesAPF(isset($registro['entidad_apf_id']) ? $registro['entidad_apf_id'] : null),
-            'palabras'=>$this->opcionesPalabrasClave(!empty($registro['palabra_clave']) ? $registro['palabra_clave'] : ''),
+            'palabras'=>isset($registro['palabra_clave']) ? $this->opcionesPalabrasClave(!empty($registro['palabra_clave']) ? $registro['palabra_clave'] : '') : '',
             'tipos'=>$this->opcionesCategoriaProyecto(isset($registro['tipo_id']) ? $registro['tipo_id'] : null), 
-            'paises'=>$this->opcionesPaises(isset($registro['pais_id']) ? $registro['pais_id'] : null),
+            'paises'=>isset($registro['pais_id']) ? $this->opcionesPaises( $registro['pais_id'] ) : $this->opcionesPaises(),
             'ficha'=>self::FICHA,
             'doc'=>$registro,
             'id'=>$id

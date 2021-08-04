@@ -12,6 +12,10 @@ var $formFicha  = (modulo => {
                 itera++; return;
             }
             $('#data-coordinador, #data-responsable, #data-colaboradores').select2();
+            $('.jq_select').select2({
+                tags: true,
+                tokenSeparators: [',', ' ']
+            });
             clearInterval(tempo);
         }, 500);        
     };
@@ -73,6 +77,9 @@ var $formFicha  = (modulo => {
         
         if (Object.keys($params).length==0) {
             return;
+        }
+        if ($("select[name='clave']").length>0 && $("select[name='clave']").val().length>0) {            
+            $params['clave'] = $("select[name='clave']").val();
         }
         $params['tipo'] = $("select[name='tipo'] option:selected").val();
         $params['cobertura'] = $("select[name='cobertura'] option:selected").val();
