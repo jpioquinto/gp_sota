@@ -1,4 +1,8 @@
-.item-img {    
-    height: 67px !important;
-    /*object-fit: cover;*/
+.content-media .foto {
+    max-width: 100% !important;
+    height:80px !important;
+}
+
+.content-media .foto img {
+    height:100%;
 }

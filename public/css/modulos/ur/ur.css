@@ -1,0 +1,12 @@
+.tabla-listado-ur .btn {
+    margin: 0 1px !important;
+}
+
+.tabla-listado-ur .btn-icon {
+    font-size: .79500rem !important;
+}
+
+.tabla-listado-ur .btn-danger {
+    background: #c75757!important;
+    border-color: #c75757!important;
+}

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es-mx">
 <head>
-	<title>Seguimiento para Proyectos del Ramo | SOTA</title>
+	<title>Plataforma de Seguimiento de Proyectos Prioritarios | PSPP</title>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="IE=9" >
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
@@ -12,8 +12,8 @@
     <!-- CSS Files -->
 	<link rel="stylesheet" href="css/plugin/bootstrap.min.css">
 	<link rel="stylesheet" href="css/plugin/atlantis.min.css">
-	<link rel="stylesheet" href="css/app.css"/>
 	<link rel="stylesheet" href="css/plugins/animate.min.css"/>
+	<link rel="stylesheet" href="css/app.css"/>
 
 	<!-- Fonts and icons -->
 	<script src="js/plugins/webfont/webfont.min.js"></script>

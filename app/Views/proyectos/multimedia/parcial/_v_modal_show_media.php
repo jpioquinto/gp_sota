@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div class="modal fade" id="jq_modal_show_media" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header no-bd">
                 <h5 class="modal-title">
