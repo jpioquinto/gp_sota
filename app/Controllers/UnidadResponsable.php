@@ -63,6 +63,10 @@ class UnidadResponsable extends BaseController
 
     public function guardar()
     {
+        if (!$this->request->isAJAX()) {
+            redirect('/'); return;
+        }
+        
         echo '<pre>';print_r($this->request->getPost());exit;
     }
 

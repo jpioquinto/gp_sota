@@ -1,9 +1,9 @@
 <?php 
 namespace App\Libraries\Entidad;
 
-use App\Traits\AccionesTrait;
+use App\Libraries\Validacion\ValidaUR;
 use App\Models\DependenciaModel;
-
+use App\Traits\AccionesTrait;
 use  App\Libraries\Usuario;
 
 class GestionUR
@@ -20,6 +20,56 @@ class GestionUR
         $this->controlador = $controlador;                     
 		$this->usuario = new Usuario();  
 	}
+
+    public function guardar($datos)
+    {
+        $validacion = new ValidaUR();
+        $validar    = $validacion->esSolicitudValida($datos);
+
+        if ($validar['Solicitud']===FALSE) {
+            return $validar;
+        } 
+        
+        $campos = [
+			'nombre'=>trim($datos['nombre']),
+			'sigla'=>trim($datos['sigla']),
+            'carpeta'=>trim($datos['carpeta']),
+            'estado_id'=>trim($datos['entidad']),
+            'municipio_id'=>trim($datos['municipio']),	
+		];
+
+        if (!isset($datos['id'])) {
+            $campos['creado_por'] = $this->usuario->getId();
+        }
+
+        if (isset($datos['calle']) && trim($datos['calle'])!='') {
+            $campos['calle'] = trim($datos['calle']);
+        }
+
+        if (isset($datos['ext']) && trim($datos['ext'])!='') {
+            $campos['ext'] = trim($datos['ext']);
+        }
+
+        if (isset($datos['int']) && trim($datos['int'])!='') {
+            $campos['int'] = trim($datos['int']);
+        }
+
+        if (isset($datos['col']) && trim($datos['col'])!='') {
+            $campos['col'] = trim($datos['col']);
+        }
+
+        if (isset($datos['cp']) && trim($datos['cp'])!='') {
+            $campos['cp'] = trim($datos['cp']);
+        }
+
+        $urModel = new DependenciaModel();
+         
+        if (!$urModel->insert($campos)) {
+            return ['Solicitud'=>false, 'Error'=>'Error al intentar crear la Unidad Responsable.'];
+        }
+
+        return ['Solicitud'=>true, 'Msg'=>'Unidad Responsable creada correctamente.'];
+    }
 
     public function obtenerListado()
     {                      
