@@ -1,5 +1,7 @@
 var $formUR = (modulo => {
 
+    var listado = {};
+
     modulo.params = {};
 
     modulo.validarInput = () => {
@@ -70,7 +72,7 @@ var $formUR = (modulo => {
     modulo.guardarUR = function(e) {
         e.preventDefault();
 
-        if (!modulo.validarInput() || modulo.validarSelect()) {
+        if (!modulo.validarInput() || !modulo.validarSelect()) {
             return;
         } 
 
@@ -95,7 +97,12 @@ var $formUR = (modulo => {
         if (!esEntero($(this).val())) {
             return;
         }
+
+        if (listado.hasOwnProperty($(this).val())) {
+            return $("select[name='municipio']").html(listado[$(this).val()]);
+        }
         
+        var me = $(this);
         $util.load.show(true);
         $util.post({
             url: "UnidadResponsable",
@@ -104,6 +111,7 @@ var $formUR = (modulo => {
             funcion: function(data) {
               if (data.Solicitud) {
                 $("select[name='municipio']").html(data.listado);
+                listado[me.val()] = data.listado;
               }
               $util.load.hide();
             }
@@ -116,4 +124,16 @@ var $formUR = (modulo => {
 $(function() {
     $("#jq_guardar_ur").off("click").on("click", $formUR.guardarUR);
     $("select[name='entidad']").off("change").on("change", $formUR.selectEntidad);
+
+    var tempo = 0, itera = 0;
+    tempo = setInterval(() => {
+        if (itera>99) {
+            clearInterval(tempo);
+        }
+        if ($('#data-municipio').length==0) {
+            itera++; return;
+        }
+        $('#data-municipio').select2();
+        clearInterval(tempo);
+    }, 500);     
 });

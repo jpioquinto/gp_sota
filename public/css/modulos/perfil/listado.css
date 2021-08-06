@@ -1,3 +1,8 @@
 .tabla-listado-perfiles .btn {
     padding: .375rem .45rem !important;
 }
+
+.btn-danger {
+    background: none !important;
+    background-color: none !important;
+}

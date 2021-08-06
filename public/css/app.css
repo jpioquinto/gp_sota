@@ -32,10 +32,17 @@
     background-color: #319db5 !important;
     color: #FFF !important;
 }
+
+.btn-danger {
+    background: #c75757!important;
+    border-color: #c75757!important;
+}
+
 .btn-success {
     background: #18a689!important;
     border-color: #18a689!important;
 }
+
 .btn-warning {
     background-color: #ff9122 !important;
     color: #fff !important;
