@@ -10,8 +10,8 @@
 	<meta name="robots" content="none|index|follow">
 	<link href='images/favicon/favicon.png' rel='shortcut icon'>
     <!-- CSS Files -->
-	<link rel="stylesheet" href="css/plugin/bootstrap.min.css">
-	<link rel="stylesheet" href="css/plugin/atlantis.min.css">
+	<link rel="stylesheet" href="css/plugin/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/plugin/atlantis.min.css"/>
 	<link rel="stylesheet" href="css/plugins/animate.min.css"/>
 	<link rel="stylesheet" href="css/app.css"/>
 

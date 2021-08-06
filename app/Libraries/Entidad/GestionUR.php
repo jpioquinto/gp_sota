@@ -40,7 +40,7 @@ class GestionUR
     protected function generarFila($ur)
     {
         $fila = sprintf(
-                "<tr data-id='%s'><td class='details-control'></td><td data-nombre='true'>%s</td><td data-sigla='true'>%s</td><td data-estatus='%d'>%s</td>",
+                "<tr data-id='%s'><td></td><td data-nombre='true'>%s</td><td data-sigla='true'>%s</td><td data-estatus='%d'>%s</td>",
                 base64_encode($this->encrypter->encrypt($ur['id'])), $ur['nombre'], $ur['sigla'], $ur['estatus'], $this->descripcionEstatus($ur['estatus'])
             );
         $fila.= sprintf(

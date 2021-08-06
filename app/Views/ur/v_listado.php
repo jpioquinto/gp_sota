@@ -27,10 +27,10 @@
                     </div>
                 </div>
                 <div class="card-body">                   
-                    <div class="table-responsiv__">
+                    <div class="table-responsive">
                         <table 
                             id="jq_listado_urs" 
-                            class="display table table-striped table-bordere dt-respon nowra tabla-listado-ur"
+                            class="display table table-striped table-bordered dt-responsive nowra tabla-listado-ur"
                         >
                             <thead>
                                 <tr>
@@ -39,11 +39,11 @@
                                     <th data-field="sigla" data-switchable="false">SIGLA</th>
                                     <th data-field="estatus" data-switchable="false">Estatus</th>  
                                     <th data-field="carpeta" data-switchable="false">Carpeta</th> 
-                                    <th data-field="calle" data-visible="true">Calle</th>  
-                                    <th data-field="ext" data-visible="true">Num. ext.</th>  
-                                    <th data-field="int" data-visible="true">Num. Int.</th>  
-                                    <th data-field="col" data-visible="true">Col.</th>  
-                                    <th data-field="cp" data-visible="true">C.P.</th> 
+                                    <th data-field="calle" data-visible="false">Calle</th>  
+                                    <th data-field="ext" data-visible="false">Num. ext.</th>  
+                                    <th data-field="int" data-visible="false">Num. Int.</th>  
+                                    <th data-field="col" data-visible="false">Col.</th>  
+                                    <th data-field="cp" data-visible="false">C.P.</th> 
                                     <th data-field="estado" data-switchable="false">Entidad</th>  
                                     <th data-field="municipio" data-switchable="false">Del./Munpio.</th>                                       
                                     <th data-field="acciones" style="width: 10%">Acciones</th>
@@ -58,7 +58,7 @@
             </div>
         </div>
     </div>
-    <div class="content-modal d-none animated">
+    <div class="content-modal d-none1">
         <!-- Aquí el contenido de la vista para editar o crear una UR -->
     </div>
 </div>

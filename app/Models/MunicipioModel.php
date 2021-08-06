@@ -2,18 +2,22 @@
 
 namespace App\Models;
 
+use CodeIgniter\Model;
 
-class MunicipioModel
+class MunicipioModel extends Model
 {
+    protected $table      = 'gp_municipios';
+    protected $primaryKey = 'id';
+
+    protected $useAutoIncrement = true;
+
+    protected $returnType     = 'array';
+
     protected $db;
 
-    public function __construct()
-    {
-        $this->db = db_connect();#\Config\Database::connect();
-    }
     public function getMunicipiosEstado($idEstado, $campos='*')
     {
-        
+        $this->db = db_connect();                
         $query   = $this->db->query("SELECT {$campos} FROM gp_municipios WHERE estado_id={$idEstado} ORDER BY municipio ASC");
         $this->db->close();
         return $query->getResultArray();
