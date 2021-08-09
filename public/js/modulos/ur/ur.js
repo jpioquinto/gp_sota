@@ -12,6 +12,7 @@ var $ur = (modulo => {
             "pageLength": 50,
             "scrollY": 400,
             "scrollX": true,
+            select: true,
             language: {
                 url: 'js/plugins/datatables/Spanish_Mexico.json'
             },
@@ -38,10 +39,7 @@ var $ur = (modulo => {
                 { "data": "acciones" }
             ]
         });
-        $('#jq_listado_urs').find('[data-toggle="tooltip"]').tooltip();    
-        $('#jq_listado_urs tbody').on('click', 'td.details-control', modulo.clickVerDetalle);        
-        $('#jq_listado_urs tbody tr .jq_editar_ur').off('click').on('click', modulo.clickEditarUR);
-        $('#jq_listado_urs tbody tr .jq_eliminar_ur').off('click').on('click', modulo.clickEliminarUR);
+        eventosTabla();
     };
 
     modulo.clickVerDetalle = function(e) {
@@ -98,7 +96,7 @@ var $ur = (modulo => {
         swal({
             title: '¿Estás seguro(a)?',
             text: "Se eliminará la UR, si contiene usuarios asignados no podrán ingresar.",
-            type: 'warning',
+            //type: 'warning',
             buttons:{
                 confirm: {
                     text : 'Aceptar',
@@ -126,10 +124,31 @@ var $ur = (modulo => {
         }
         
         me = $(this);
-        var $params = {
-            id:me.parents('tr').attr('data-id')
-        };
-        mostrarFormulario($params);
+        console.log(tabla.row(me.parents('tr').index()).data());
+        mostrarFormulario({id:me.parents('tr').attr('data-id')});
+    };
+
+    modulo.actualizarTR = $datos => {
+        var $actual = Object.assign(tabla.row(me.parents('tr').index()).data(), $datos);
+        tabla.row(me.parents('tr').index()).data($actual).draw();
+        eventosTabla();
+    };
+
+    modulo.agregarFila = $datos => {
+        var $ultima = tabla.row($('#jq_listado_urs tbody tr:last').index()).data();
+
+        if (!$datos.hasOwnProperty('id')) {
+            return;
+        }
+        
+        $datos['acciones'] = $ultima.acciones;
+        $datos['estatus'] = $ultima.estatus;
+        tabla.row.add($datos).draw();
+        
+        setTimeout(()=>{
+            $('#jq_listado_urs tbody tr:last').attr('data-id', $datos.id);
+            eventosTabla();
+        }, 3500);
     };
 
     var eliminar = ($params) => {        
@@ -161,6 +180,13 @@ var $ur = (modulo => {
                 }            
             }
         });
+    };
+
+    var eventosTabla = () => {
+        $('#jq_listado_urs').find('[data-toggle="tooltip"]').tooltip();    
+        $('#jq_listado_urs tbody').on('click', 'td.details-control', modulo.clickVerDetalle);        
+        $('#jq_listado_urs tbody tr .jq_editar_ur').off('click').on('click', modulo.clickEditarUR);
+        $('#jq_listado_urs tbody tr .jq_eliminar_ur').off('click').on('click', modulo.clickEliminarUR);
     };
 
     return modulo;

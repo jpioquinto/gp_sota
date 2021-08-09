@@ -30,7 +30,7 @@
                     <div class="table-responsive">
                         <table 
                             id="jq_listado_urs" 
-                            class="display table table-striped table-bordered dt-responsive nowra tabla-listado-ur"
+                            class="display table table-striped table-bordered table-hover dt-responsive tabla-listado-ur"
                         >
                             <thead>
                                 <tr>
@@ -64,4 +64,3 @@
 </div>
 <script src="js/library/select2.min.js"></script>
 <script src="js/modulos/ur/ur.js"></script>
-<!--script src="js/modulos/perfil/perfil.js"></script-->

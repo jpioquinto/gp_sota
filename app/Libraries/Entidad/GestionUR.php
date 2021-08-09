@@ -35,7 +35,7 @@ class GestionUR
         $campos = [
 			'nombre'=>trim($datos['nombre']),
 			'sigla'=>trim($datos['sigla']),
-            'carpeta'=>trim($datos['carpeta']),
+            'carpeta'=>mb_strtoupper(trim($datos['carpeta'])),
             'estado_id'=>trim($datos['entidad']),
             'municipio_id'=>trim($datos['municipio']),	
 		];
@@ -66,11 +66,21 @@ class GestionUR
 
         $urModel = new DependenciaModel();
          
-        if (!$urModel->insert($campos)) {
+        if (!($id = $urModel->insert($campos))) {
             return ['Solicitud'=>false, 'Error'=>'Error al intentar crear la Unidad Responsable.'];
         }
 
-        return ['Solicitud'=>true, 'Msg'=>'Unidad Responsable creada correctamente.'];
+        $ur = $this->obtenerURs($id);
+        $ur = isset($ur[0]['id']) ? $ur[0] : [];
+
+        if (isset($ur['id'])) {
+            $ur['id'] = base64_encode($this->encriptar($ur['id']));
+        }
+        return [
+            'Solicitud'=>true, 
+            'Msg'=>'Unidad Responsable creada correctamente.',
+            'fila'=>$ur
+        ];
     }
 
     public function actualizar($datos)
@@ -141,11 +151,11 @@ class GestionUR
         return $urModel->find($id);
     }
 
-    protected function obtenerURs()
+    protected function obtenerURs($id=null, $estatus=1)
     {
         $urModel = new DependenciaModel();
 
-        return $urModel->listarURs();
+        return $urModel->listarURs($id, $estatus);
     }  
 
     protected function generarFila($ur)

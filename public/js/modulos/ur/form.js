@@ -83,7 +83,9 @@ var $formUR = (modulo => {
             datos:modulo.params,
             funcion: function(data) {
               if (data.Solicitud) {
-                //$docs.actualizarContenidoFicha(data, valida.params);
+                modulo.params['municipio'] = $("select[name='municipio'] option:selected").text();
+                modulo.params['estado'] = $("select[name='entidad'] option:selected").text();
+                modulo.params.hasOwnProperty('id') ? $ur.actualizarTR(modulo.params) : $ur.agregarFila(data.fila);
                 $('#jq_modal_ur').modal('hide'); 
               }
               $util.load.hide();
