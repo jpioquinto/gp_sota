@@ -1,8 +1,12 @@
 .tabla-listado-perfiles .btn {
-    padding: .375rem .45rem !important;
+    margin: 0 1px !important;
 }
 
-.btn-danger {
+.tabla-listado-perfiles .btn-icon {
+    font-size: .79500rem !important;
+}
+
+/*.btn-danger {
     background: none !important;
     background-color: none !important;
-}
+}*/

@@ -13,6 +13,7 @@ var $ur = (modulo => {
             "scrollY": 400,
             "scrollX": true,
             select: true,
+            responsive: true,
             language: {
                 url: 'js/plugins/datatables/Spanish_Mexico.json'
             },
@@ -140,7 +141,7 @@ var $ur = (modulo => {
         if (!$datos.hasOwnProperty('id')) {
             return;
         }
-        
+
         $datos['acciones'] = $ultima.acciones;
         $datos['estatus'] = $ultima.estatus;
         tabla.row.add($datos).draw();
@@ -184,7 +185,7 @@ var $ur = (modulo => {
 
     var eventosTabla = () => {
         $('#jq_listado_urs').find('[data-toggle="tooltip"]').tooltip();    
-        $('#jq_listado_urs tbody').on('click', 'td.details-control', modulo.clickVerDetalle);        
+        $('#jq_listado_urs tbody tr .details-control').off('click').on('click', modulo.clickVerDetalle);        
         $('#jq_listado_urs tbody tr .jq_editar_ur').off('click').on('click', modulo.clickEditarUR);
         $('#jq_listado_urs tbody tr .jq_eliminar_ur').off('click').on('click', modulo.clickEliminarUR);
     };

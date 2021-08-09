@@ -40,7 +40,7 @@
                 </div>
                 <div class="card-body">                   
                     <div class="table-responsive">
-                        <table id="jq_listado_perfiles" class="display table table-striped table-hover tabla-listado-perfiles" >
+                        <table id="jq_listado_perfiles" class="display table table-striped table-bordered table-hover tabla-listado-perfiles" >
                             <thead>
                                 <tr>
                                     <th>Nombre</th>
