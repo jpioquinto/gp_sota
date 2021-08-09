@@ -15,9 +15,9 @@ class DependenciaModel extends Model
 
     protected $returnType     = 'array';
 
-    #protected $allowedFields = ['tipo', 'email', 'contacto_id', 'estatus'];
+    protected $allowedFields = ['nombre', 'sigla', 'carpeta', 'calle', 'ext', 'int', 'col', 'cp', 'estado_id', 'municipio_id', 'estatus', 'creado_por', 'actualizado_el', 'actualizado_por'];
 
-    public function listarURs($id=null, $estatus=null)
+    public function listarURs($id=null, $estatus=1)
     {
         $this->db = db_connect();
 

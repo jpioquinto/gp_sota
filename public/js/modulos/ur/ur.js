@@ -39,7 +39,9 @@ var $ur = (modulo => {
             ]
         });
         $('#jq_listado_urs').find('[data-toggle="tooltip"]').tooltip();    
-        $('#jq_listado_urs tbody').on('click', 'td.details-control', modulo.clickVerDetalle);
+        $('#jq_listado_urs tbody').on('click', 'td.details-control', modulo.clickVerDetalle);        
+        $('#jq_listado_urs tbody tr .jq_editar_ur').off('click').on('click', modulo.clickEditarUR);
+        $('#jq_listado_urs tbody tr .jq_eliminar_ur').off('click').on('click', modulo.clickEliminarUR);
     };
 
     modulo.clickVerDetalle = function(e) {
@@ -56,7 +58,7 @@ var $ur = (modulo => {
         }
     };
 
-    modulo.mostrarDetalle = datos => {console.log(datos);
+    modulo.mostrarDetalle = datos => {//console.log(datos);
         return  `<table cellpadding="3" cellspacing="0" border="0" style="padding-left:50px;"> 
             <tr> 
                 <td>Calle</td> 
@@ -85,6 +87,64 @@ var $ur = (modulo => {
         e.preventDefault();
         me = $(this);
         mostrarFormulario({});
+    };
+
+    modulo.clickEliminarUR = function(e) {
+        e.preventDefault();
+        if ($(this).parents('tr').attr('data-id').length==0) {
+            return;
+        }
+        me = $(this);
+        swal({
+            title: '¿Estás seguro(a)?',
+            text: "Se eliminará la UR, si contiene usuarios asignados no podrán ingresar.",
+            type: 'warning',
+            buttons:{
+                confirm: {
+                    text : 'Aceptar',
+                    className : 'btn btn-success'
+                },
+                cancel: {
+                    visible: true,
+                    className: 'btn btn-danger'
+                }
+            }
+        }).then((Aceptar) => {
+            if (Aceptar) {
+                eliminar({id:me.parents('tr').attr('data-id')});
+            } else {
+                swal.close();
+            }
+        });
+    };
+
+    modulo.clickEditarUR = function(e) {
+        e.preventDefault();
+        
+        if ($(this).parents('tr').attr('data-id').length==0) {
+            return;
+        }
+        
+        me = $(this);
+        var $params = {
+            id:me.parents('tr').attr('data-id')
+        };
+        mostrarFormulario($params);
+    };
+
+    var eliminar = ($params) => {        
+        $util.load.show(true);
+        $util.post({
+            url: "UnidadResponsable",
+            metodo:"eliminar",
+            datos:$params,
+            funcion: function(data){
+                $util.load.hide();
+                if (data.Solicitud) {                    
+                    me.parents('tr').remove();
+                }            
+            }
+        });
     };
 
     var mostrarFormulario = $params => {

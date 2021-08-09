@@ -7,10 +7,12 @@ use App\Models\{MunicipioModel};
 use  App\Libraries\{Usuario};
 use App\Models\CatalogoModel;
 use App\Traits\InfoVistaTrait;
+use App\Traits\CifradoTrait;
 
 class UnidadResponsable extends BaseController
 {   
     use InfoVistaTrait;
+    use CifradoTrait;
 
     protected $encrypter;
     protected $usuario;   
@@ -42,12 +44,26 @@ class UnidadResponsable extends BaseController
 
     public function vistaForm()
     {
+        $ur = new GestionUR(get_class($this));	
+        $registro  = $this->request->getPost('id')
+                   ? $ur->obtenerUR($this->desencriptar(base64_decode($this->request->getPost('id')))) : null;
+        
+        $municipios = null;
+        if (isset($registro['municipio_id']) && $registro['municipio_id']>0) {
+            $municipios = $this->listadoMunpios(
+                $this->obtenerMunicipios(isset($registro['estado_id']) ? $registro['estado_id'] : null), $registro['municipio_id']
+            ) ?? null;
+        }
+        
         echo json_encode([
             'Solicitud'=>true, 
             'vista'=>view(
                 'ur/v_modal_ur', 
                 [
-                    'entidades'=>$this->listadoEntidades()
+                    'entidades'=>$this->listadoEntidades(isset($registro['estado_id']) ? $registro['estado_id'] : null),
+                    'id'=>$this->request->getPost('id'),
+                    'municipios'=>$municipios,
+                    'ur'=>$registro,
                 ]
             )
         ]);
@@ -67,7 +83,20 @@ class UnidadResponsable extends BaseController
             redirect('/'); return;
         }
         
-        echo '<pre>';print_r($this->request->getPost());exit;
+        $urs = new GestionUR(get_class($this));	
+
+        echo json_encode($urs->{$this->request->getPost('id') ? 'actualizar' : 'guardar'}($this->request->getPost()));
+    }
+
+    public function eliminar()
+    {
+        if (!$this->request->isAJAX()) {
+            redirect('/'); return;
+        }
+        
+        $urs = new GestionUR(get_class($this));	
+
+        echo json_encode($urs->eliminar($this->desencriptar(base64_decode($this->request->getPost('id')))));
     }
 
     public function listadoMunpios($municipios, $municipioId=null)

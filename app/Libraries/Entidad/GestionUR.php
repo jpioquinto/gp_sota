@@ -4,11 +4,13 @@ namespace App\Libraries\Entidad;
 use App\Libraries\Validacion\ValidaUR;
 use App\Models\DependenciaModel;
 use App\Traits\AccionesTrait;
+use App\Traits\CifradoTrait;
 use  App\Libraries\Usuario;
 
 class GestionUR
 {	
     use AccionesTrait;
+    use CifradoTrait;
 
     protected $controlador;
     protected $encrypter;
@@ -71,6 +73,58 @@ class GestionUR
         return ['Solicitud'=>true, 'Msg'=>'Unidad Responsable creada correctamente.'];
     }
 
+    public function actualizar($datos)
+    {
+        $validacion = new ValidaUR();
+        $validar    = $validacion->esSolicitudValida($datos);
+
+        if ($validar['Solicitud']===FALSE) {
+            return $validar;
+        } 
+        
+        $campos = [
+            'actualizado_por'=>$this->usuario->getId(),
+            'municipio_id'=>trim($datos['municipio']),	
+            'estado_id'=>trim($datos['entidad']),
+			'nombre'=>trim($datos['nombre']),
+			'sigla'=>trim($datos['sigla']),            
+            'actualizado_el'=>'now()',
+		];
+
+        if (isset($datos['calle']) && trim($datos['calle'])!='') {
+            $campos['calle'] = trim($datos['calle']);
+        }
+
+        if (isset($datos['ext']) && trim($datos['ext'])!='') {
+            $campos['ext'] = trim($datos['ext']);
+        }
+
+        if (isset($datos['int']) && trim($datos['int'])!='') {
+            $campos['int'] = trim($datos['int']);
+        }
+
+        if (isset($datos['col']) && trim($datos['col'])!='') {
+            $campos['col'] = trim($datos['col']);
+        }
+
+        if (isset($datos['cp']) && trim($datos['cp'])!='') {
+            $campos['cp'] = trim($datos['cp']);
+        }
+
+        $urModel = new DependenciaModel();
+         
+        if (!$urModel->update($this->desencriptar(base64_decode($datos['id'])), $campos)) {
+            return ['Solicitud'=>false, 'Error'=>'Error al intentar actualizar la Unidad Responsable.'];
+        }
+
+        return ['Solicitud'=>true, 'Msg'=>'Unidad Responsable actualizada correctamente.'];
+    }
+
+    public function eliminar($id) {
+        $urModel = new DependenciaModel();
+        return $urModel->update($id, ['estatus'=>0]) ? ['Solicitud'=>true, 'Msg'=>'UR eliminada correctamente.'] : ['Solicitud'=>false, 'Error'=>'Error al intentar eliminar la UR.'];
+    }
+
     public function obtenerListado()
     {                      
         $sHtml = '';
@@ -78,6 +132,13 @@ class GestionUR
             $sHtml .= $this->generarFila($value);
         }
         return $sHtml;
+    }
+
+    public function obtenerUR($id)
+    {
+        $urModel = new DependenciaModel();
+
+        return $urModel->find($id);
     }
 
     protected function obtenerURs()

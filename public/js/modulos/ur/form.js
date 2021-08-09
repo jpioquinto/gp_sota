@@ -118,12 +118,21 @@ var $formUR = (modulo => {
         }); 
     };
 
+    modulo.generaSIGLA = function(e) {
+        e.preventDefault();
+        
+        $("input[name='id']").length>0
+        ? $("input[name='sigla']").val( $(this).val().replace(/[a-z|á-ú|ñ|Ñ\s]*/g,'') )
+        : $("input[name='sigla'], input[name='carpeta']").val( $(this).val().replace(/[a-z|á-ú|ñ|Ñ\s]*/g,'') );
+    };
+
     return modulo;
 })($formUR || {});
 
 $(function() {
     $("#jq_guardar_ur").off("click").on("click", $formUR.guardarUR);
     $("select[name='entidad']").off("change").on("change", $formUR.selectEntidad);
+    $("input[name='nombre']").off("blur").on("blur", $formUR.generaSIGLA);
 
     var tempo = 0, itera = 0;
     tempo = setInterval(() => {

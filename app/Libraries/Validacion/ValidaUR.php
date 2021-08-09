@@ -19,6 +19,13 @@ class ValidaUR
                 'required' => 'El campo SIGLA es obligatorio.'
             ]
         ],
+        'carpeta'    => [
+			'label'=>'Carpeta',
+            'rules'  => 'required',
+            'errors' => [
+                'required' => 'El campo Carpeta es obligatorio.'
+            ]
+        ],
 		'entidad'    => [
 			'label'=>'Entidad',
             'rules'  => 'required|numeric',
@@ -46,15 +53,23 @@ class ValidaUR
         if ($validation->hasError('nombre')) {
             return ['Solicitud'=>false, 'Error'=>$validation->getError('nombre')];
         }
+
 		if ($validation->hasError('sigla')) {
             return ['Solicitud'=>false, 'Error'=>$validation->getError('sigla')];
         }
+
+        if ($validation->hasError('carpeta')) {
+            return ['Solicitud'=>false, 'Error'=>$validation->getError('carpeta')];
+        }
+
 		if ($validation->hasError('entidad')) {
             return ['Solicitud'=>false, 'Error'=>$validation->getError('entidad')];
         }
+
 		if ($validation->hasError('municipio')) {
             return ['Solicitud'=>false, 'Error'=>$validation->getError('municipio')];
         }
+
         return ['Solicitud'=>true];
     }
 }

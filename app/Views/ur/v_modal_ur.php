@@ -19,7 +19,7 @@
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="data-nombre">Nombre</label>
-                                <input type="text" id="data-nombre" name="nombre" class="form-control" minlength="5" value="<?=isset($nombre) ? $nombre : ''?>" required>
+                                <input type="text" id="data-nombre" name="nombre" class="form-control" minlength="5" value="<?=isset($ur['nombre']) ? $ur['nombre'] : ''?>" required>
                                 <small id="mensaje-nombre" class="form-text text-danger"></small>
                             </div>
                         </div>
@@ -27,7 +27,7 @@
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label for="data-sigla">SIGLA</label>
-                                <input type="text" id="data-sigla" name="sigla" class="form-control" value="<?=isset($sigla) ? $sigla : ''?>" required>
+                                <input type="text" id="data-sigla" name="sigla" class="form-control" value="<?=isset($ur['sigla']) ? $ur['sigla'] : ''?>" required>
                                 <small id="mensaje-sigla" class="form-text text-danger"></small>
                             </div>
                         </div>
@@ -35,7 +35,15 @@
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label for="data-carpeta">Carpeta</label>
-                                <input type="text" id="data-carpeta" name="carpeta" class="form-control" value="<?=isset($carpeta) ? $carpeta : ''?>" required>
+                                <input 
+                                    type="text" 
+                                    id="data-carpeta" 
+                                    name="carpeta" 
+                                    class="form-control" 
+                                    value="<?=isset($ur['carpeta']) ? $ur['carpeta'] : ''?>" 
+                                    <?=isset($id) ? 'readonly': ''?>
+                                    required
+                                />
                                 <small id="mensaje-carpeta" class="form-text text-danger"></small>
                             </div>
                         </div>
@@ -43,7 +51,7 @@
                         <div class="col-sm-12 col-md-12">
                             <div class="form-group">
                                 <label for="data-calle">Calle</label>
-                                <input type="text" id="data-calle" name="calle" class="form-control" value="<?=isset($calle) ? $calle : ''?>">
+                                <input type="text" id="data-calle" name="calle" class="form-control" value="<?=isset($ur['calle']) ? $ur['calle'] : ''?>">
                                 <small id="mensaje-calle" class="form-text text-danger"></small>
                             </div>
                         </div>
@@ -51,7 +59,7 @@
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label for="data-ext">Num. Exterior</label>
-                                <input type="text" id="data-ext" name="ext" class="form-control" value="<?=isset($ext) ? $ext : ''?>">
+                                <input type="text" id="data-ext" name="ext" class="form-control" value="<?=isset($ur['ext']) ? $ur['ext'] : ''?>">
                                 <small id="mensaje-ext" class="form-text text-danger"></small>
                             </div>
                         </div>
@@ -59,7 +67,7 @@
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label for="data-int">Num. Interior</label>
-                                <input type="text" id="data-int" name="int" class="form-control" value="<?=isset($int) ? $int : ''?>">
+                                <input type="text" id="data-int" name="int" class="form-control" value="<?=isset($ur['int']) ? $ur['int'] : ''?>">
                                 <small id="mensaje-int" class="form-text text-danger"></small>
                             </div>
                         </div>
@@ -67,7 +75,7 @@
                         <div class="col-sm-12 col-md-8">
                             <div class="form-group">
                                 <label for="data-col">Colonia</label>
-                                <input type="text" id="data-col" name="col" class="form-control" value="<?=isset($col) ? $col : ''?>">
+                                <input type="text" id="data-col" name="col" class="form-control" value="<?=isset($ur['col']) ? $ur['col'] : ''?>">
                                 <small id="mensaje-col" class="form-text text-danger"></small>
                             </div>
                         </div>
@@ -75,7 +83,7 @@
                         <div class="col-sm-12 col-md-4">
                             <div class="form-group">
                                 <label for="data-cp">CP</label>
-                                <input type="text" id="data-cp" name="cp" class="form-control" value="<?=isset($cp) ? $cp : ''?>">
+                                <input type="text" id="data-cp" name="cp" class="form-control" value="<?=isset($ur['cp']) ? $ur['cp'] : ''?>">
                                 <small id="mensaje-cp" class="form-text text-danger"></small>
                             </div>
                         </div>
@@ -99,7 +107,7 @@
                         </div>
                     </div> 
                     <?php if(isset($id)): ?>
-                        <input type="hidden" name='id' value="<?=$id?>">
+                        <input type="hidden" name='id' value="<?=$id?>" required>
                     <?php endif; ?>                   
                 </form>
             </div>
