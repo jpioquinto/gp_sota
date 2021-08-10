@@ -2,12 +2,25 @@ var $evidencia = (modulo => {
 
     modulo.clickSelecEvidencia = function(e) {
         e.preventDefault();
+
+        $(".jq_descargar_evidencia").addClass('d-none');
         $("#listado-doc .card").removeClass('item-seleccionado');
 
-        $(this).find('.card').addClass('item-seleccionado');console.log($(this).find('.card').attr('url'));
+        $(this).find('.card').addClass('item-seleccionado');console.log($util.obtenerTipoMIME($(this).find('.card').attr('extension')), $(this).find('.card').attr('extension'));
 
-        $("#jq_contenedor_archivo").attr("type", $util.obtenerTipoMIME($(this).find('.card').attr('extension')));
+        let tipo = $.inArray($(this).find('.card').attr('extension'),['pdf','png11','jpeg111','jpg111'])!=-1 
+                   ? 'application/pdf' : $util.obtenerTipoMIME($(this).find('.card').attr('extension'));
+
+        $("#jq_contenedor_archivo").attr("type", tipo);
         $("#jq_contenedor_archivo").attr("src", $(this).find('.card').attr('url') + "?hash=" + $util.hash(10));
+
+        if (tipo!='application/pdf') {
+            $(".jq_descargar_evidencia").prop({
+                href:$(this).find('.card').attr('url') + "?hash=" + $util.hash(10),
+                target:'_blank'
+            });
+            $(".jq_descargar_evidencia").removeClass('d-none');
+        }
     };
 
     modulo.clickValidarAvance = function(e) {

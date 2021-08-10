@@ -26,6 +26,10 @@ var $avance = (modulo => {
     };
 
     var editarAvance = (dato, carga) => {
+        if (carga && objArchivos.length==0) {
+            return;
+        }
+        
         var $params = {id:$modSeguimiento.me.parents('tr').attr('id'), avance:dato, anterior:$('#data-avance').attr('data-avance')};
         $util.load.show(true);
         $util.post({

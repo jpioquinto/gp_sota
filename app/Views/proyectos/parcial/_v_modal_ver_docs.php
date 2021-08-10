@@ -30,6 +30,12 @@
                 <button type="button" id="jq_aceptar_carga" class="btn btn-default d-none" disabled>
                     <span class="btn-label"><i class="fa fa-save"></i></span> Aceptar																					
                 </button>
+                <a class="btn btn-success text-white d-none jq_descargar_evidencia">
+                    <span class="btn-label">
+                        <i class="fas fa-cloud-download-alt"></i>
+                    </span>
+                    Descargar
+                </a>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">
                     <span class="btn-label"><i class="fa fa-window-close"></i></span> Cerrar
                 </button>
@@ -37,4 +43,4 @@
         </div>
     </div>
 </div>
-<script src="js/modulos/proyecto/evidencia.js"></script>
+<script src="js/modulos/proyecto/evidencia.js?hash=<?=mt_rand()?>"></script>

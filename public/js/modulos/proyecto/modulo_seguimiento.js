@@ -10,7 +10,10 @@ var $modSeguimiento = (modulo=>{
             locale:'es-MX',                                   
             paginationParts:[
                 'pageInfo', 'pageSize','pageList'
-            ]       
+            ],
+            onColumnSwitch:function(field,checked) {
+                setTimeout(modulo.eventosTabla, 3500);
+            }       
         });
         
         $('#jq_listado_acciones').find('[data-toggle="tooltip"]').tooltip();        
