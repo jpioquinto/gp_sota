@@ -26,7 +26,7 @@
                             <div class="text-center">                  
                                 <img src="<?=(isset($foto) && $foto!='') ? $foto : 'images/perfiles/default.png'?>" alt="Foto de perfil" class="img-thumbnail jq_foto_perfil">
                                 <span>
-                                    <button class="btn btn-primary btn-sm jq_cargar_foto">
+                                    <button class="btn btn-dorado btn-sm jq_cargar_foto">
                                         <span class="btn-label">
                                             <i class="fa fa-image"></i>
                                         </span>

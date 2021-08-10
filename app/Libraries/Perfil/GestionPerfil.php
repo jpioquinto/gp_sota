@@ -5,6 +5,10 @@ use App\Models\{PerfilQuery};
 
 use  App\Libraries\Usuario;
 
+use Carbon\{Carbon};
+use DateTime;
+use DateTimeZone;
+
 class GestionPerfil
 {	
     use AccionesTrait;
@@ -17,7 +21,8 @@ class GestionPerfil
 	{
         $this->encrypter = \Config\Services::encrypter();         
         $this->controlador = $controlador;                     
-		$this->usuario = new Usuario();  
+		$this->usuario = new Usuario();
+        Carbon::setLocale('es');   
 	}
 
     public function obtenerArbolPermiso($perfilId)
@@ -45,6 +50,7 @@ class GestionPerfil
 
     protected function generarFila($perfil)
     {
+        $creado =  new Carbon(new DateTime($perfil['creado_el']), new DateTimeZone('America/Mexico_City'));
         $fila = sprintf(
                 "<tr data-id='%s'><td data-nombre='true'>%s</td><td data-descripcion='true'>%s</td><td data-estatus='%d'>%s</td>",
                 base64_encode($this->encrypter->encrypt($perfil['id'])), $perfil['nombre'], $perfil['descripcion'], 
@@ -52,7 +58,7 @@ class GestionPerfil
             );
         return $fila .= sprintf(
                 "<td>%s</td><td>%s</td><td class='text-center'>%s</td></tr>",
-                $perfil['creado_el'], $perfil['nickname'], $this->obtenerAcciones($perfil['estatus'])
+                $creado->format('d/m/Y H:i:s'), $perfil['nickname'], $this->obtenerAcciones($perfil['estatus'])
             );
     }
 

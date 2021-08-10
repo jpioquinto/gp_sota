@@ -43,7 +43,7 @@
                         <table id="jq_listado_users" class="display table table-striped table-bordered table-hover tabla-listado-usuarios" >
                             <thead>
                                 <tr>
-                                    <th rowspan="2">Entidad</th>
+                                    <th rowspan="2">UR</th>
                                     <th rowspan="2">Usuario</th>
                                     <th rowspan="2">Perfil</th>
                                     <th rowspan="2">Estatus</th>

@@ -21,6 +21,6 @@
         <span class="btn-label">
             <i class="fas fa-film"></i>
         </span>
-        Galería de Fotos y Videos
+        Fotos y Videos
     </a>
 <?php endif; ?>

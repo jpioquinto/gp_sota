@@ -4,6 +4,10 @@ use App\Models\{UsuarioQuery};
 use App\Traits\AccionesTrait;
 use  App\Libraries\Usuario;
 
+use Carbon\{Carbon};
+use DateTime;
+use DateTimeZone;
+
 class GestionUsuario
 {	
     use AccionesTrait;
@@ -17,7 +21,7 @@ class GestionUsuario
 		$this->usuario = new Usuario();
         $this->encrypter = \Config\Services::encrypter(); 
         $this->controlador = $controlador;
-        
+        Carbon::setLocale('es');        
 	}
 
     public function obtenerListado()
@@ -33,11 +37,15 @@ class GestionUsuario
     {
         $fila = sprintf(
             "<tr data-id='%s'><td>%s</td><td>%s</td><td data-perfil='true'>%s</td>",
-            base64_encode($this->encrypter->encrypt($usuario['id'])), $usuario['estado'], $usuario['nickname'], $usuario['perfil']
+            base64_encode($this->encrypter->encrypt($usuario['id'])), $usuario['sigla'], $usuario['nickname'], $usuario['perfil']
             );
+        
+        $creado =  new Carbon(new DateTime($usuario['creado_el']), new DateTimeZone('America/Mexico_City'));
+        $ultimo =  new Carbon(new DateTime($usuario['ultimo_acceso']), new DateTimeZone('America/Mexico_City'));
+
         return $fila .= sprintf(
             "<td data-estatus='%d'>%s</td><td>%s</td><td>%s</td><td>%s</td><td class='text-center'>%s</td></tr>",
-            $usuario['estatus'], $this->descripcionEstatus($usuario['estatus']), $usuario['creado_el'], $usuario['ultimo_acceso'],
+            $usuario['estatus'], $this->descripcionEstatus($usuario['estatus']), $creado->format('d/m/Y H:i:s'), $ultimo->format('d/m/Y H:i:s'),
             $usuario['creador'], $this->obtenerAcciones($usuario['estatus'])
             );
     }
