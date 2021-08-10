@@ -1,5 +1,5 @@
-<!--link rel="stylesheet" href="css/plugins/select2.min.css" />
-<link rel="stylesheet" href="css/modulos/usuario/perfil.css" /-->
+<!--link rel="stylesheet" href="css/plugins/select2.min.css" /-->
+<link rel="stylesheet" href="css/sidebar-setting.css" />
 <div class="panel-header bg-primary-gradient">
     <div class="page-inner py-5">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
@@ -15,49 +15,31 @@
 </div>
 <div class="page-inner mt--5">
     <div class="row mt--2 content-listado-proyectos"> 
-        <?=isset($listado) ? $listado : ''?>  
-        
-        <!--div class="col-md-4">
-            <div class="card card-post card-round">
-                <img class="card-img-top" src="documentos/SOTA/2021/AIFA/fotos/aifa.png" alt="Card image cap">
-                <div class="card-body text-center">
-                <p>AIFA TEST</p>
-                <div class="separator-solid"></div>
-                    <div class="dropdown">                        
-                        <button class="btn btn-primary btn-border dropdown-toggle" id="dropdownMenuButton" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Ver información
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="" onclick="return false;">
-                                <i class="flaticon-calendar"></i>  Planeación
-                            </a>
-                            <div role="separator" class="dropdown-divider"></div>  
-                            <a class="dropdown-item" href="" onclick="return false;">
-                                <i class="flaticon-interface-6"></i> Acta de reuniones
-                            </a>
-                            <div role="separator" class="dropdown-divider"></div>  
-                            <a class="dropdown-item" href="" onclick="return false;">
-                                <i class="flaticon-file-1"></i> Documentos del ramo
-                            </a>
-                            <div role="separator" class="dropdown-divider"></div>  
-                            <a class="dropdown-item" href="" onclick="return false;">
-                                <i class="flaticon-graph-2"></i> Estadísticas
-                            </a>
-                            <div role="separator" class="dropdown-divider"></div>  
-                            <a class="dropdown-item" href="" onclick="return false;">
-                                <i class="flaticon-presentation"></i> Investigaciones
-                            </a>
-                            <div role="separator" class="dropdown-divider"></div>                                                      
-                            <a class="dropdown-item" href="" onclick="return false;">
-                                <i class="flaticon-list"></i> Ficha técnica
-                            </a>  
-                                                    
-                        </div>
+        <?=isset($listado) ? $listado : ''?>                         
+    </div>
+    <!-- barra lateral derecha filtros -->
+    <div class="custom-template">
+        <div class="title">Filtro</div>
+        <div class="custom-content">
+            <div class="switcher">
+                <div class="switch-block">
+                    <div class="form-group form-floating-label">
+                        <select class="form-control input-border-bottom" id="selectTipoProyecto" required>
+                            <option value="">&nbsp;</option>
+                            <option>Proritarios</option>
+                            <option>Ramo 15</option>
+                        </select>
+                        <label for="selectTipoProyecto" class="placeholder">Todos los Proyectos</label>
                     </div>
                 </div>
             </div>
-        </div-->                
+        </div>
+        <div class="custom-toggle">
+            <i class="flaticon-settings"></i>
+        </div>
     </div>
+    <!-- fin de la barra lateral derecha filtros -->
     <div class='content-modulo jq_content_modulo'></div>
 </div>
+<script src="js/sidebar-setting.js?hash=<?=mt_rand()?>"></script>
 <script src="js/modulos/proyecto/proyecto.js?hash=<?=mt_rand()?>"></script>
