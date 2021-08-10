@@ -75,8 +75,11 @@ class AccionParticular extends BaseController
         $html = '';     
         $accion = $this->accionEspecificaModel->find($this->desencriptar($idAccion)) ?? [];
         foreach ($this->obtenerAvances($this->desencriptar($idAccion)) as $avance) {
-            $avance['id'] = base64_encode($this->encriptar($avance['id']));
+            
+            $avance['id']        = base64_encode($this->encriptar($avance['id']));
             $avance['accion_id'] = base64_encode($this->encriptar($avance['accion_id']));
+            $avance['validarEvidencia'] = $this->puedeValidar($accion, $avance);
+            
             $html .= view('proyectos/seguimiento/parcial/_v_separador_avance', $avance);
             $html .= $this->iterarEvidencias($docs, $this->desencriptar( base64_decode($avance['id']) ), $accion, $avance);
         }
@@ -257,6 +260,14 @@ class AccionParticular extends BaseController
     {
         $avanceModel = new AvanceModel();
         return $avanceModel->where(['accion_id'=>$idAccion, 'estatus'=>1])->findAll() ?? [];
+    }
+
+    protected function puedeValidar($accion, $avance)
+    {
+        if (!isset($this->permisosModulo[32])) {
+            return false;
+        }
+        return !$this->estaValidado($accion, $avance); 
     }
 
     protected function puedeEliminar($accion, $avance)

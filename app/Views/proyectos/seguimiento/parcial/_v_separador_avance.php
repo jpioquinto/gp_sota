@@ -8,7 +8,7 @@
                     </div>
                     <h3 class="text-info fw-bold"><?=isset($avance) ? $avance : ''?>%</h3>
                 </div>
-                <?php if(isset($validado) && $validado==0): ?>
+                <?php if(isset($validarEvidencia) && $validarEvidencia): ?>
                     <div class="d-flex justify-content-between mt-2">
                         <p class="text-muted mb-0">
                                 <span 
@@ -17,7 +17,7 @@
                                 accion-id="<?=isset($accion_id) ? $accion_id : ''?>"
                                 ><strong>Validar</strong></span>
                         </p>
-                        <!--p class="text-muted mb-0">..%</p-->
+                        <!--p class="text-muted mb-0">.%</p-->
                     </div>
                 <?php endif; ?>
             </div>

@@ -27,10 +27,13 @@ class UIProyecto
 		return view('proyectos/parcial/_v_modulos', $this->uiSubmodulos->listadoSubmodulos());
 	}
 
-	public function obtenerListado()
+	public function obtenerListado($tipo=null)
 	{
 		$items = '';
-		$proyectos = $this->proyectoModel->orderBy('alias', 'ASC')->findAll() ?? [];
+		$proyectos = is_null($tipo) 
+					? $this->proyectoModel->orderBy('alias', 'ASC')->findAll() ?? []
+					: $this->proyectoModel->where('tipo_id', $tipo)->orderBy('alias', 'ASC')->findAll() ?? [];
+					
 		foreach ($proyectos as $proyecto) {
 			$items .= $this->generarItemCard($proyecto);
 		}
