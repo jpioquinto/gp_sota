@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\{UsuarioModel, UsuarioQuery, ContactoModel, AccionModel, ModuloModel};
+use App\Libraries\Proyecto\CDependencia;
 
 
 class Login extends BaseController
@@ -58,7 +59,13 @@ class Login extends BaseController
             echo json_encode(['Solicitud'=>false, 'Error'=>'Datos de acceso incorrectos.']);return;
         }
 
-        $this->usuario['organizacion_id'] = $this->obtenerOrganizacion($this->usuario['id']);
+        $ur = $this->comprobarUR($this->obtenerOrganizacion($this->usuario['id']));
+
+        if ($ur['Solicitud']===FALSE) {
+            echo json_encode($ur); return;
+        }
+        
+        $this->usuario['organizacion_id'] = $ur['id'];
         
         $_SESSION['GP_SOTA'] = $this->usuario;
         $_SESSION['GP_SOTA']['permisos'] = $this->obtenerPermisos($this->usuario['perfil_id']);
@@ -168,4 +175,19 @@ class Login extends BaseController
 	{
 		return array_search($id, array_column($datos, $columna));
 	}
+
+    protected function comprobarUR($urId)
+    {
+        $ur = new CDependencia($urId);
+
+        if (!$ur->existe()) {
+            return ['Solicitud'=>false, 'Error'=>'No se encontró la Unidad Responsable del este usuario.'];
+        }
+
+        if (!$ur->estaActiva()) {
+            return ['Solicitud'=>false, 'Error'=>'La Unidad Responsable de este usuario ha sido dada de baja.'];
+        }
+
+        return ['Solicitud'=>true, 'id'=>$ur->getId()];
+    }
 }

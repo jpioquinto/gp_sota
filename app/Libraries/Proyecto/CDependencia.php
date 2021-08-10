@@ -18,6 +18,16 @@ class CDependencia
         return $this->id;
     }
 
+    public function existe()
+    {
+        return isset($this->dependencia['id']);
+    }
+
+    public function estaActiva()
+    {
+        return ( isset($this->dependencia['estatus']) && $this->dependencia['estatus'] );
+    }
+
     public function getCarpeta()
     {
         return isset($this->dependencia['carpeta']) ? $this->dependencia['carpeta'] : '';
