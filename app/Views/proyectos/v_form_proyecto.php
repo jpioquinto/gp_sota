@@ -29,7 +29,7 @@
                                         </span>
                                         Cargar imagen
                                     </button>
-                                    <input type="file" accept=".jpg,.png" class="form-control invisible uploadFile" name="foto" value="" />
+                                    <input type="file" accept=".jpg,.jpeg,.png" class="form-control invisible uploadFile" name="foto" value="" />
                                 </span>
                             </div>
                         </div>

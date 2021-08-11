@@ -9,7 +9,7 @@ var $modSeguimiento = (modulo=>{
             pagination: true,     
             locale:'es-MX',                                   
             paginationParts:[
-                'pageInfo', 'pageSize','pageList'
+                'pageInfo','pageList'
             ],
             onColumnSwitch:function(field,checked) {
                 setTimeout(modulo.eventosTabla, 3500);

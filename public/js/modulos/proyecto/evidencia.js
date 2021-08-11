@@ -6,7 +6,7 @@ var $evidencia = (modulo => {
         $(".jq_descargar_evidencia").addClass('d-none');
         $("#listado-doc .card").removeClass('item-seleccionado');
 
-        $(this).find('.card').addClass('item-seleccionado');console.log($util.obtenerTipoMIME($(this).find('.card').attr('extension')), $(this).find('.card').attr('extension'));
+        $(this).find('.card').addClass('item-seleccionado');//console.log($util.obtenerTipoMIME($(this).find('.card').attr('extension')), $(this).find('.card').attr('extension'));
 
         let tipo = $.inArray($(this).find('.card').attr('extension'),['pdf','png11','jpeg111','jpg111'])!=-1 
                    ? 'application/pdf' : $util.obtenerTipoMIME($(this).find('.card').attr('extension'));
